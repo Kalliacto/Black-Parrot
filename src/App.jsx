@@ -1,10 +1,8 @@
 import React from 'react';
 import testData from './assents/data.json'; //Массив с данными карточек
 import Card from './components/Card/Card'; //Компонент обертка для карточек
-
+import Header from './components/Header/index'; //Можно и таким образом подключить './components/Header'
 const promoData = ['=)', '^_^', 'O_o', 'X_x', ';=('];
-
-console.log(Card);
 
 const Promo = (props) => {
     return (
@@ -17,12 +15,14 @@ const Promo = (props) => {
 
 const App = () => {
     return (
-        <div>
+        <>
+            <Header />
             <h1>First page</h1>
             <div className="container">
-                {testData.map((el) => {
+                {testData.map((el, index) => {
                     return (
                         <Card
+                            key={index}
                             img={el.pictures}
                             name={el.name}
                             price={el.price}
@@ -30,10 +30,10 @@ const App = () => {
                     );
                 })}
                 {promoData.map((el) => {
-                    return <Promo text={el} />;
+                    return <Promo key={el} text={el} />;
                 })}
             </div>
-        </div>
+        </>
     );
 };
 
