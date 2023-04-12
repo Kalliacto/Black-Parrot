@@ -1,5 +1,7 @@
 import React from 'react';
 
+const promoData = ['=)', '^_^', 'O_o', 'X_x', ';=('];
+
 const Promo = (props) => {
     return (
         <div className="promo__block">
@@ -14,9 +16,9 @@ const App = () => {
         <div>
             <h1>First page</h1>
             <div className="container">
-                <Promo text="First" />
-                <Promo text="Second" />
-                <Promo text={4 * 10} />
+                {promoData.map((el) => {
+                    return <Promo text={el} />;
+                })}
             </div>
         </div>
     );

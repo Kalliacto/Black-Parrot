@@ -1,7 +1,32 @@
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-color: springgreen;
 }
-
-p {
-    color: yellow;
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.promo__block {
+    border: 1px solid;
+    border-radius: 8px;
+    position: relative;
+}
+.promo__img {
+    background-image: radial-gradient(circle, orange, forestgreen, transparent);
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    right: 20px;
+    top: calc(50% - 20px);
+}
+.promo__text {
+    padding: 20px;
 }
