@@ -1,6 +1,10 @@
 import React from 'react';
+import testData from './assents/data.json'; //Массив с данными карточек
+import Card from './components/Card/Card'; //Компонент обертка для карточек
 
 const promoData = ['=)', '^_^', 'O_o', 'X_x', ';=('];
+
+console.log(Card);
 
 const Promo = (props) => {
     return (
@@ -16,6 +20,15 @@ const App = () => {
         <div>
             <h1>First page</h1>
             <div className="container">
+                {testData.map((el) => {
+                    return (
+                        <Card
+                            img={el.pictures}
+                            name={el.name}
+                            price={el.price}
+                        />
+                    );
+                })}
                 {promoData.map((el) => {
                     return <Promo text={el} />;
                 })}
