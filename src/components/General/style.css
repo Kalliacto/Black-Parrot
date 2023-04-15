@@ -1,4 +1,26 @@
 header {
     background-color: #ffe44d;
     padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.logo__pic {
+    height: 50px;
+}
+
+footer {
+    background-color: #ffe44d;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
 }

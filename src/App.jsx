@@ -2,8 +2,7 @@ import React from 'react';
 import testData from './assents/data.json'; //Массив с данными карточек
 import Card from './components/Card/Card'; //Компонент обертка для карточек
 // import Header from './components/General/index'; //Можно и таким образом подключить './components/Header'
-import Header from './components/General/Header';
-import Footer from './components/General/Footer';
+import { Header, Footer } from './components/General';
 import Promo from './components/Promo/Promo';
 const promoData = ['=)', '^_^', 'O_o', 'X_x', ';=('];
 
