@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardList } from '../../components/CardList/CardList';
 import './catalogProduct.css';
-import { Navigate } from 'react-router-dom';
+import { Link, NavLink, Navigate } from 'react-router-dom';
 import SortCards from '../../components/SortCards/SortCards';
 
 const CatalogProducts = ({ cards, user, changeLikeCard, search, onSort }) => {

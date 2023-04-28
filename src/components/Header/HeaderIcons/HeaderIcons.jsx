@@ -3,18 +3,25 @@ import './headersIcons.css';
 import { ReactComponent as Dog } from './icons/DogIcon.svg';
 import { ReactComponent as Heart } from './icons/Favorites.svg';
 import { ReactComponent as Cart } from './icons/ic-cart.svg';
+import { Link } from 'react-router-dom';
 
 const HeaderIcons = (props) => {
     return (
         <div className="header__icons">
             <div>
-                <Heart />
+                <Link to={'/favorite'}>
+                    <Heart />
+                </Link>
             </div>
             <div>
-                <Cart />
+                <Link>
+                    <Cart />
+                </Link>
             </div>
             <div>
-                <Dog />
+                <Link>
+                    <Dog />
+                </Link>
             </div>
         </div>
     );

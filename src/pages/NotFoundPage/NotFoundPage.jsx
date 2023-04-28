@@ -16,7 +16,7 @@ const NotFoundPage = (props) => {
                     <h2 className="notFoundPage__title">
                         Простите, данная страница не найдена.
                     </h2>
-                    <Link to="/">
+                    <Link to={'/'}>
                         <button className="notFoundPage__btn">
                             На главную
                         </button>

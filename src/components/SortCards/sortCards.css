@@ -10,7 +10,6 @@
     padding: 12px 16px;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
     gap: 16px;
 }
 
@@ -23,4 +22,14 @@
 
 .sort__cards_text_active {
     color: #1a1a1a;
+}
+
+@media (max-width: 776px) {
+    .sort__cards {
+        flex-wrap: wrap;
+    }
+    .sort__cards_text {
+        font-size: 12px;
+        line-height: 123%;
+    }
 }

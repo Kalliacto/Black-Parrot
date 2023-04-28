@@ -16,23 +16,6 @@
     margin-bottom: 20px;
 }
 
-.product__info_back {
-    font-size: 14px;
-    line-height: 143%;
-    color: #535557;
-    transition: all 0.2s;
-    background: url(./left-arrow.svg) no-repeat;
-    padding-left: 20px;
-    align-items: center;
-}
-
-.product__info_back:hover {
-    cursor: pointer;
-    text-decoration: underline;
-    font-weight: bold;
-    color: orange;
-}
-
 .product__title {
     margin-top: 0;
     font-weight: 800;

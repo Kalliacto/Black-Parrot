@@ -112,8 +112,8 @@ function App() {
     return (
         <div className="App">
             <Header setSearch={setSearch}></Header>
-            <main>
-                <button onClick={() => setAuth(!isAuth)}>Click me now!</button>
+            <main className="main">
+                {/* <button onClick={() => setAuth(!isAuth)}>Click me now!</button> */}
                 <div className="container">
                     {isAuth ? (
                         <Routes>

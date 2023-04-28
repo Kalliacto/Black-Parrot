@@ -5,6 +5,10 @@
     justify-content: space-between;
     gap: 40px;
     margin-top: 50px;
+    width: 100%;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
 }
 
 .notFoundProductPage__img {
