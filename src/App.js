@@ -18,6 +18,7 @@ function App() {
     const [search, setSearch] = useState(undefined);
     const [user, setUser] = useState({});
     const [isAuth, setAuth] = useState(true);
+    const [favorite, setFavorite] = useState([]);
 
     const myCards = (card) => {
         return card.filter(
@@ -33,7 +34,14 @@ function App() {
         const newCard = card.map((item) =>
             item._id === updateLikeInCard._id ? updateLikeInCard : item
         );
+
         setCards([...newCard]);
+        localStorage.setItem('card', JSON.stringify(newCard));
+
+        const newFavorite = newCard.filter((item) =>
+            findFavorite(item, user._id)
+        );
+        setFavorite(newFavorite);
         // const deleteUpdatedCard = () => {
         //     const newCard = card.map((item) =>
         //         item._id === updateLikeInCard._id ? updateLikeInCard : item
@@ -57,14 +65,21 @@ function App() {
             .catch((error) => console.log(error));
     }, [search]);
 
+    const findFavorite = (card, id) => {
+        return card.likes.some((i) => i === id);
+    };
+
     useEffect(() => {
         api.getAllProducts()
             .then((res) => {
-                setCards(myCards(res.products));
-                localStorage.setItem(
-                    'card',
-                    JSON.stringify(myCards(res.products))
+                const filtered = myCards(res.products);
+                setCards(filtered);
+                localStorage.setItem('card', JSON.stringify(filtered));
+
+                const favorite = localStorageCards.filter((item) =>
+                    findFavorite(item, user._id)
                 );
+                setFavorite(favorite);
             })
             .catch((error) => console.log(error));
         api.getUserInfo()
@@ -136,7 +151,13 @@ function App() {
                             />
                             <Route
                                 path="/favorite"
-                                element={<FavoritePage />}
+                                element={
+                                    <FavoritePage
+                                        favorite={favorite}
+                                        userId={user._id}
+                                        changeLikeCard={changeLikeCard}
+                                    />
+                                }
                             />
                             <Route path="*" element={<NotFoundPage />} />
                             <Route

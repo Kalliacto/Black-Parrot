@@ -1,5 +1,26 @@
+.header__heart {
+    position: relative;
+}
+
 .header__icons {
     display: flex;
     align-items: center;
     gap: 34px;
+}
+
+.header__icons_bubble {
+    position: absolute;
+    width: 25px;
+    height: 20px;
+    bottom: 70%;
+    left: 50%;
+    background: #01a54e;
+    border: 2px solid #ffe44d;
+    border-radius: 20px;
+    color: white;
+    font-size: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
