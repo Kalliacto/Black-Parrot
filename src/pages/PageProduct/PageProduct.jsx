@@ -16,7 +16,9 @@ const PageProduct = () => {
         getOneProduct(id).then((data) => setProductInfo(data));
     }, [id]);
 
-    console.log({ productInfo });
+    const cardIsLiked = productInfo.likes
+        ? productInfo.likes.includes(user._id)
+        : false;
 
     return (
         <>
@@ -45,9 +47,7 @@ const PageProduct = () => {
                                 console.log('click');
                             }}
                             className={`btn__like ${
-                                productInfo.likes
-                                    ? 'card__like_active'
-                                    : 'card__like'
+                                cardIsLiked ? 'card__like_active' : 'card__like'
                             }`}
                         >
                             <Like />
