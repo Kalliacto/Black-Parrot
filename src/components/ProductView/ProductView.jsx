@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './productView.css';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { getOneProduct } from '../../utils/api';
 import GoBack from '../GoBack/GoBack';
+import { ReactComponent as Like } from '../Card/img/Like.svg';
 
-const ProductView = () => {
-    const [productInfo, setProductInfo] = useState({});
-    const { id } = useParams();
+const ProductView = ({ changeLikeCard, productInfo, user }) => {
+    // const cardLiked = productInfo.likes.some((item) => item === user._id);
 
-    useEffect(() => {
-        getOneProduct(id).then((data) => setProductInfo(data));
-    }, [id]);
+    // const foo = async (productInfo, user) => {
+    //     const cardLiked = await productInfo.likes.some(
+    //         (item) => item === user._id
+    //     );
+    //     changeLikeCard(productInfo._id, cardLiked);
+    // };
 
     return (
         <>
@@ -32,6 +33,18 @@ const ProductView = () => {
                         ) : (
                             ''
                         )}
+                    </div>
+                    <div className="card__sticky card__sticky_right">
+                        <button
+                            // onClick={() => foo(productInfo, user)}
+                            className={`btn__like ${
+                                productInfo.likes
+                                    ? 'card__like_active'
+                                    : 'card__like'
+                            }`}
+                        >
+                            <Like />
+                        </button>
                     </div>
                     <img
                         className="product__img"

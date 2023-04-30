@@ -1,19 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './card.css';
 import { ReactComponent as Like } from './img/Like.svg';
 import { Link } from 'react-router-dom';
+import { CardContext } from '../../context/cardContext';
 
-const Card = ({ product, userId, changeLikeCard }) => {
-    const cardLiked = product.likes.some((item) => item === userId);
+const Card = ({ product }) => {
+    const { user, changeLikeCard } = useContext(CardContext);
 
-    // console.log(product.likes);
-    const changeLike = () => {
-        // return !cardLiked
-        //     ? api.addLike(product._id)
-        //     : api.removeLike(product._id);
-        changeLikeCard(product._id, cardLiked);
-        // return editLikeCard(product._id, cardLiked);
-    };
+    const cardLiked = product.likes.some((item) => item === user._id);
 
     return (
         <div className="card">
@@ -29,7 +23,9 @@ const Card = ({ product, userId, changeLikeCard }) => {
             </div>
             <div className="card__sticky card__sticky_right">
                 <button
-                    onClick={changeLike}
+                    onClick={() => {
+                        changeLikeCard(product._id, cardLiked);
+                    }}
                     className={`btn__like ${
                         cardLiked ? 'card__like_active' : 'card__like'
                     }`}

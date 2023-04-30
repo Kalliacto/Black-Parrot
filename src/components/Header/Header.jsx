@@ -5,9 +5,9 @@ import Search from '../Search/Search';
 import HeaderIcons from './HeaderIcons/HeaderIcons';
 import { Link, useLocation } from 'react-router-dom';
 
-export const Header = (props) => {
+export const Header = ({ setSearch, favorites }) => {
     const setSearchQuery = (path) => {
-        props.setSearch(path);
+        setSearch(path);
     };
 
     const location = useLocation();
@@ -27,7 +27,7 @@ export const Header = (props) => {
                     ) : (
                         ''
                     )}
-                    <HeaderIcons />
+                    <HeaderIcons favorites={favorites} />
                 </div>
             </div>
         </header>

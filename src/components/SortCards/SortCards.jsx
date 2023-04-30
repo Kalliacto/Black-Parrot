@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './sortCards.css';
+import { CardContext } from '../../context/cardContext';
 
-const SortCards = ({ onSort }) => {
+const SortCards = () => {
+    const { onSort } = useContext(CardContext);
     const sortItem = [
         { id: 'all', title: 'Все товары' },
         { id: 'popular', title: 'Популярные' },

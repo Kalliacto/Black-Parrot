@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { CardList } from '../../components/CardList/CardList';
 import './catalogProduct.css';
 import { Link, NavLink, Navigate } from 'react-router-dom';
 import SortCards from '../../components/SortCards/SortCards';
+import { CardContext } from '../../context/cardContext';
 
-const CatalogProducts = ({ cards, user, changeLikeCard, search, onSort }) => {
+const CatalogProducts = () => {
+    const { card, search } = useContext(CardContext);
+
     const getEndings = (num) => {
         const res = num % 10;
         if (res === 1) {
@@ -21,24 +24,20 @@ const CatalogProducts = ({ cards, user, changeLikeCard, search, onSort }) => {
             {search ? (
                 <p className="search__info">
                     По запросу <b>{search}</b>
-                    {cards.length === 1 ? ' найден' : ' найдено'}{' '}
-                    <b>{cards.length}</b>
-                    {getEndings(cards.length)}
+                    {card.length === 1 ? ' найден' : ' найдено'}{' '}
+                    <b>{card.length}</b>
+                    {getEndings(card.length)}
                 </p>
             ) : (
                 ''
             )}
-            {search && cards.length === 0 ? (
+            {/* {search && card.length === 0 ? (
                 <Navigate to="/notfoundProduct"></Navigate>
             ) : (
                 ''
-            )}
-            <SortCards onSort={onSort} />
-            <CardList
-                cards={cards}
-                userId={user._id}
-                changeLikeCard={changeLikeCard}
-            />
+            )} */}
+            <SortCards />
+            <CardList cards={card} />
         </>
     );
 };

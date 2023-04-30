@@ -4,8 +4,6 @@ import './notFoundProductPage.css';
 import { Link, NavLink } from 'react-router-dom';
 
 const NotFoundProductPage = ({ search, setSearch }) => {
-    // console.log({ search });
-    // console.log({ setSearch });
     return (
         <>
             <div className="container">
