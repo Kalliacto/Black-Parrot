@@ -129,8 +129,12 @@ function App() {
         search,
         user,
         favorites,
+        setCards,
         changeLikeCard,
         onSort,
+        findFavorite,
+        setFavorite,
+        localStorage,
         localStorageCards,
     };
 
@@ -146,12 +150,7 @@ function App() {
                                 <Route path="/" element={<CatalogProducts />} />
                                 <Route
                                     path="/product/:id"
-                                    element={
-                                        <PageProduct
-                                        // user={user}
-                                        // changeLikeCard={changeLikeCard}
-                                        />
-                                    }
+                                    element={<PageProduct />}
                                 />
                                 <Route
                                     path="/favorite"
