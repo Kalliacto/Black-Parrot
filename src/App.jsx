@@ -137,7 +137,7 @@ function App() {
     return (
         <div className="App">
             <CardContext.Provider value={cardsValue}>
-                <Header setSearch={setSearch} favorites={favorites}></Header>
+                <Header setSearch={setSearch}></Header>
                 <main className="main">
                     {/* <button onClick={() => setAuth(!isAuth)}>Click me now!</button> */}
                     <div className="container">
