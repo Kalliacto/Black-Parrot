@@ -89,7 +89,7 @@ function App() {
 
     const onSort = (sortId) => {
         if (sortId === 'all') {
-            const newCard = localStorageCards.map((elem) => elem);
+            const newCard = localStorageCards;
             setCards([...newCard]);
         }
         if (sortId === 'lowPrice') {
@@ -105,21 +105,21 @@ function App() {
             setCards([...newCards]);
         }
         if (sortId === 'sale') {
-            const newCards = localStorageCards
-                .filter((a) => a.discount)
-                .sort((a, b) => a.discount - b.discount);
+            const newCards = localStorageCards.sort(
+                (a, b) => a.discount - b.discount
+            );
             setCards([...newCards]);
         }
         if (sortId === 'new') {
-            const newCards = localStorageCards.filter((a) =>
-                a.tags.includes('new')
+            const newCards = card.sort(
+                (a, b) => new Date(b.created_at) - new Date(a.created_at)
             );
             setCards([...newCards]);
         }
         if (sortId === 'popular') {
-            const newCards = localStorageCards
-                .filter((a) => a.likes)
-                .sort((a, b) => b.likes.length - a.likes.length);
+            const newCards = localStorageCards.sort(
+                (a, b) => b.likes.length - a.likes.length
+            );
             setCards([...newCards]);
         }
     };
