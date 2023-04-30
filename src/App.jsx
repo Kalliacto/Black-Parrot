@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
-import { api, editLikeCard } from './utils/api';
+import { api, editLikeCard, getOneProduct } from './utils/api';
 import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
 import PageProduct from './pages/PageProduct/PageProduct';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
@@ -11,6 +11,7 @@ import FavoritePage from './pages/FavoritePage/FavoritePage';
 import RouterAuth from './route/RouterAuth/RouterAuth';
 import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
 import { CardContext } from './context/cardContext';
+import FAQ from './pages/FAQ/FAQ';
 
 function App() {
     const localStorage = window.localStorage;
@@ -130,6 +131,7 @@ function App() {
         favorites,
         changeLikeCard,
         onSort,
+        localStorageCards,
     };
 
     return (
@@ -146,11 +148,8 @@ function App() {
                                     path="/product/:id"
                                     element={
                                         <PageProduct
-                                            localStorageCards={
-                                                localStorageCards
-                                            }
-                                            user={user}
-                                            changeLikeCard={changeLikeCard}
+                                        // user={user}
+                                        // changeLikeCard={changeLikeCard}
                                         />
                                     }
                                 />
@@ -167,6 +166,7 @@ function App() {
                                         />
                                     }
                                 />
+                                <Route path="/faq" element={<FAQ />}></Route>
                             </Routes>
                         ) : (
                             <RouterAuth />

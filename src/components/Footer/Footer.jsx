@@ -1,6 +1,7 @@
 import React from 'react';
 import './footer.css';
 import Logo from '../Logo/Logo';
+import { Link } from 'react-router-dom';
 
 const links = [
     { name: 'Каталог', href: '/' },
@@ -11,7 +12,7 @@ const links = [
 
 const linksTwo = [
     { name: 'Оплата и доставка', href: '/' },
-    { name: 'Часто спрашивают', href: '/' },
+    { name: 'Часто спрашивают', href: '/faq' },
     { name: 'Обратная связь', href: '/' },
     { name: 'Контакты', href: '/' },
 ];
@@ -37,7 +38,7 @@ export const Footer = () => {
                                             key={el.name}
                                             className="footer__item"
                                         >
-                                            <a href={el.src}>{el.name}</a>
+                                            <Link to={el.href}>{el.name}</Link>
                                         </li>
                                     );
                                 })}
@@ -49,7 +50,7 @@ export const Footer = () => {
                                             key={el.name}
                                             className="footer__item"
                                         >
-                                            <a href={el.href}>{el.name}</a>
+                                            <Link to={el.href}>{el.name}</Link>
                                         </li>
                                     );
                                 })}

@@ -8,7 +8,7 @@ export const CardList = ({ cards }) => {
             {cards.map((elem) => {
                 return (
                     <>
-                        <Card key={elem._id} {...elem} product={elem} />
+                        <Card key={elem._id.index} {...elem} product={elem} />
                     </>
                 );
             })}
