@@ -4,3 +4,8 @@ main {
     background: url('./24493-orig.jpg');
     padding-top: 40px;
 }
+
+.active {
+    color: orangered;
+    text-decoration: underline;
+}
