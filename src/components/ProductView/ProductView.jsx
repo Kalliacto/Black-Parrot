@@ -5,6 +5,7 @@ import { ReactComponent as Like } from '../Card/img/Like.svg';
 import { CardContext } from '../../context/cardContext';
 import { editLikeCard } from '../../utils/api';
 import { Star, StarFill, StarHalf, Truck, Award } from 'react-bootstrap-icons';
+import ProductPrice from '../ProductPrice/ProductPrice';
 
 const ProductView = ({ productInfo, setProductInfo, id }) => {
     const { card, user, setCards, findFavorite, setFavorite, localStorage } =
@@ -77,32 +78,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                         />
                     </div>
                     <div className="product__inCart_wrapper">
-                        <div className="product__price">
-                            {!!productInfo.discount ? (
-                                <span className="product__old_price">
-                                    {productInfo.price}&nbsp;₽
-                                </span>
-                            ) : (
-                                <span className="product__old_price"></span>
-                            )}
-                            {!!productInfo.discount ? (
-                                <span className="product__price _red">
-                                    {productInfo.price -
-                                        (productInfo.price *
-                                            productInfo.discount) /
-                                            100}{' '}
-                                    ₽
-                                </span>
-                            ) : (
-                                <span className="product__price _black">
-                                    {productInfo.price -
-                                        (productInfo.price *
-                                            productInfo.discount) /
-                                            100}{' '}
-                                    ₽
-                                </span>
-                            )}
-                        </div>
+                        <ProductPrice productInfo={productInfo} />
                         <div className="product__delivery">
                             <Truck width={32} height={32} />
                             <div className="product__text">

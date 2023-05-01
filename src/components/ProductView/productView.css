@@ -44,20 +44,24 @@
     padding: 10px;
     gap: 8px;
 }
-.product__old_price {
+/* .product__old_price {
+    font-size: 20px;
     text-decoration-line: line-through;
 }
 .product__price {
+    display: flex;
+    flex-direction: column;
     font-weight: bold;
     font-size: 28px;
     line-height: 32px;
+    margin-bottom: 5px;
 }
 ._red {
     color: red;
 }
 ._black {
     color: black;
-}
+} */
 .product__delivery,
 .product__quality {
     background: rgba(236, 239, 241, 0.5);
