@@ -4,6 +4,7 @@ import GoBack from '../GoBack/GoBack';
 import { ReactComponent as Like } from '../Card/img/Like.svg';
 import { CardContext } from '../../context/cardContext';
 import { editLikeCard } from '../../utils/api';
+import { Star, StarFill, StarHalf, Truck, Award } from 'react-bootstrap-icons';
 
 const ProductView = ({ productInfo, setProductInfo, id }) => {
     const { card, user, setCards, findFavorite, setFavorite, localStorage } =
@@ -42,31 +43,65 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                         <span>Rate</span>
                     </div>
                 </div>
-                <div className="product__img_wrapper">
-                    <div className="card__sticky card__sticky_left">
-                        {productInfo.discount ? (
-                            <span className="card__discount">
-                                -{productInfo.discount}%
-                            </span>
-                        ) : (
-                            ''
-                        )}
+                <div className="product__content_wrapper">
+                    <div className="product__img_wrapper">
+                        <div className="card__sticky card__sticky_left">
+                            {productInfo.discount ? (
+                                <span className="card__discount">
+                                    -{productInfo.discount}%
+                                </span>
+                            ) : (
+                                ''
+                            )}
+                        </div>
+                        <div className="card__sticky card__sticky_right">
+                            <button
+                                onClick={() =>
+                                    changeLikeCardOne(id, cardIsLiked)
+                                }
+                                className={`btn__like ${
+                                    cardIsLiked
+                                        ? 'card__like_active'
+                                        : 'card__like'
+                                }`}
+                            >
+                                <Like />
+                            </button>
+                        </div>
+                        <img
+                            className="product__img"
+                            src={productInfo.pictures}
+                            alt=""
+                        />
                     </div>
-                    <div className="card__sticky card__sticky_right">
-                        <button
-                            onClick={() => changeLikeCardOne(id, cardIsLiked)}
-                            className={`btn__like ${
-                                cardIsLiked ? 'card__like_active' : 'card__like'
-                            }`}
-                        >
-                            <Like />
-                        </button>
+                    <div className="product__inCart_wrapper">
+                        <h3>{productInfo.price}</h3>
+                        <div className="product__delivery">
+                            <Truck width={32} height={32} />
+                            <div className="product__text">
+                                <h4>Доставка по всему Миру!</h4>
+                                <p>
+                                    Доставка курьером — <b>от 399 ₽</b>
+                                </p>
+                                <p>
+                                    Доставка в пункт выдачи — <b>от 199 ₽</b>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="product__quality">
+                            <Award width={52} height={52} />
+                            <div className="product__text">
+                                <h4>Гарантия качества</h4>
+                                <p>
+                                    Если Вам не понравилось качество нашей
+                                    продукции, мы вернем деньги, либо сделаем
+                                    все возможное, чтобы удовлетворить ваши
+                                    нужды.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <img
-                        className="product__img"
-                        src={productInfo.pictures}
-                        alt=""
-                    />
                 </div>
                 <div className="product__description">
                     <span className="product__description_price">
