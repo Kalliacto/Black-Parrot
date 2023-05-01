@@ -28,7 +28,7 @@
     gap: 30px;
 }
 .product__img_wrapper {
-    width: 50%;
+    min-width: 400px;
     padding: 20px;
     flex: 1;
     margin-bottom: 30px;
@@ -44,6 +44,20 @@
     padding: 10px;
     gap: 8px;
 }
+.product__old_price {
+    text-decoration-line: line-through;
+}
+.product__price {
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 32px;
+}
+._red {
+    color: red;
+}
+._black {
+    color: black;
+}
 .product__delivery,
 .product__quality {
     background: rgba(236, 239, 241, 0.5);
@@ -56,12 +70,12 @@
 .product__text {
     display: flex;
     flex-direction: column;
-
     gap: 10px;
 }
 
 .product__img {
-    max-width: 488px;
+    max-width: 100%;
+    height: auto;
 }
 
 .product__description {

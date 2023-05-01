@@ -32,6 +32,8 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
         setFavorite(newFavorite);
     };
 
+    console.log();
+
     return (
         <>
             <div className="product__wrapper">
@@ -75,7 +77,32 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                         />
                     </div>
                     <div className="product__inCart_wrapper">
-                        <h3>{productInfo.price}</h3>
+                        <div className="product__price">
+                            {!!productInfo.discount ? (
+                                <span className="product__old_price">
+                                    {productInfo.price}&nbsp;₽
+                                </span>
+                            ) : (
+                                <span className="product__old_price"></span>
+                            )}
+                            {!!productInfo.discount ? (
+                                <span className="product__price _red">
+                                    {productInfo.price -
+                                        (productInfo.price *
+                                            productInfo.discount) /
+                                            100}{' '}
+                                    ₽
+                                </span>
+                            ) : (
+                                <span className="product__price _black">
+                                    {productInfo.price -
+                                        (productInfo.price *
+                                            productInfo.discount) /
+                                            100}{' '}
+                                    ₽
+                                </span>
+                            )}
+                        </div>
                         <div className="product__delivery">
                             <Truck width={32} height={32} />
                             <div className="product__text">
@@ -88,7 +115,6 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                                 </p>
                             </div>
                         </div>
-
                         <div className="product__quality">
                             <Award width={52} height={52} />
                             <div className="product__text">
@@ -104,9 +130,9 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     </div>
                 </div>
                 <div className="product__description">
-                    <span className="product__description_price">
+                    {/* <span className="product__description_price">
                         {productInfo.price}&nbsp;₽
-                    </span>
+                    </span> */}
                 </div>
                 <div className="product__description">
                     <span className="product__description_title">Описание</span>
