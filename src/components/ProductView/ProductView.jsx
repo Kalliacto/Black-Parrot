@@ -33,8 +33,6 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
         setFavorite(newFavorite);
     };
 
-    console.log();
-
     return (
         <>
             <div className="product__wrapper">
@@ -79,6 +77,14 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     </div>
                     <div className="product__inCart_wrapper">
                         <ProductPrice productInfo={productInfo} />
+                        <div className="product__inCart_btns">
+                            <div className="product__counter_btns">
+                                <p className="btn_minus">-</p>
+                                <span>0</span>
+                                <p className="btn_plus">+</p>
+                            </div>
+                            <button className="btn_basket">В корзину</button>
+                        </div>
                         <div className="product__delivery">
                             <Truck width={32} height={32} />
                             <div className="product__text">
@@ -92,7 +98,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                             </div>
                         </div>
                         <div className="product__quality">
-                            <Award width={52} height={52} />
+                            <Award className="award" />
                             <div className="product__text">
                                 <h4>Гарантия качества</h4>
                                 <p>
@@ -104,11 +110,6 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="product__description">
-                    {/* <span className="product__description_price">
-                        {productInfo.price}&nbsp;₽
-                    </span> */}
                 </div>
                 <div className="product__description">
                     <span className="product__description_title">Описание</span>
