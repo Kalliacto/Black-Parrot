@@ -3,6 +3,7 @@ import './card.css';
 import { ReactComponent as Like } from './img/Like.svg';
 import { Link } from 'react-router-dom';
 import { CardContext } from '../../context/cardContext';
+import ProductPrice from '../ProductPrice/ProductPrice';
 
 const Card = ({ product }) => {
     const { user, changeLikeCard } = useContext(CardContext);
@@ -42,7 +43,7 @@ const Card = ({ product }) => {
                     />
                 </div>
                 <div className="card__description">
-                    <span className="card__price">{product.price} ₽</span>
+                    <ProductPrice productInfo={product} />
                     <span className="card__weight">{product.wight}</span>
                     <p className="card__text">{product.name}</p>
                 </div>
