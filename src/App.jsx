@@ -124,6 +124,14 @@ function App() {
         }
     };
 
+    const productRating = (product) => {
+        if (!product.reviews || !product.reviews.length) {
+            return 0;
+        }
+        const res = product.reviews.reduce((acc, el) => (acc += el.rating), 0);
+        return Math.round(res / product.reviews.length);
+    };
+
     const cardsValue = {
         card,
         search,
@@ -134,6 +142,7 @@ function App() {
         onSort,
         findFavorite,
         setFavorite,
+        productRating,
         localStorage,
         localStorageCards,
     };

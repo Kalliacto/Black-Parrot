@@ -23,6 +23,11 @@
     line-height: 32px;
     margin-bottom: 4px;
 }
+.product__rating {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
 .product__content_wrapper {
     display: flex;
     gap: 30px;
