@@ -1,20 +1,20 @@
 import React from 'react';
 import './footer.css';
 import Logo from '../Logo/Logo';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const links = [
     { name: 'Каталог', href: '/' },
-    { name: 'Акции', href: '/' },
-    { name: 'Новости', href: '/' },
-    { name: 'Отзывы', href: '/' },
+    { name: 'Акции', href: '/stocks' },
+    { name: 'Новости', href: '/news' },
+    { name: 'Отзывы', href: '/reviews' },
 ];
 
 const linksTwo = [
-    { name: 'Оплата и доставка', href: '/' },
+    { name: 'Оплата и доставка', href: '/delivery' },
     { name: 'Часто спрашивают', href: '/faq' },
-    { name: 'Обратная связь', href: '/' },
-    { name: 'Контакты', href: '/' },
+    { name: 'Обратная связь', href: '/feedback' },
+    { name: 'Контакты', href: '/contacts' },
 ];
 
 export const Footer = () => {
@@ -38,7 +38,9 @@ export const Footer = () => {
                                             key={el.name}
                                             className="footer__item"
                                         >
-                                            <Link to={el.href}>{el.name}</Link>
+                                            <NavLink to={el.href}>
+                                                {el.name}
+                                            </NavLink>
                                         </li>
                                     );
                                 })}
@@ -50,7 +52,9 @@ export const Footer = () => {
                                             key={el.name}
                                             className="footer__item"
                                         >
-                                            <Link to={el.href}>{el.name}</Link>
+                                            <NavLink to={el.href}>
+                                                {el.name}
+                                            </NavLink>
                                         </li>
                                     );
                                 })}
