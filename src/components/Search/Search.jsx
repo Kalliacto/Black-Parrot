@@ -1,5 +1,4 @@
 import React from 'react';
-// import './search.css';
 import s from './search.module.css';
 
 const Search = ({ setSearch }) => {
@@ -10,7 +9,6 @@ const Search = ({ setSearch }) => {
                 placeholder="Поиск..."
                 onChange={(e) => setSearch(e.target.value)}
             />
-            {/* <i class="fas fa-search" className={s.search__icon}></i> */}
         </div>
     );
 };

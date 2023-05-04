@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { CardList } from '../../components/CardList/CardList';
 import './catalogProduct.css';
-import { Link, NavLink, Navigate } from 'react-router-dom';
 import SortCards from '../../components/SortCards/SortCards';
 import { CardContext } from '../../context/cardContext';
 
@@ -31,11 +30,6 @@ const CatalogProducts = () => {
             ) : (
                 ''
             )}
-            {/* {search && card.length === 0 ? (
-                <Navigate to="/notfoundProduct"></Navigate>
-            ) : (
-                ''
-            )} */}
             <SortCards />
             <CardList cards={card} />
         </>

@@ -2,7 +2,7 @@ import React from 'react';
 import './goBack.css';
 import { useNavigate } from 'react-router-dom';
 
-const GoBack = (props) => {
+const GoBack = () => {
     const nav = useNavigate();
 
     const goBack = () => {
