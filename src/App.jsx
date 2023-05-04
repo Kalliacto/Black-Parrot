@@ -58,8 +58,8 @@ function App() {
     };
 
     useEffect(() => {
-        Promise.all([api.getUserInfo(), api.getAllProducts()]).then(
-            ([data, res]) => {
+        Promise.all([api.getUserInfo(), api.getAllProducts()])
+            .then(([data, res]) => {
                 setUser(data);
                 const filtered = myCards(res.products);
                 setCards(filtered);
@@ -69,8 +69,8 @@ function App() {
                     findFavorite(item, data._id)
                 );
                 setFavorite(MyFavorite);
-            }
-        );
+            })
+            .catch((error) => console.log(error));
     }, []);
 
     const onSort = (sortId) => {
