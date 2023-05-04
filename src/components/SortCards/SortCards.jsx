@@ -10,7 +10,6 @@ const SortCards = () => {
         { id: 'new', title: 'Новинки' },
         { id: 'lowPrice', title: 'Сначала дешёвые' },
         { id: 'highPrice', title: 'Сначала дорогие' },
-        // { id: 'rate', title: 'По рейтингу' } запланировано на будущее, рэйтинг не проходили еще  ,
         { id: 'sale', title: 'По скидке' },
     ];
     return (

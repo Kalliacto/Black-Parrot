@@ -17,8 +17,6 @@ const NotFoundProductPage = ({ search, setSearch }) => {
                         Простите, товары по вашему запросу не найдены.
                     </h2>
                     <Link to={'/'}>
-                        {/* Вот здесь вопрос: не перекидывает на главную потомцу что не принят и не обнулен search? */}
-                        {/* Как обнулить значение в инпуте ??? */}
                         <button
                             className="notFoundProductPage__btn"
                             onClick={() => {
