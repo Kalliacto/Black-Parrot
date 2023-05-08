@@ -1,5 +1,5 @@
 # Учебный проект интернет магазина ParrotFood находится здесь:
-- https://zingy-faun-b02097.netlify.app
+- https://exquisite-yeot-508d4a.netlify.app/
 
 
 ## Реализован следующий функционал:
