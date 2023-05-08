@@ -11,28 +11,38 @@
 .faq__title {
     margin-bottom: 28px;
 }
-.faq__subtitle {
-    width: fit-content;
-    font-weight: 800;
-    line-height: 125%;
-    color: #1a1a1a;
+
+.faq__accordion {
     display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.faq__accordion_item {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.faq__accordion_title {
+    display: flex;
+    gap: 15px;
     align-items: center;
-    margin-bottom: 26px;
-    transition: all 0.2s;
 }
-.faq__span {
-    display: inline-block;
-    margin-right: 10px;
-    font-size: 20px;
-}
-
-.faq__subtitle:hover {
+.faq__accordion_title:hover {
     cursor: pointer;
-    color: orange;
+    color: #ffe44d;
 }
 
-.faq__info {
-    display: block;
-    padding-left: 40px;
+.faq__accordion_content {
+    overflow: hidden;
+    max-height: 0;
+    transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+}
+
+.faq__accordion_content.show {
+    height: auto;
+    max-height: 999px;
+    transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+    padding-left: 20px;
 }
