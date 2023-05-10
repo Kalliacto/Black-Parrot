@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
@@ -28,34 +28,12 @@ function App() {
         );
     };
 
-    const changeLikeCard = async (product, cardLiked) => {
-        const updateLikeInCard = await editLikeCard(product, cardLiked).catch(
-            (error) => console.log(error)
-        );
-
-        const newCard = card.map((item) =>
-            item._id === updateLikeInCard._id ? updateLikeInCard : item
-        );
-
-        setCards([...newCard]);
-        localStorage.setItem('card', JSON.stringify(newCard));
-
-        const newFavorite = newCard.filter((item) =>
-            findFavorite(item, user._id)
-        );
-        setFavorite(newFavorite);
-    };
-
     useEffect(() => {
         if (search === undefined) return;
         api.searchProducts(search)
             .then((data) => setCards(myCards(data)))
             .catch((error) => console.log(error));
     }, [search]);
-
-    const findFavorite = (card, id) => {
-        return card.likes.some((i) => i == id);
-    };
 
     useEffect(() => {
         Promise.all([api.getUserInfo(), api.getAllProducts()])
@@ -73,7 +51,29 @@ function App() {
             .catch((error) => console.log(error));
     }, []);
 
-    const onSort = (sortId) => {
+    const changeLikeCard = useCallback(async (product, cardLiked) => {
+        const updateLikeInCard = await editLikeCard(product, cardLiked).catch(
+            (error) => console.log(error)
+        );
+
+        const newCard = card.map((item) =>
+            item._id === updateLikeInCard._id ? updateLikeInCard : item
+        );
+
+        setCards([...newCard]);
+        localStorage.setItem('card', JSON.stringify(newCard));
+
+        const newFavorite = newCard.filter((item) =>
+            findFavorite(item, user._id)
+        );
+        setFavorite(newFavorite);
+    }, []);
+
+    const findFavorite = useCallback((card, id) => {
+        return card.likes.some((i) => i == id);
+    }, []);
+
+    const onSort = useCallback((sortId) => {
         if (sortId === 'all') {
             const newCard = localStorageCards;
             setCards([...newCard]);
@@ -108,15 +108,15 @@ function App() {
             );
             setCards([...newCards]);
         }
-    };
+    }, []);
 
-    const productRating = (product) => {
+    const productRating = useCallback((product) => {
         if (!product.reviews || !product.reviews.length) {
             return 0;
         }
         const res = product.reviews.reduce((acc, el) => (acc += el.rating), 0);
         return Math.round(res / product.reviews.length);
-    };
+    }, []);
 
     const cardsValue = {
         card,
