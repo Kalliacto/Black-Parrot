@@ -17,7 +17,7 @@ const linksTwo = [
     { name: 'Контакты', href: '/contacts' },
 ];
 
-export const Footer = () => {
+export const Footer = React.memo(() => {
     return (
         <>
             <footer className="footer">
@@ -91,4 +91,4 @@ export const Footer = () => {
             </footer>
         </>
     );
-};
+});

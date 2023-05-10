@@ -18,8 +18,10 @@ const Card = ({ product }) => {
                 ) : (
                     ''
                 )}
-                {product.tags.map((item) => (
-                    <span className={`tag tag_type_${item}`}>{item}</span>
+                {product.tags.map((item, index) => (
+                    <span className={`tag tag_type_${item}`} key={index}>
+                        {item}
+                    </span>
                 ))}
             </div>
             <div className="card__sticky card__sticky_right">

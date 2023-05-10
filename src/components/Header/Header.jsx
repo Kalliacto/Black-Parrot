@@ -5,7 +5,7 @@ import Search from '../Search/Search';
 import HeaderIcons from './HeaderIcons/HeaderIcons';
 import { Link, useLocation } from 'react-router-dom';
 
-export const Header = ({ setSearch }) => {
+export const Header = React.memo(({ setSearch }) => {
     const setSearchQuery = (path) => {
         setSearch(path);
     };
@@ -32,4 +32,4 @@ export const Header = ({ setSearch }) => {
             </div>
         </header>
     );
-};
+});
