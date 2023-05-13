@@ -28,6 +28,7 @@
     align-items: center;
     gap: 20px;
 }
+
 .product__content_wrapper {
     display: flex;
     gap: 30px;
@@ -65,16 +66,14 @@
     border-radius: 100px;
     padding: 16px;
 }
-.btn_minus {
-}
-.btn_plus {
-}
+
 .btn_basket {
     font-weight: 700;
     line-height: 125%;
     padding: 14px 50px;
     background: #ffe44d;
     border-radius: 55px;
+    border: none;
 }
 .product__delivery,
 .product__quality {

@@ -8,15 +8,14 @@ import { CardContext } from '../../../context/cardContext';
 
 const HeaderIcons = () => {
     const { favorites } = useContext(CardContext);
+
     return (
-        <div className="header__icons">
+        <div className='header__icons'>
             <div>
-                <Link className="header__heart" to={'/favorite'}>
+                <Link className='header__heart' to={'/favorite'}>
                     <Heart />
                     {favorites.length !== 0 ? (
-                        <span className="header__icons_bubble">
-                            {favorites.length}
-                        </span>
+                        <span className='header__icons_bubble'>{favorites.length}</span>
                     ) : (
                         ''
                     )}
