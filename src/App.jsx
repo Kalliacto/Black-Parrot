@@ -118,7 +118,6 @@ function App() {
         <div className='App'>
             <CardContext.Provider value={cardsValue}>
                 <Header setSearch={setSearch}></Header>
-                {/* <Modal /> */}
                 <main className='main'>
                     <div className='container'>
                         <Routes>
