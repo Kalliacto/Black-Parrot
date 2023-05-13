@@ -8,17 +8,20 @@ import PageProduct from './pages/PageProduct/PageProduct';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import { Route, Routes } from 'react-router-dom';
 import FavoritePage from './pages/FavoritePage/FavoritePage';
-import RouterAuth from './route/RouterAuth/RouterAuth';
 import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
 import { CardContext } from './context/cardContext';
 import FAQ from './pages/FAQ/FAQ';
+import Modal from './components/Modal/Modal';
+import RegistrationForm from './components/Forms/RegistrationForm/RegistrationForm';
+import AuthorizationForm from './components/Forms/AuthorizationForm/AuthorizationForm';
+import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/PasswordRecoveryForm';
 
 function App() {
     const [card, setCards] = useState([]);
     const [search, setSearch] = useState(undefined);
     const [user, setUser] = useState({});
-    const [isAuth, setAuth] = useState(true);
     const [favorites, setFavorite] = useState([]);
+    const [activeModal, setActiveModal] = useState(true);
 
     const myCards = (card) => {
         return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
@@ -107,6 +110,8 @@ function App() {
         findFavorite,
         setFavorite,
         productRating,
+        activeModal,
+        setActiveModal,
     };
 
     return (
@@ -115,21 +120,29 @@ function App() {
                 <Header setSearch={setSearch}></Header>
                 <main className='main'>
                     <div className='container'>
-                        {isAuth ? (
-                            <Routes>
-                                <Route path='/' element={<CatalogProducts />} />
-                                <Route path='/product/:id' element={<PageProduct />} />
-                                <Route path='/favorite' element={<FavoritePage />} />
-                                <Route path='*' element={<NotFoundPage />} />
-                                <Route
-                                    path='/notfoundProduct'
-                                    element={<NotFoundProductPage setSearch={setSearch} />}
-                                />
-                                <Route path='/faq' element={<FAQ />}></Route>
-                            </Routes>
-                        ) : (
-                            <RouterAuth />
-                        )}
+                        <Routes>
+                            <Route path='/' element={<CatalogProducts />} />
+                            <Route path='/product/:id' element={<PageProduct />} />
+                            <Route path='/favorite' element={<FavoritePage />} />
+                            <Route path='*' element={<NotFoundPage />} />
+                            <Route
+                                path='/notfoundProduct'
+                                element={<NotFoundProductPage setSearch={setSearch} />}
+                            />
+                            <Route path='/faq' element={<FAQ />}></Route>
+                            <Route
+                                path='/register'
+                                element={<Modal children={<RegistrationForm />} />}
+                            ></Route>
+                            <Route
+                                path='/auth'
+                                element={<Modal children={<AuthorizationForm />} />}
+                            ></Route>
+                            <Route
+                                path='/newPass'
+                                element={<Modal children={<PasswordRecoveryForm />} />}
+                            ></Route>
+                        </Routes>
                     </div>
                 </main>
                 <Footer />
