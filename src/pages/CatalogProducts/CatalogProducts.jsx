@@ -21,10 +21,9 @@ const CatalogProducts = () => {
     return (
         <>
             {search ? (
-                <p className="search__info">
+                <p className='search__info'>
                     По запросу <b>{search}</b>
-                    {card.length === 1 ? ' найден' : ' найдено'}{' '}
-                    <b>{card.length}</b>
+                    {card.length === 1 ? ' найден' : ' найдено'} <b>{card.length}</b>
                     {getEndings(card.length)}
                 </p>
             ) : (
