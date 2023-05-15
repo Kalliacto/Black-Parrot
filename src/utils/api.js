@@ -48,6 +48,32 @@ class Api {
             headers: this.headers,
         }).then(onResponse);
     }
+
+    getAllReviews() {
+        return fetch(`${this.baseUrl}/products/review`, {
+            headers: this.headers,
+        }).then(onResponse);
+    }
+
+    getProductAllReviews(id) {
+        return fetch(`${this.baseUrl}/products/review/${id}`, {
+            headers: this.headers,
+        }).then(onResponse);
+    }
+
+    addNewReview(id) {
+        return fetch(`${this.baseUrl}/products/review/${id}`, {
+            method: 'POST',
+            headers: this.headers,
+        }).then(onResponse);
+    }
+
+    deleteProductReview(productId, reviewId) {
+        return fetch(`${this.baseUrl}/products/review/${productId}/${reviewId}`, {
+            method: 'DELETE',
+            headers: this.headers,
+        }).then(onResponse);
+    }
 }
 
 export const api = new Api(config);
