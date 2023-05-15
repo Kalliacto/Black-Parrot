@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import './productReviews.css';
 import { timeOptions } from '../../utils/utils';
 import Rate from '../Rate/Rate';
+import { useForm } from 'react-hook-form';
+import { api } from '../../utils/api';
 
 const ProductReviews = ({ productInfo }) => {
     const [formActive, setFormActive] = useState(false);
+    const { register, handleSubmit, reset } = useForm({});
 
-    const submitReview = () => {
-        console.log('click');
+    const submitReview = async (review) => {
+        return await api
+            .addNewReview(productInfo._id, review)
+            .then(reset())
+            .catch((error) => console.log(error));
     };
+
     console.log({ productInfo });
     return (
         <div className='product__reviews'>
@@ -17,13 +24,14 @@ const ProductReviews = ({ productInfo }) => {
                 Написать отзыв
             </button>
             {formActive && (
-                <form className='form__reviews' onSubmit={submitReview}>
+                <form className='form__reviews' onSubmit={handleSubmit(submitReview)}>
                     Rate Component
                     <textarea
-                        name='reviews'
                         type='text'
+                        {...register('text')}
                         placeholder='Ваш отзыв'
                         className='form__reviews_input'
+                        rows={3}
                     />
                     <button type='submit' className='reviews_btn'>
                         Отправить

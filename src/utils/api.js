@@ -61,10 +61,11 @@ class Api {
         }).then(onResponse);
     }
 
-    addNewReview(id) {
+    addNewReview(id, body) {
         return fetch(`${this.baseUrl}/products/review/${id}`, {
             method: 'POST',
             headers: this.headers,
+            body: JSON.stringify(body),
         }).then(onResponse);
     }
 
