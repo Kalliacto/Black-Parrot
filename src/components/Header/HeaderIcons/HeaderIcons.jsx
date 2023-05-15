@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { CardContext } from '../../../context/cardContext';
 
 const HeaderIcons = () => {
-    const { favorites } = useContext(CardContext);
+    const { favorites, setActiveModal } = useContext(CardContext);
 
     return (
         <div className='header__icons'>
@@ -27,7 +27,7 @@ const HeaderIcons = () => {
                 </Link>
             </div>
             <div title='Профиль'>
-                <Link>
+                <Link to={'/auth'} onClick={() => setActiveModal(true)}>
                     <Dog />
                 </Link>
             </div>

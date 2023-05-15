@@ -14,7 +14,11 @@ const PageProduct = () => {
 
     return (
         <>
-            <ProductView productInfo={productInfo} setProductInfo={setProductInfo} id={id} />
+            {!!Object.keys(productInfo).length ? (
+                <ProductView productInfo={productInfo} setProductInfo={setProductInfo} id={id} />
+            ) : (
+                <div>Loading....</div>
+            )}
         </>
     );
 };

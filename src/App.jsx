@@ -15,6 +15,7 @@ import Modal from './components/Modal/Modal';
 import RegistrationForm from './components/Forms/RegistrationForm/RegistrationForm';
 import AuthorizationForm from './components/Forms/AuthorizationForm/AuthorizationForm';
 import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/PasswordRecoveryForm';
+import { productRating } from './utils/utils';
 
 function App() {
     const [card, setCards] = useState([]);
@@ -24,7 +25,11 @@ function App() {
     const [activeModal, setActiveModal] = useState(true);
 
     const myCards = (card) => {
-        return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
+        return card.filter(
+            (item) =>
+                item.author._id === '643fb8243291d790b3f3b309' ||
+                item.author._id === '622bd81b06c7d323b8ae4614'
+        );
     };
 
     useEffect(() => {
@@ -89,14 +94,6 @@ function App() {
             default:
                 return setCards((state) => [...state.sort((a, b) => a.price - b.price)]);
         }
-    };
-
-    const productRating = (product) => {
-        if (!product.reviews || !product.reviews.length) {
-            return 0;
-        }
-        const res = product.reviews.reduce((acc, el) => (acc += el.rating), 0);
-        return Math.round(res / product.reviews.length);
     };
 
     const cardsValue = {

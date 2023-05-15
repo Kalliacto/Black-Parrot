@@ -4,8 +4,11 @@ import GoBack from '../GoBack/GoBack';
 import { ReactComponent as Like } from '../Card/img/Like.svg';
 import { CardContext } from '../../context/cardContext';
 import { api } from '../../utils/api';
-import { Star, StarFill, Truck, Award } from 'react-bootstrap-icons';
+import { Truck, Award } from 'react-bootstrap-icons';
 import ProductPrice from '../ProductPrice/ProductPrice';
+import ProductReviews from '../ProductReviews/ProductReviews';
+import { getEndings } from '../../utils/utils';
+import Rate from '../Rate/Rate';
 
 const ProductView = ({ productInfo, setProductInfo, id }) => {
     const { card, user, setCards, findFavorite, setFavorite, productRating } =
@@ -29,12 +32,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
     };
 
     const rating = productRating(productInfo);
-    const starsRate = [];
-    for (let i = 0; i < 5; i++) {
-        i < rating
-            ? starsRate.push(<StarFill key={i} fill='#ffe44d' stroke='#f23e16' />)
-            : starsRate.push(<Star key={i} />);
-    }
+
     return (
         <>
             <div className='product__wrapper'>
@@ -43,7 +41,11 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     <h3 className='product__title'>{productInfo.name}</h3>
                     <div className='product__rating'>
                         <span>Artikul</span>
-                        <span>{[...starsRate]}</span>
+                        <Rate rate={rating} />
+                        <span>
+                            {productInfo.reviews?.length}{' '}
+                            {getEndings(productInfo.reviews?.length, 'Отзыв')}
+                        </span>
                     </div>
                 </div>
                 <div className='product__content_wrapper'>
@@ -106,6 +108,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     <span className='product__description_title'>Описание</span>
                     <span>{productInfo.description}</span>
                 </div>
+                <ProductReviews productInfo={productInfo} />
             </div>
         </>
     );

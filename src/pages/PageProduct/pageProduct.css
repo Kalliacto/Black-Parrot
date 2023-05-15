@@ -1,4 +1,4 @@
-.product__wrapper {
+/* .product__wrapper {
     display: flex;
     flex-direction: column;
     margin: 50px 0;
@@ -38,11 +38,6 @@
     max-width: 488px;
 }
 
-.product__description {
-    max-width: 400px;
-    flex-shrink: 0;
-}
-
 .product__description_price,
 .product__description_title {
     font-size: 28px;
@@ -50,4 +45,4 @@
     font-weight: 800;
     display: block;
     margin-bottom: 24px;
-}
+} */

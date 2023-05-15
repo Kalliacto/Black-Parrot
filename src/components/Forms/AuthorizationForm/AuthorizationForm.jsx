@@ -9,7 +9,9 @@ const AuthorizationForm = (props) => {
             <form className='form__container'>
                 <input type='email' placeholder='Email' className='form__input' />
                 <input type='password' placeholder='Пароль' className='form__input' />
-                <p className='form__info form__info-right'>Восстановить пароль</p>
+                <Link to='/newPass' className='form__info-right'>
+                    <p className='form__info'>Восстановить пароль</p>
+                </Link>
                 <button type='submit' className='form__btn form__btn-basic'>
                     Войти
                 </button>
