@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Star, StarFill } from 'react-bootstrap-icons';
 
-const Rate = ({ rate }) => {
+const Rate = memo(({ rate }) => {
     return (
         <span>
             {new Array(5)
@@ -9,6 +9,6 @@ const Rate = ({ rate }) => {
                 .fill(<StarFill stroke='currentColor' fill='#ffe44d' />, 0, rate)}
         </span>
     );
-};
+});
 
 export default Rate;

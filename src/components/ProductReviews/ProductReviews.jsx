@@ -7,20 +7,15 @@ import { api } from '../../utils/api';
 import { CardContext } from '../../context/cardContext';
 import { Trash3 } from 'react-bootstrap-icons';
 
-const ProductReviews = memo(({ productInfo }) => {
+const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
     const [formActive, setFormActive] = useState(false);
     const { register, handleSubmit, reset } = useForm({});
-    const [allReviews, setAllReviews] = useState([]);
     const { user } = useContext(CardContext);
-
-    useEffect(() => {
-        api.getProductAllReviews(productInfo._id).then((data) => setAllReviews(data));
-    }, [allReviews]);
 
     const submitReview = async (review) => {
         return await api
             .addNewReview(productInfo._id, review)
-            .then((review) => setAllReviews((state) => [...state, review]))
+            .then((product) => setAllReviews(product.reviews))
             .then(reset())
             .catch((error) => console.log(error));
     };
@@ -44,7 +39,6 @@ const ProductReviews = memo(({ productInfo }) => {
             </button>
             {formActive && (
                 <form className='form__reviews' onSubmit={handleSubmit(submitReview)}>
-                    Rate Component
                     <textarea
                         type='text'
                         {...register('text')}
@@ -55,8 +49,10 @@ const ProductReviews = memo(({ productInfo }) => {
                     <input
                         type='number'
                         {...register('rating')}
-                        placeholder='Ваша оценка от 0 до 5'
+                        placeholder='Ваша оценка от 1 до 5'
                         className='form__reviews_input'
+                        min={1}
+                        max={5}
                     />
                     <button type='submit' className='reviews_btn'>
                         Отправить

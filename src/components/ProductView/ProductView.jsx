@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './productView.css';
 import GoBack from '../GoBack/GoBack';
 import { ReactComponent as Like } from '../Card/img/Like.svg';
@@ -13,7 +13,7 @@ import Rate from '../Rate/Rate';
 const ProductView = ({ productInfo, setProductInfo, id }) => {
     const { card, user, setCards, findFavorite, setFavorite, productRating } =
         useContext(CardContext);
-
+    const [allReviews, setAllReviews] = useState([]);
     const cardIsLiked = productInfo.likes ? productInfo.likes.includes(user._id) : false;
 
     const changeLikeCardOne = async (id, cardIsLiked) => {
@@ -31,7 +31,9 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
         setFavorite(newFavorite);
     };
 
-    const rating = productRating(productInfo);
+    useEffect(() => {
+        api.getProductAllReviews(productInfo._id).then((data) => setAllReviews(data));
+    }, [productInfo._id]);
 
     return (
         <>
@@ -41,10 +43,9 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     <h3 className='product__title'>{productInfo.name}</h3>
                     <div className='product__rating'>
                         <span>Artikul</span>
-                        <Rate rate={rating} />
+                        <Rate rate={productRating(allReviews)} />
                         <span>
-                            {productInfo.reviews?.length}{' '}
-                            {getEndings(productInfo.reviews?.length, 'Отзыв')}
+                            {allReviews?.length} {getEndings(allReviews?.length, 'Отзыв')}
                         </span>
                     </div>
                 </div>
@@ -108,7 +109,11 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     <span className='product__description_title'>Описание</span>
                     <span>{productInfo.description}</span>
                 </div>
-                <ProductReviews productInfo={productInfo} />
+                <ProductReviews
+                    productInfo={productInfo}
+                    allReviews={allReviews}
+                    setAllReviews={setAllReviews}
+                />
             </div>
         </>
     );

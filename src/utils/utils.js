@@ -9,12 +9,12 @@ export const getEndings = (num, word) => {
     }
 };
 
-export const productRating = (product) => {
-    if (!product.reviews || !product.reviews.length) {
+export const productRating = (reviews) => {
+    if (!reviews || !reviews.length) {
         return 0;
     }
-    const res = product.reviews.reduce((acc, el) => (acc += el.rating), 0);
-    return Math.round(res / product.reviews.length);
+    const res = reviews.reduce((acc, el) => (acc += el.rating), 0);
+    return Math.round(res / reviews.length);
 };
 
 export const timeOptions = {
