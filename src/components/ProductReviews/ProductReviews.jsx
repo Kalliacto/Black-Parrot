@@ -15,7 +15,7 @@ const ProductReviews = memo(({ productInfo }) => {
 
     useEffect(() => {
         api.getProductAllReviews(productInfo._id).then((data) => setAllReviews(data));
-    }, []);
+    }, [allReviews]);
 
     const submitReview = async (review) => {
         return await api
@@ -77,7 +77,7 @@ const ProductReviews = memo(({ productInfo }) => {
                                 <Rate rate={item.rating} />
                             </div>
                             <div className='reviews__text-wrap'>
-                                <div className='reviews__text'>{item.text}</div>
+                                <div className='reviews__text'>{item?.text}</div>
                                 {user._id === item.author._id ? (
                                     <Trash3
                                         className='reviews__trash'
