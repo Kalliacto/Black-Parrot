@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './productReviews.css';
 import { timeOptions } from '../../utils/utils';
-import { Star, StarFill } from 'react-bootstrap-icons';
+import Rate from '../Rate/Rate';
 
 const ProductReviews = ({ productInfo }) => {
     const [formActive, setFormActive] = useState(false);
@@ -9,7 +9,7 @@ const ProductReviews = ({ productInfo }) => {
     const submitReview = () => {
         console.log('click');
     };
-
+    console.log({ productInfo });
     return (
         <div className='product__reviews'>
             <h2 className='product__reviews_title'>Отзывы</h2>
@@ -31,11 +31,7 @@ const ProductReviews = ({ productInfo }) => {
                 </form>
             )}
             <div className='reviews__list'>
-                {console.log(productInfo.reviews)}
                 {productInfo.reviews.map((item) => {
-                    {
-                        console.log(item.author.rating);
-                    }
                     return (
                         <div key={item._id} className='reviews__item'>
                             <div className='reviews__name-wrap'>
@@ -45,9 +41,7 @@ const ProductReviews = ({ productInfo }) => {
                                 </span>
                             </div>
                             <div className='reviews__rate'>
-                                {new Array(item?.rating).fill(
-                                    <StarFill fill='#ffe44d' stroke='#f23e16' />
-                                )}
+                                <Rate rate={item.rating} />
                             </div>
                             <div className='reviews__text'>{item.text}</div>
                         </div>
