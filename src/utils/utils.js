@@ -16,3 +16,9 @@ export const productRating = (product) => {
     const res = product.reviews.reduce((acc, el) => (acc += el.rating), 0);
     return Math.round(res / product.reviews.length);
 };
+
+export const timeOptions = {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+};

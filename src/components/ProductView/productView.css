@@ -108,3 +108,9 @@
     display: flex;
     align-self: flex-start;
 }
+
+.btn_minus,
+.btn_plus {
+    font-size: 18px;
+    cursor: pointer;
+}

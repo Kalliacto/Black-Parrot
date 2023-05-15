@@ -42,3 +42,35 @@
 .reviews_btn:hover {
     cursor: pointer;
 }
+
+.reviews__list {
+    width: 100%;
+}
+
+.reviews__item {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reviews__name {
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 120%;
+    color: #1a1a1a;
+}
+.reviews__date {
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.reviews__text {
+    font-size: 14px;
+    line-height: 143%;
+    color: #1a1a1a;
+}
+
+.btn__all_reviews {
+    width: 100%;
+}
