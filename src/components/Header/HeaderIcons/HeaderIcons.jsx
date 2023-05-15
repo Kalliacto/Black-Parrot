@@ -11,7 +11,7 @@ const HeaderIcons = () => {
 
     return (
         <div className='header__icons'>
-            <div>
+            <div title='В избранное'>
                 <Link className='header__heart' to={'/favorite'}>
                     <Heart />
                     {favorites.length !== 0 ? (
@@ -21,12 +21,12 @@ const HeaderIcons = () => {
                     )}
                 </Link>
             </div>
-            <div>
+            <div title='В корзину'>
                 <Link>
                     <Cart />
                 </Link>
             </div>
-            <div>
+            <div title='Профиль'>
                 <Link>
                     <Dog />
                 </Link>
