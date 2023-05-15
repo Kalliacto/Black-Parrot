@@ -5,7 +5,7 @@ import Rate from '../Rate/Rate';
 import { useForm } from 'react-hook-form';
 import { api } from '../../utils/api';
 import { CardContext } from '../../context/cardContext';
-import { Trash3} from 'react-bootstrap-icons'
+import { Trash3 } from 'react-bootstrap-icons';
 
 const ProductReviews = memo(({ productInfo }) => {
     const [formActive, setFormActive] = useState(false);
@@ -13,7 +13,6 @@ const ProductReviews = memo(({ productInfo }) => {
     const [allReviews, setAllReviews] = useState([]);
     const { user } = useContext(CardContext);
 
-    console.log(user._id);
     useEffect(() => {
         api.getProductAllReviews(productInfo._id).then((data) => setAllReviews(data));
     }, []);
@@ -21,8 +20,19 @@ const ProductReviews = memo(({ productInfo }) => {
     const submitReview = async (review) => {
         return await api
             .addNewReview(productInfo._id, review)
-            .then((review) => setAllReviews((state) => [review, ...state]))
+            .then((review) => setAllReviews((state) => [...state, review]))
             .then(reset())
+            .catch((error) => console.log(error));
+    };
+
+    const deleteReview = async (reviewId) => {
+        return await api
+            .deleteProductReview(productInfo._id, reviewId)
+            .then(() =>
+                setAllReviews((state) =>
+                    state.filter((productReview) => productReview._id !== reviewId)
+                )
+            )
             .catch((error) => console.log(error));
     };
 
@@ -66,7 +76,17 @@ const ProductReviews = memo(({ productInfo }) => {
                             <div className='reviews__rate'>
                                 <Rate rate={item.rating} />
                             </div>
-                            <div className='reviews__text'>{item.text}</div>
+                            <div className='reviews__text-wrap'>
+                                <div className='reviews__text'>{item.text}</div>
+                                {user._id === item.author._id ? (
+                                    <Trash3
+                                        className='reviews__trash'
+                                        onClick={() => deleteReview(item._id)}
+                                    />
+                                ) : (
+                                    ''
+                                )}
+                            </div>
                         </div>
                     );
                 })}

@@ -74,3 +74,10 @@
 .btn__all_reviews {
     width: 100%;
 }
+.reviews__trash {
+    margin-left: 20px;
+    cursor: pointer;
+}
+.reviews__text-wrap {
+    display: flex;
+}
