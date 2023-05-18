@@ -73,7 +73,13 @@
     background: #ffe44d;
     border-radius: 55px;
     border: none;
+    transition: all 0.3s;
 }
+.btn_basket:hover {
+    cursor: pointer;
+    background-color: #ffaa0d;
+}
+
 .product__delivery,
 .product__quality {
     background: rgba(236, 239, 241, 0.5);

@@ -32,15 +32,17 @@
     border: 1px solid #cfd8dc;
     border-radius: 87px;
     padding: 14px 24px;
-    background: transparent;
+    background: #ffe44d;
     font-weight: 700;
     font-size: 16px;
     line-height: 125%;
     color: #1a1a1a;
+    transition: 0.3s all;
 }
 
 .reviews_btn:hover {
     cursor: pointer;
+    background-color: #ffaa0d;
 }
 
 .reviews__list {
