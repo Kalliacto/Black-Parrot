@@ -5,7 +5,7 @@ import Search from '../Search/Search';
 import HeaderIcons from './HeaderIcons/HeaderIcons';
 import { Link, useLocation } from 'react-router-dom';
 
-export const Header = ({ setSearch }) => {
+export const Header = React.memo(({ setSearch }) => {
     const setSearchQuery = (path) => {
         setSearch(path);
     };
@@ -13,16 +13,15 @@ export const Header = ({ setSearch }) => {
     const location = useLocation();
 
     return (
-        <header className="header">
-            <div className="container">
-                <div className="header__wrapper">
+        <header className='header'>
+            <div className='container'>
+                <div className='header__wrapper'>
                     <Link to={'/'}>
-                        <div className="header__logo">
+                        <div className='header__logo' title='На главную'>
                             <Logo />
                         </div>
                     </Link>
-                    {location.pathname === '/' ||
-                    location.pathname === '/notfoundProduct' ? (
+                    {location.pathname === '/' || location.pathname === '/notfoundProduct' ? (
                         <Search setSearch={setSearchQuery} />
                     ) : (
                         ''
@@ -32,4 +31,4 @@ export const Header = ({ setSearch }) => {
             </div>
         </header>
     );
-};
+});

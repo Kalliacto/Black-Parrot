@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { CardContext } from '../../context/cardContext';
 import ProductPrice from '../ProductPrice/ProductPrice';
 
-const Card = ({ product }) => {
+const Card = React.memo(({ product }) => {
     const { user, changeLikeCard } = useContext(CardContext);
 
     const cardLiked = product.likes.some((item) => item === user._id);
@@ -18,8 +18,10 @@ const Card = ({ product }) => {
                 ) : (
                     ''
                 )}
-                {product.tags.map((item) => (
-                    <span className={`tag tag_type_${item}`}>{item}</span>
+                {product.tags.map((item, index) => (
+                    <span className={`tag tag_type_${item}`} key={index}>
+                        {item}
+                    </span>
                 ))}
             </div>
             <div className="card__sticky card__sticky_right">
@@ -51,6 +53,6 @@ const Card = ({ product }) => {
             <button className="card__btn btn_color">В Корзину</button>
         </div>
     );
-};
+});
 
 export default Card;

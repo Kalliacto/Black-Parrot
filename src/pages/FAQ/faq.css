@@ -38,11 +38,11 @@
     overflow: hidden;
     max-height: 0;
     transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+    padding-left: 20px;
 }
 
 .faq__accordion_content.show {
     height: auto;
     max-height: 999px;
     transition: all 0.5s cubic-bezier(0, 1, 0, 1);
-    padding-left: 20px;
 }

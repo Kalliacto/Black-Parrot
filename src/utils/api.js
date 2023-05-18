@@ -36,66 +36,45 @@ class Api {
             headers: this.headers,
         }).then(onResponse);
     }
-    // addLike(id) {
-    //     return fetch(`${this.baseUrl}/products/likes/${id}`, {
-    //         method: 'PUT',
-    //         headers: this.headers,
-    //     }).then(onResponse);
-    // }
 
-    // removeLike(id) {
-    //     return fetch(`${this.baseUrl}/products/likes/${id}`, {
-    //         method: 'DELETE',
-    //         headers: this.headers,
-    //     }).then(onResponse);
-    // }
-    // getProduct(id) {
-    //     return fetch(`${this.baseUrl}/products/${id}`, {
-    //         headers: this.headers,
-    //     }).then(onResponse);
-    // }
+    editLikeCard(id, cardLiked) {
+        return fetch(`${this.baseUrl}/products/likes/${id}`, {
+            method: cardLiked ? 'DELETE' : 'PUT',
+            headers: this.headers,
+        }).then(onResponse);
+    }
+    getOneProduct(id) {
+        return fetch(`${this.baseUrl}/products/${id}`, {
+            headers: this.headers,
+        }).then(onResponse);
+    }
+
+    getAllReviews() {
+        return fetch(`${this.baseUrl}/products/review`, {
+            headers: this.headers,
+        }).then(onResponse);
+    }
+
+    getProductAllReviews(id) {
+        return fetch(`${this.baseUrl}/products/review/${id}`, {
+            headers: this.headers,
+        }).then(onResponse);
+    }
+
+    addNewReview(id, body) {
+        return fetch(`${this.baseUrl}/products/review/${id}`, {
+            method: 'POST',
+            headers: this.headers,
+            body: JSON.stringify(body),
+        }).then(onResponse);
+    }
+
+    deleteProductReview(productId, reviewId) {
+        return fetch(`${this.baseUrl}/products/review/${productId}/${reviewId}`, {
+            method: 'DELETE',
+            headers: this.headers,
+        }).then(onResponse);
+    }
 }
 
 export const api = new Api(config);
-
-export const editLikeCard = (id, cardLiked) => {
-    return fetch(`${config.baseUrl}/products/likes/${id}`, {
-        method: cardLiked ? 'DELETE' : 'PUT',
-        headers: config.headers,
-    }).then(onResponse);
-};
-
-export const getOneProduct = (id) => {
-    return fetch(`${config.baseUrl}/products/${id}`, {
-        method: 'GET',
-        headers: config.headers,
-    }).then(onResponse);
-};
-
-// export const getAllProducts = (id, cardLiked) => {
-//     return fetch(`${config.baseUrl}/products`, {
-//         method: 'GET',
-//         headers: config.headers,
-//     }).then(onResponse);
-// };
-
-// export const addReview = (id, reviewId) => {
-//     return fetch(`${config.baseUrl}/products/review/${id}/${reviewId}`, {
-//         method: 'POST',
-//         headers: config.headers,
-//     }).then(onResponse);
-// }
-
-// export const removeReview = (id) => {return fetch(`${config.baseUrl}/products/${id}`, {
-//     method: 'DELETE',
-//     headers: config.headers,
-// }).then(onResponse);}
-
-// export const getAllReview = () => {
-//     return fetch(`${config.baseUrl}/products/review/`, {
-//         method: 'GET',
-//         headers: config.headers,
-//     }).then(onResponse);
-// };
-
-// + GET https://api.react-learning.ru/products/review/:productId

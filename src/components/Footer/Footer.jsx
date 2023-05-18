@@ -17,71 +17,66 @@ const linksTwo = [
     { name: 'Контакты', href: '/contacts' },
 ];
 
-export const Footer = () => {
+export const Footer = React.memo(() => {
     return (
         <>
-            <footer className="footer">
-                <div className="container">
-                    <div className="footer__wrapper">
-                        <div className="footer__copy">
+            <footer className='footer'>
+                <div className='container'>
+                    <div className='footer__wrapper'>
+                        <div className='footer__copy'>
                             <Logo />
                             <span>
-                                © «Интернет-магазин BlackParrot.ru»{' '}
-                                {new Date().getFullYear()}
+                                © «Интернет-магазин BlackParrot.ru» {new Date().getFullYear()}
                             </span>
                         </div>
-                        <nav className="footer__nav">
-                            <ul className="footer__menu">
+                        <nav className='footer__nav'>
+                            <ul className='footer__menu'>
                                 {links.map((el) => {
                                     return (
-                                        <li
-                                            key={el.name}
-                                            className="footer__item"
-                                        >
-                                            <NavLink to={el.href}>
-                                                {el.name}
-                                            </NavLink>
+                                        <li key={el.name} className='footer__item'>
+                                            <NavLink to={el.href}>{el.name}</NavLink>
                                         </li>
                                     );
                                 })}
                             </ul>
-                            <ul className="footer__menu">
+                            <ul className='footer__menu'>
                                 {linksTwo.map((el) => {
                                     return (
-                                        <li
-                                            key={el.name}
-                                            className="footer__item"
-                                        >
-                                            <NavLink to={el.href}>
-                                                {el.name}
-                                            </NavLink>
+                                        <li key={el.name} className='footer__item'>
+                                            <NavLink to={el.href}>{el.name}</NavLink>
                                         </li>
                                     );
                                 })}
                             </ul>
-                            <ul className="footer__menu">
-                                <li className="footer__item">
+                            <ul className='footer__menu'>
+                                <li className='footer__item'>
                                     <h3>Мы на связи</h3>
                                 </li>
-                                <li className="footer__item">
-                                    <h3>8 (999) 00-00-00</h3>
-                                    <span>blackparrot.ru@gmail.com</span>
+                                <li className='footer__item'>
+                                    <h3>
+                                        <a href='tel:+7999000000'>8 (999) 00-00-00</a>{' '}
+                                    </h3>
+                                    <span>
+                                        <a href='mailto:blackparrot.ru@gmail.com'>
+                                            blackparrot.ru@gmail.com
+                                        </a>{' '}
+                                    </span>
                                 </li>
-                                <ul className="icon__wrapper">
-                                    <li className="icon telegram-icon">
-                                        <a href="/"></a>
+                                <ul className='icon__wrapper'>
+                                    <li className='icon telegram-icon'>
+                                        <a href='/'></a>
                                     </li>
-                                    <li className="icon whatsapp-icon">
-                                        <a href="/"></a>
+                                    <li className='icon whatsapp-icon'>
+                                        <a href='/'></a>
                                     </li>
-                                    <li className="icon viber-icon">
-                                        <a href="/"></a>
+                                    <li className='icon viber-icon'>
+                                        <a href='/'></a>
                                     </li>
-                                    <li className="icon instagram-icon">
-                                        <a href="/"></a>
+                                    <li className='icon instagram-icon'>
+                                        <a href='/'></a>
                                     </li>
-                                    <li className="icon vk-icon">
-                                        <a href="/"></a>
+                                    <li className='icon vk-icon'>
+                                        <a href='/'></a>
                                     </li>
                                 </ul>
                             </ul>
@@ -91,4 +86,4 @@ export const Footer = () => {
             </footer>
         </>
     );
-};
+});
