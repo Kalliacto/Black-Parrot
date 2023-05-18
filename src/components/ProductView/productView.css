@@ -30,11 +30,13 @@
 }
 
 .product__content_wrapper {
-    display: flex;
-    gap: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
 }
 .product__img_wrapper {
     min-width: 400px;
+    max-height: 520px;
     padding: 20px;
     flex: 1;
     position: relative;
@@ -97,7 +99,8 @@
 
 .product__img {
     max-width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: contain;
 }
 .product__description_price,
 .product__description_title {

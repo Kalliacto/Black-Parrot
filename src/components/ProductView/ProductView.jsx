@@ -9,9 +9,10 @@ import ProductPrice from '../ProductPrice/ProductPrice';
 import ProductReviews from '../ProductReviews/ProductReviews';
 import { getEndings } from '../../utils/utils';
 import Rate from '../Rate/Rate';
+import Modal from '../Modal/Modal';
 
 const ProductView = ({ productInfo, setProductInfo, id }) => {
-    const { card, user, setCards, findFavorite, setFavorite, productRating } =
+    const { card, user, setCards, findFavorite, setFavorite, productRating, setActiveModal } =
         useContext(CardContext);
     const [allReviews, setAllReviews] = useState([]);
     const cardIsLiked = productInfo.likes ? productInfo.likes.includes(user._id) : false;
@@ -50,7 +51,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     </div>
                 </div>
                 <div className='product__content_wrapper'>
-                    <div className='product__img_wrapper'>
+                    <div className='product__img_wrapper' onClick={() => setActiveModal(true)}>
                         <div className='card__sticky card__sticky_left'>
                             {productInfo.discount ? (
                                 <span className='card__discount'>-{productInfo.discount}%</span>
@@ -115,6 +116,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     setAllReviews={setAllReviews}
                 />
             </div>
+            <Modal children={<img className='product__img' src={productInfo.pictures} alt='' />} />
         </>
     );
 };
