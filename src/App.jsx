@@ -25,11 +25,7 @@ function App() {
     const [activeModal, setActiveModal] = useState(true);
 
     const myCards = (card) => {
-        return card.filter(
-            (item) =>
-                item.author._id === '643fb8243291d790b3f3b309' ||
-                item.author._id === '622bd81b06c7d323b8ae4614'
-        );
+        return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
     };
 
     useEffect(() => {
