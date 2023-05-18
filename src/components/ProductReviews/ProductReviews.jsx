@@ -70,7 +70,6 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
                                 </span>
                             </div>
                             <div className='reviews__rate'>
-                                {/* <Rate rate={item.rating} /> */}
                                 <Rate rating={item.rating} />
                             </div>
                             <div className='reviews__text-wrap'>

@@ -44,7 +44,6 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     <div className='product__rating'>
                         <span>Artikul</span>
                         <Rate rating={productRating(allReviews)} />
-                        {/* не отрисовывается, только с зависимостью в рэйтинке в юзэф */}
                         <span>
                             {allReviews?.length} {getEndings(allReviews?.length, 'Отзыв')}
                         </span>
