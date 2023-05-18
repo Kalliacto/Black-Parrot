@@ -1,4 +1,4 @@
-import React, { memo, useContext, useEffect, useState } from 'react';
+import React, { memo, useContext, useState } from 'react';
 import './productReviews.css';
 import { timeOptions } from '../../utils/utils';
 import Rate from '../Rate/Rate';
@@ -8,15 +8,15 @@ import { CardContext } from '../../context/cardContext';
 import { Trash3 } from 'react-bootstrap-icons';
 
 const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
-    const [formActive, setFormActive] = useState(false);
+    const [formActive, setFormActive] = useState(true);
     const { register, handleSubmit, reset } = useForm({});
     const { user } = useContext(CardContext);
+    const [rate, setRate] = useState(3);
 
     const submitReview = async (review) => {
         return await api
             .addNewReview(productInfo._id, review)
             .then((product) => setAllReviews(product.reviews))
-            .then(reset())
             .catch((error) => console.log(error));
     };
 
@@ -31,6 +31,13 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
             .catch((error) => console.log(error));
     };
 
+    const sendReview = ({ text }) => {
+        submitReview({ text, rating: rate });
+        reset();
+        setFormActive(false);
+        setRate(3);
+    };
+
     return (
         <div className='product__reviews'>
             <h2 className='product__reviews_title'>Отзывы</h2>
@@ -38,21 +45,14 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
                 Написать отзыв
             </button>
             {formActive && (
-                <form className='form__reviews' onSubmit={handleSubmit(submitReview)}>
+                <form className='form__reviews' onSubmit={handleSubmit(sendReview)}>
+                    <Rate rating={rate} setRate={setRate} isModify={true} />
                     <textarea
                         type='text'
                         {...register('text')}
                         placeholder='Ваш отзыв'
                         className='form__reviews_input'
                         rows={3}
-                    />
-                    <input
-                        type='number'
-                        {...register('rating')}
-                        placeholder='Ваша оценка от 1 до 5'
-                        className='form__reviews_input'
-                        min={1}
-                        max={5}
                     />
                     <button type='submit' className='reviews_btn'>
                         Отправить
@@ -70,7 +70,8 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
                                 </span>
                             </div>
                             <div className='reviews__rate'>
-                                <Rate rate={item.rating} />
+                                {/* <Rate rate={item.rating} /> */}
+                                <Rate rating={item.rating} />
                             </div>
                             <div className='reviews__text-wrap'>
                                 <div className='reviews__text'>{item?.text}</div>
