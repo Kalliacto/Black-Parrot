@@ -11,7 +11,7 @@ const AuthorizationForm = (props) => {
         return await userApi
             .signIn(data)
             .then((res) => localStorage.setItem('token', res.token))
-            .catch((error) => alert('Oooops, что-то пошло не так'));
+            .catch((error) => alert('Oooops, ' + error));
     };
 
     return (

@@ -19,7 +19,7 @@ const PasswordRecoveryForm = (props) => {
                 </button>
             </form>
             <Link to='/auth'>
-                <button className='form__btn'>Авторизация</button>
+                <button className='form__btn'>Назад к авторизации</button>
             </Link>
         </div>
     );
