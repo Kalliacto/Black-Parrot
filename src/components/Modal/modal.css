@@ -36,7 +36,7 @@
 }
 
 .modal__form_content {
-    width: 100%;
+    width: max-content;
     padding: 15px;
     overflow: auto;
     max-height: 80vh;

@@ -4,7 +4,7 @@ import GoBack from '../GoBack/GoBack';
 import { ReactComponent as Like } from '../Card/img/Like.svg';
 import { CardContext } from '../../context/cardContext';
 import { api } from '../../utils/api';
-import { Truck, Award } from 'react-bootstrap-icons';
+import { Truck, Award, ZoomIn } from 'react-bootstrap-icons';
 import ProductPrice from '../ProductPrice/ProductPrice';
 import ProductReviews from '../ProductReviews/ProductReviews';
 import { getEndings } from '../../utils/utils';
@@ -51,7 +51,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     </div>
                 </div>
                 <div className='product__content_wrapper'>
-                    <div className='product__img_wrapper' onClick={() => setActiveModal(true)}>
+                    <div className='product__img_wrapper'>
                         <div className='card__sticky card__sticky_left'>
                             {productInfo.discount ? (
                                 <span className='card__discount'>-{productInfo.discount}%</span>
@@ -70,6 +70,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                             </button>
                         </div>
                         <img className='product__img' src={productInfo.pictures} alt='' />
+                        <ZoomIn className='zoom__picture' onClick={() => setActiveModal(true)} />
                     </div>
                     <div className='product__inCart_wrapper'>
                         <ProductPrice productInfo={productInfo} />
