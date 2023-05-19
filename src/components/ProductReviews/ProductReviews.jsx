@@ -8,7 +8,7 @@ import { CardContext } from '../../context/cardContext';
 import { Trash3 } from 'react-bootstrap-icons';
 
 const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
-    const [formActive, setFormActive] = useState(true);
+    const [formActive, setFormActive] = useState(false);
     const { register, handleSubmit, reset } = useForm({});
     const { user } = useContext(CardContext);
     const [rate, setRate] = useState(3);
