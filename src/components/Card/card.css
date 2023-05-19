@@ -95,7 +95,6 @@
 .card__sticky_left {
     display: flex;
     flex-wrap: wrap;
-    /* flex-direction: column; */
     top: 0;
     left: 0;
     gap: 3px;

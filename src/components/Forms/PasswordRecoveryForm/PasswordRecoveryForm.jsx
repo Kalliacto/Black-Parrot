@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../forms.css';
 
 import React from 'react';
@@ -17,6 +18,9 @@ const PasswordRecoveryForm = (props) => {
                     Отправить
                 </button>
             </form>
+            <Link to='/auth'>
+                <button className='form__btn'>Авторизация</button>
+            </Link>
         </div>
     );
 };
