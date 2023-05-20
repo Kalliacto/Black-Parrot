@@ -83,3 +83,8 @@
 .reviews__text-wrap {
     display: flex;
 }
+.errors__span {
+    margin-top: 10px;
+    color: rgba(218, 25, 25, 0.8);
+    font-size: 12px;
+}

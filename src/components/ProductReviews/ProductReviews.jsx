@@ -8,8 +8,13 @@ import { CardContext } from '../../context/cardContext';
 import { Trash3 } from 'react-bootstrap-icons';
 
 const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
-    const [formActive, setFormActive] = useState(true);
-    const { register, handleSubmit, reset } = useForm({});
+    const [formActive, setFormActive] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm({ mode: 'onBlur' });
     const { user } = useContext(CardContext);
     const [rate, setRate] = useState(3);
 
@@ -38,6 +43,13 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
         setRate(3);
     };
 
+    const checkingTheField = {
+        required: {
+            value: true,
+            message: 'Обязательное поле для заполнения',
+        },
+    };
+
     return (
         <div className='product__reviews'>
             <h2 className='product__reviews_title'>Отзывы</h2>
@@ -47,13 +59,18 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
             {formActive && (
                 <form className='form__reviews' onSubmit={handleSubmit(sendReview)}>
                     <Rate rating={rate} setRate={setRate} isModify={true} />
-                    <textarea
-                        type='text'
-                        {...register('text')}
-                        placeholder='Ваш отзыв'
-                        className='form__reviews_input'
-                        rows={3}
-                    />
+                    <div>
+                        <textarea
+                            type='text'
+                            {...register('text', { ...checkingTheField })}
+                            placeholder='Ваш отзыв'
+                            className='form__reviews_input'
+                            rows={3}
+                        />
+                        {errors?.text && (
+                            <span className='errors__span'> {errors?.text.message}</span>
+                        )}
+                    </div>
                     <button type='submit' className='reviews_btn'>
                         Отправить
                     </button>

@@ -23,6 +23,7 @@ function App() {
     const [user, setUser] = useState({});
     const [favorites, setFavorite] = useState([]);
     const [activeModal, setActiveModal] = useState(true);
+    const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
 
     const myCards = (card) => {
         return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
@@ -46,7 +47,7 @@ function App() {
                 setFavorite(MyFavorite);
             })
             .catch((error) => console.log(error));
-    }, []);
+    }, [haveTokenAuth]);
 
     const changeLikeCard = async (product, cardLiked) => {
         const updateLikeInCard = await api
@@ -105,6 +106,8 @@ function App() {
         productRating,
         activeModal,
         setActiveModal,
+        setHaveTokenAuth,
+        haveTokenAuth,
     };
 
     return (

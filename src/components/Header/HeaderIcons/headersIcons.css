@@ -5,7 +5,7 @@
 .header__icons {
     display: flex;
     align-items: center;
-    gap: 34px;
+    gap: 24px;
 }
 
 .header__icons_bubble {
@@ -23,4 +23,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.log__icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }

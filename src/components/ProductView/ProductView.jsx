@@ -4,14 +4,15 @@ import GoBack from '../GoBack/GoBack';
 import { ReactComponent as Like } from '../Card/img/Like.svg';
 import { CardContext } from '../../context/cardContext';
 import { api } from '../../utils/api';
-import { Truck, Award } from 'react-bootstrap-icons';
+import { Truck, Award, ZoomIn } from 'react-bootstrap-icons';
 import ProductPrice from '../ProductPrice/ProductPrice';
 import ProductReviews from '../ProductReviews/ProductReviews';
 import { getEndings } from '../../utils/utils';
 import Rate from '../Rate/Rate';
+import Modal from '../Modal/Modal';
 
 const ProductView = ({ productInfo, setProductInfo, id }) => {
-    const { card, user, setCards, findFavorite, setFavorite, productRating } =
+    const { card, user, setCards, findFavorite, setFavorite, productRating, setActiveModal } =
         useContext(CardContext);
     const [allReviews, setAllReviews] = useState([]);
     const cardIsLiked = productInfo.likes ? productInfo.likes.includes(user._id) : false;
@@ -69,6 +70,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                             </button>
                         </div>
                         <img className='product__img' src={productInfo.pictures} alt='' />
+                        <ZoomIn className='zoom__picture' onClick={() => setActiveModal(true)} />
                     </div>
                     <div className='product__inCart_wrapper'>
                         <ProductPrice productInfo={productInfo} />
@@ -115,6 +117,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     setAllReviews={setAllReviews}
                 />
             </div>
+            <Modal children={<img className='product__img' src={productInfo.pictures} alt='' />} />
         </>
     );
 };
