@@ -1,23 +1,23 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './headersIcons.css';
 import { ReactComponent as Dog } from './icons/DogIcon.svg';
 import { ReactComponent as Heart } from './icons/Favorites.svg';
 import { ReactComponent as Cart } from './icons/ic-cart.svg';
-import { ReactComponent as Exit } from './icons/exit.svg';
 import { Link } from 'react-router-dom';
 import { CardContext } from '../../../context/cardContext';
+import { BoxArrowInLeft, BoxArrowRight } from 'react-bootstrap-icons';
 
 const HeaderIcons = () => {
-    const { favorites, setActiveModal } = useContext(CardContext);
-    const { haveToken, setHaveToken } = useState(localStorage.getItem('token'));
+    const { favorites, setActiveModal, setHaveTokenAuth, haveTokenAuth } = useContext(CardContext);
 
-    const exit = () => {
+    const logOut = () => {
         localStorage.removeItem('token');
+        return setHaveTokenAuth(false);
     };
 
     return (
         <div className='header__icons'>
-            {localStorage.getItem('token') ? (
+            {haveTokenAuth ? (
                 <>
                     <div title='В избранное'>
                         <Link className='header__heart' to={'/favorite'}>
@@ -34,12 +34,13 @@ const HeaderIcons = () => {
                             <Cart />
                         </Link>
                     </div>{' '}
-                    <Exit onClick={() => {}} />
+                    <Dog title='Профиль' />
+                    <BoxArrowRight onClick={() => logOut()} title='Выход' className='log__icon' />
                 </>
             ) : (
-                <div title='Профиль'>
-                    <Link to={'/auth'} onClick={() => setActiveModal(true)}>
-                        <Dog />
+                <div>
+                    <Link to={'/auth'} onClick={() => setActiveModal(true)} title='Вход'>
+                        <BoxArrowInLeft className='log__icon' />
                     </Link>
                 </div>
             )}

@@ -1,11 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import '../forms.css';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { userApi } from '../../../utils/apiUser';
 import { checkingTheFillingEmail, passwordValidationCheck } from '../../../utils/utils';
+import { CardContext } from '../../../context/cardContext';
 
 const AuthorizationForm = (props) => {
+    const { setActiveModal, setHaveTokenAuth } = useContext(CardContext);
     const {
         register,
         handleSubmit,
@@ -15,7 +17,11 @@ const AuthorizationForm = (props) => {
     const sendAuthData = async (data) => {
         return await userApi
             .signIn(data)
-            .then((res) => localStorage.setItem('token', res.token))
+            .then((res) => {
+                localStorage.setItem('token', res.token);
+                setActiveModal(false);
+                setHaveTokenAuth(true);
+            })
             .catch((error) => alert('Oooops, ' + error));
     };
 
