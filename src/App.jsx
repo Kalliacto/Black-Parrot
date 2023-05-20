@@ -47,7 +47,7 @@ function App() {
                 setFavorite(MyFavorite);
             })
             .catch((error) => console.log(error));
-    }, []);
+    }, [haveTokenAuth]);
 
     const changeLikeCard = async (product, cardLiked) => {
         const updateLikeInCard = await api
