@@ -22,3 +22,19 @@ export const timeOptions = {
     month: 'short',
     year: 'numeric',
 };
+
+export const passwordValidationCheck = {
+    required: {
+        value: true,
+        message: 'Пароль должен быть обязательно!',
+    },
+    pattern: {
+        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        message:
+            'Пароль должен содержать минимум 8 символов, одну большую букву латинского алфавита и одну цифру',
+    },
+};
+
+export const checkingTheFillingEmail = { required: 'Email обязательно!' };
+
+export const checkingTheFillingGroup = { required: 'Введите вашу группу обязательно!' };

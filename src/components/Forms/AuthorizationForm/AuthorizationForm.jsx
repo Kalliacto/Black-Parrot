@@ -3,9 +3,14 @@ import '../forms.css';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { userApi } from '../../../utils/apiUser';
+import { checkingTheFillingEmail, passwordValidationCheck } from '../../../utils/utils';
 
 const AuthorizationForm = (props) => {
-    const { register, handleSubmit } = useForm({});
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ mode: 'onBlur' });
 
     const sendAuthData = async (data) => {
         return await userApi
@@ -18,18 +23,28 @@ const AuthorizationForm = (props) => {
         <div className='form__wrapper'>
             <h2 className='form__title'>Вход</h2>
             <form className='form__container' onSubmit={handleSubmit(sendAuthData)}>
-                <input
-                    type='email'
-                    {...register('email')}
-                    placeholder='Email'
-                    className='form__input'
-                />
-                <input
-                    type='password'
-                    {...register('password')}
-                    placeholder='Пароль'
-                    className='form__input'
-                />
+                <div className='input__wrap'>
+                    <input
+                        type='email'
+                        {...register('email', { ...checkingTheFillingEmail })}
+                        placeholder='Email'
+                        className='form__input'
+                    />
+                    {errors?.email && (
+                        <span className='warning__text'> {errors?.email.message}</span>
+                    )}
+                </div>
+                <div className='input__wrap'>
+                    <input
+                        type='password'
+                        {...register('password', { ...passwordValidationCheck })}
+                        placeholder='Пароль'
+                        className='form__input'
+                    />
+                    {errors?.password && (
+                        <span className='warning__text'> {errors?.password.message}</span>
+                    )}
+                </div>
                 <Link to='/newPass' className='form__info-right'>
                     <p className='form__info'>Восстановить пароль</p>
                 </Link>
