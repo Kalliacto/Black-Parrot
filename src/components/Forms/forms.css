@@ -15,6 +15,7 @@
     margin-bottom: 8px;
 }
 .form__input {
+    width: 100%;
     border: none;
     padding: 14px 16px;
     border: 1px solid #cfd8dc;
@@ -52,4 +53,10 @@
 }
 .form__btn-basic {
     background: #ffe44d;
+}
+
+.warning__text {
+    margin-top: 8px;
+    color: rgba(218, 25, 25, 0.8);
+    font-size: 12px;
 }

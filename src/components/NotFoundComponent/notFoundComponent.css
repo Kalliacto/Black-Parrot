@@ -13,6 +13,7 @@
 .notFound__img {
     width: 80px;
     height: 80px;
+    opacity: 0.5;
 }
 .notFound__title {
     font-weight: 700;
