@@ -17,7 +17,7 @@ const RegistrationForm = (props) => {
     } = useForm({ mode: 'onBlur' });
 
     const sendRegistrData = async (data) => {
-        return await userApi.signUp(data).catch((error) => alert('Oooops, что-то пошло не так'));
+        return await userApi.signUp(data).catch((error) => alert(error));
     };
 
     return (
@@ -66,7 +66,7 @@ const RegistrationForm = (props) => {
                 </button>
             </form>
             <Link to='/auth' className='form__link'>
-                <button className='form__btn'>Войти</button>
+                <button className='form__btn'>Назад к авторизации</button>
             </Link>
         </div>
     );

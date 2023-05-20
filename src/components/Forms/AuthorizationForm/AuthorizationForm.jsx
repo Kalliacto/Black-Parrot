@@ -53,7 +53,7 @@ const AuthorizationForm = (props) => {
                 </button>
             </form>
             <Link to='/register' className='form__link'>
-                <button className='form__btn'>Регистрация</button>
+                <button className='form__btn'>Зарегистрироваться</button>
             </Link>
         </div>
     );
