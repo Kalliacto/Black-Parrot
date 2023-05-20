@@ -1,6 +1,5 @@
 # Учебный проект интернет магазина ParrotFood находится здесь:
-- https://exquisite-yeot-508d4a.netlify.app/
-
+- https://chipper-entremet-729ed0.netlify.app
 
 ## Реализован следующий функционал:
 
