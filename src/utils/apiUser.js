@@ -60,6 +60,14 @@ class UserApi {
             headers: this.headers,
         }).then(onResponse);
     }
+
+    changingDataUser(data) {
+        return fetch(`${this.baseUrl}/users/me`, {
+            method: 'PATCH',
+            headers: this.headers,
+            body: JSON.stringify(data),
+        }).then(onResponse);
+    }
 }
 
 export const userApi = new UserApi(config);

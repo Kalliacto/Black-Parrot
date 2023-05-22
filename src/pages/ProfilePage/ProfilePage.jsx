@@ -1,28 +1,70 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './profilePage.css';
 import GoBack from '../../components/GoBack/GoBack';
 import { userApi } from '../../utils/apiUser';
+import { useForm } from 'react-hook-form';
+import { CardContext } from '../../context/cardContext';
 
 const ProfilePage = () => {
-    const { userId } = useParams();
-    const [userInfo, setUserInfo] = useState([]);
+    const [formActive, setFormActive] = useState(false);
+    const { user, setUser } = useContext(CardContext);
+    const { register, handleSubmit } = useForm({
+        defaultValues: { name: user.name, about: user.about },
+    });
 
-    useEffect(() => {
-        userApi
-            .getUserInfoById(userId)
-            .then((userData) => {
-                setUserInfo(userData);
-            })
-            .catch((error) => console.log(error));
-    }, [userId]);
-
-    console.log({ userInfo });
+    const sendData = async (data) => {
+        return await userApi
+            .changingDataUser(data)
+            .then((dataUser) => setUser({ ...dataUser }))
+            .catch((err) => alert(err));
+    };
 
     return (
         <div className='profile__container'>
             <GoBack />
             <h2 className='profile__title'>Профиль</h2>
+            <div className='profile__info'>
+                <p className='profile__name'>{user.name}</p>
+                <span className='profile__contact'>{user.about}</span>
+                <span className='profile__contact'>{user.email}</span>
+                <button onClick={() => setFormActive(!formActive)} className='profile_btn'>
+                    Изменить
+                </button>
+            </div>
+            {formActive && (
+                <>
+                    <form className='profile__form' onSubmit={handleSubmit(sendData)}>
+                        <h4>Мои данные</h4>
+                        <input
+                            type='text'
+                            {...register('name')}
+                            placeholder='Имя'
+                            className='form__profile_input'
+                        />
+                        <input
+                            type='about'
+                            {...register('about')}
+                            className='form__profile_input'
+                            placeholder='Обо мне'
+                        />
+                        {/* <div className='profile__input_wrap'>
+                        <input
+                            type='tel'
+                            {...register('tel', { ...telephoneValidationCheck })}
+                            className='form__profile_input'
+                            placeholder='Телефон'
+                        />
+                        {errors?.tel && (
+                            <span className='errors__span'> {errors?.tel.message}</span>
+                        )}
+                    </div> */}
+                        <button type='submit' className='profile_btn'>
+                            Сохранить
+                        </button>
+                    </form>
+                </>
+            )}
         </div>
     );
 };

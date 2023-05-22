@@ -110,6 +110,7 @@ function App() {
         setActiveModal,
         setHaveTokenAuth,
         haveTokenAuth,
+        setUser,
     };
 
     return (
@@ -122,7 +123,7 @@ function App() {
                             <Route path='/' element={<CatalogProducts />} />
                             <Route path='/product/:id' element={<PageProduct />} />
                             <Route path='/favorite' element={<FavoritePage />} />
-                            <Route path='/profile/:userId' element={<ProfilePage />}></Route>
+                            <Route path='/profile' element={<ProfilePage />}></Route>
                             <Route path='*' element={<NotFoundPage />} />
                             <Route
                                 path='/notfoundProduct'

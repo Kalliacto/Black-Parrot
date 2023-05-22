@@ -35,7 +35,7 @@ const HeaderIcons = () => {
                             <Cart />
                         </Link>
                     </div>{' '}
-                    <Link to={`/profile/${user._id}`}>
+                    <Link to={`/profile`}>
                         <Dog title='Профиль' />
                     </Link>
                     <BoxArrowRight onClick={() => logOut()} title='Выход' className='log__icon' />
