@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import './headersIcons.css';
 import { ReactComponent as Dog } from './icons/DogIcon.svg';
 import { ReactComponent as Heart } from './icons/Favorites.svg';
@@ -8,7 +8,8 @@ import { CardContext } from '../../../context/cardContext';
 import { BoxArrowInLeft, BoxArrowRight } from 'react-bootstrap-icons';
 
 const HeaderIcons = () => {
-    const { favorites, setActiveModal, setHaveTokenAuth, haveTokenAuth } = useContext(CardContext);
+    const { favorites, setActiveModal, setHaveTokenAuth, haveTokenAuth, user } =
+        useContext(CardContext);
 
     const logOut = () => {
         localStorage.removeItem('token');
@@ -34,7 +35,9 @@ const HeaderIcons = () => {
                             <Cart />
                         </Link>
                     </div>{' '}
-                    <Dog title='Профиль' />
+                    <Link to={`/profile`}>
+                        <Dog title='Профиль' />
+                    </Link>
                     <BoxArrowRight onClick={() => logOut()} title='Выход' className='log__icon' />
                 </>
             ) : (

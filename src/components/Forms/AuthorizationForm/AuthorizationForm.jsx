@@ -1,4 +1,4 @@
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import '../forms.css';
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,6 +13,7 @@ const AuthorizationForm = (props) => {
         handleSubmit,
         formState: { errors },
     } = useForm({ mode: 'onBlur' });
+    const navigate = useNavigate();
 
     const sendAuthData = async (data) => {
         return await userApi
@@ -21,6 +22,7 @@ const AuthorizationForm = (props) => {
                 localStorage.setItem('token', res.token);
                 setActiveModal(false);
                 setHaveTokenAuth(true);
+                navigate('/');
             })
             .catch((error) => alert('Oooops, ' + error));
     };
@@ -34,7 +36,7 @@ const AuthorizationForm = (props) => {
                         type='email'
                         {...register('email', { ...checkingTheFillingEmail })}
                         placeholder='Email'
-                        className='form__input'
+                        className={errors?.email ? 'form__input warning' : 'form__input'}
                     />
                     {errors?.email && (
                         <span className='warning__text'> {errors?.email.message}</span>
@@ -45,7 +47,7 @@ const AuthorizationForm = (props) => {
                         type='password'
                         {...register('password', { ...passwordValidationCheck })}
                         placeholder='Пароль'
-                        className='form__input'
+                        className={errors?.password ? 'form__input warning' : 'form__input'}
                     />
                     {errors?.password && (
                         <span className='warning__text'> {errors?.password.message}</span>

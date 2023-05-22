@@ -35,6 +35,17 @@ export const passwordValidationCheck = {
     },
 };
 
+export const telephoneValidationCheck = {
+    required: {
+        value: true,
+    },
+    pattern: {
+        value: /^[\d\+][\d\(\)\ -]{4,14}\d$/,
+        message:
+            'Телефон должен начинаться только с цифры или знака +, состоять из цифр, в середине можно использовать скобоки, пробел и знак дефиса ',
+    },
+};
+
 export const checkingTheFillingEmail = { required: 'Email обязательно!' };
 
 export const checkingTheFillingGroup = { required: 'Введите вашу группу обязательно!' };

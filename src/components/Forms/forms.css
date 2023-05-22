@@ -23,7 +23,7 @@
 }
 
 .form__input:focus {
-    outline: #ffe44d;
+    outline: 1px solid #ffaa0d;
 }
 
 .form__info {
@@ -59,4 +59,9 @@
     margin-top: 8px;
     color: rgba(218, 25, 25, 0.8);
     font-size: 12px;
+}
+
+.warning {
+    outline: auto;
+    outline-color: rgba(218, 25, 25, 0.8);
 }

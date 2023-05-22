@@ -16,6 +16,8 @@ import RegistrationForm from './components/Forms/RegistrationForm/RegistrationFo
 import AuthorizationForm from './components/Forms/AuthorizationForm/AuthorizationForm';
 import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/PasswordRecoveryForm';
 import { productRating } from './utils/utils';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
+import { userApi } from './utils/apiUser';
 
 function App() {
     const [card, setCards] = useState([]);
@@ -37,7 +39,7 @@ function App() {
     }, [search]);
 
     useEffect(() => {
-        Promise.all([api.getUserInfo(), api.getAllProducts()])
+        Promise.all([userApi.getUserInfo(), api.getAllProducts()])
             .then(([data, res]) => {
                 setUser(data);
                 const filtered = myCards(res.products);
@@ -108,6 +110,7 @@ function App() {
         setActiveModal,
         setHaveTokenAuth,
         haveTokenAuth,
+        setUser,
     };
 
     return (
@@ -120,6 +123,7 @@ function App() {
                             <Route path='/' element={<CatalogProducts />} />
                             <Route path='/product/:id' element={<PageProduct />} />
                             <Route path='/favorite' element={<FavoritePage />} />
+                            <Route path='/profile' element={<ProfilePage />}></Route>
                             <Route path='*' element={<NotFoundPage />} />
                             <Route
                                 path='/notfoundProduct'

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../forms.css';
 import React from 'react';
 import { userApi } from '../../../utils/apiUser';
@@ -15,9 +15,13 @@ const RegistrationForm = (props) => {
         handleSubmit,
         formState: { errors },
     } = useForm({ mode: 'onBlur' });
+    const navigate = useNavigate();
 
     const sendRegistrData = async (data) => {
-        return await userApi.signUp(data).catch((error) => alert(error));
+        return await userApi
+            .signUp(data)
+            .then(() => navigate('/auth'))
+            .catch((error) => alert(error));
     };
 
     return (
@@ -29,7 +33,7 @@ const RegistrationForm = (props) => {
                         type='email'
                         {...register('email', { ...checkingTheFillingEmail })}
                         placeholder='Email'
-                        className='form__input'
+                        className={errors?.email ? 'form__input warning' : 'form__input'}
                     />
                     {errors?.email && (
                         <span className='warning__text'> {errors?.email.message}</span>
@@ -40,7 +44,7 @@ const RegistrationForm = (props) => {
                         type='password'
                         {...register('password', { ...passwordValidationCheck })}
                         placeholder='Пароль'
-                        className='form__input'
+                        className={errors?.password ? 'form__input warning' : 'form__input'}
                     />
                     {errors?.password && (
                         <span className='warning__text'> {errors?.password.message}</span>
@@ -51,7 +55,7 @@ const RegistrationForm = (props) => {
                         type='number'
                         {...register('group', { ...checkingTheFillingGroup })}
                         placeholder='group'
-                        className='form__input'
+                        className={errors?.group ? 'form__input warning' : 'form__input'}
                     />
                     {errors?.group && (
                         <span className='warning__text'> {errors?.group.message}</span>

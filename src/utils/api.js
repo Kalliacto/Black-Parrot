@@ -24,13 +24,6 @@ class Api {
         }).then(onResponse);
     }
 
-    getUserInfo() {
-        return fetch(`${this.baseUrl}/users/me`, {
-            method: 'GET',
-            headers: this.headers,
-        }).then(onResponse);
-    }
-
     searchProducts(path) {
         return fetch(`${this.baseUrl}/products/search?query=${path}`, {
             headers: this.headers,
