@@ -46,7 +46,7 @@ const PasswordRecoveryForm = (props) => {
                         type='email'
                         {...register('email', { ...checkingTheFillingEmail })}
                         placeholder='Email'
-                        className='form__input'
+                        className={errors?.email ? 'form__input warning' : 'form__input'}
                     />
                     {errors?.email && (
                         <span className='warning__text'> {errors?.email.message}</span>
@@ -56,21 +56,25 @@ const PasswordRecoveryForm = (props) => {
                     <>
                         <div className='input__wrap'>
                             <input
-                                className='form__input'
+                                className={errors?.text ? 'form__input warning' : 'form__input'}
                                 type='text'
                                 {...register('token', { ...checkingTheFillingEmail })}
                                 placeholder='token'
                             />
-                            {errors?.token && <span> {errors?.token.message}</span>}
+                            {errors?.token && (
+                                <span className='warning__text'> {errors?.token.message}</span>
+                            )}
                         </div>
                         <div className='input__wrap'>
                             <input
-                                className='form__input'
+                                className={errors?.text ? 'form__input warning' : 'form__input'}
                                 type='password'
                                 {...register('password', { ...passwordValidationCheck })}
                                 placeholder='password'
                             />
-                            {errors?.password && <span> {errors?.password.message}</span>}
+                            {errors?.password && (
+                                <span className='warning__text'> {errors?.password.message}</span>
+                            )}
                         </div>
                     </>
                 )}

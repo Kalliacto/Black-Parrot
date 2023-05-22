@@ -17,6 +17,13 @@ class UserApi {
         this.headers = data.headers;
     }
 
+    getUserInfo() {
+        return fetch(`${this.baseUrl}/users/me`, {
+            method: 'GET',
+            headers: this.headers,
+        }).then(onResponse);
+    }
+
     signIn(data) {
         return fetch(`${this.baseUrl}/signin`, {
             headers: this.headers,
@@ -43,6 +50,21 @@ class UserApi {
         return fetch(`${this.baseUrl}/password-reset/${token}`, {
             headers: this.headers,
             method: 'PATCH',
+            body: JSON.stringify(data),
+        }).then(onResponse);
+    }
+
+    getUserInfoById(id) {
+        return fetch(`${this.baseUrl}/users/${id}`, {
+            method: 'GET',
+            headers: this.headers,
+        }).then(onResponse);
+    }
+
+    changingDataUser(data) {
+        return fetch(`${this.baseUrl}/users/me`, {
+            method: 'PATCH',
+            headers: this.headers,
             body: JSON.stringify(data),
         }).then(onResponse);
     }
