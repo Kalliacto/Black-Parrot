@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import './profilePage.css';
 import GoBack from '../../components/GoBack/GoBack';
 import { userApi } from '../../utils/apiUser';
@@ -48,17 +47,6 @@ const ProfilePage = () => {
                             className='form__profile_input'
                             placeholder='Обо мне'
                         />
-                        {/* <div className='profile__input_wrap'>
-                        <input
-                            type='tel'
-                            {...register('tel', { ...telephoneValidationCheck })}
-                            className='form__profile_input'
-                            placeholder='Телефон'
-                        />
-                        {errors?.tel && (
-                            <span className='errors__span'> {errors?.tel.message}</span>
-                        )}
-                    </div> */}
                         <button type='submit' className='profile_btn'>
                             Сохранить
                         </button>
