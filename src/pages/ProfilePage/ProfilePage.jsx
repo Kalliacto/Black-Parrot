@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './profilePage.css';
 import GoBack from '../../components/GoBack/GoBack';
 import { userApi } from '../../utils/apiUser';

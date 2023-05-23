@@ -24,7 +24,7 @@ function App() {
     const [search, setSearch] = useState(undefined);
     const [user, setUser] = useState({});
     const [favorites, setFavorite] = useState([]);
-    const [activeModal, setActiveModal] = useState(true);
+    const [activeModal, setActiveModal] = useState(false);
     const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
 
     const myCards = (card) => {

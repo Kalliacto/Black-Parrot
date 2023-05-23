@@ -117,7 +117,13 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     setAllReviews={setAllReviews}
                 />
             </div>
-            <Modal children={<img className='product__img' src={productInfo.pictures} alt='' />} />
+            <Modal
+                children={
+                    <div className='product__img_container-modal'>
+                        <img className='product__img' src={productInfo.pictures} alt='' />
+                    </div>
+                }
+            />
         </>
     );
 };
