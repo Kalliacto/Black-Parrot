@@ -63,21 +63,11 @@ export const Footer = React.memo(() => {
                                     </span>
                                 </li>
                                 <ul className='icon__wrapper'>
-                                    <li className='icon telegram-icon'>
-                                        <a href='/'></a>
-                                    </li>
-                                    <li className='icon whatsapp-icon'>
-                                        <a href='/'></a>
-                                    </li>
-                                    <li className='icon viber-icon'>
-                                        <a href='/'></a>
-                                    </li>
-                                    <li className='icon instagram-icon'>
-                                        <a href='/'></a>
-                                    </li>
-                                    <li className='icon vk-icon'>
-                                        <a href='/'></a>
-                                    </li>
+                                    <li className='icon telegram-icon'></li>
+                                    <li className='icon whatsapp-icon'></li>
+                                    <li className='icon viber-icon'></li>
+                                    <li className='icon instagram-icon'></li>
+                                    <li className='icon vk-icon'></li>
                                 </ul>
                             </ul>
                         </nav>

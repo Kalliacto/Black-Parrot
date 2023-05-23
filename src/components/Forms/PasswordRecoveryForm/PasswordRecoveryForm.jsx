@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom';
 import '../forms.css';
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { userApi } from '../../../utils/apiUser';
 import { checkingTheFillingEmail } from '../../../utils/utils';
 import { passwordValidationCheck } from '../../../utils/utils';
+import { CardContext } from '../../../context/cardContext';
+import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
 
 const PasswordRecoveryForm = (props) => {
+    const { showPassword, setShowPassword } = useContext(CardContext);
     const [haveToken, setHaveToken] = useState(false);
     const {
         register,
@@ -66,12 +69,22 @@ const PasswordRecoveryForm = (props) => {
                             )}
                         </div>
                         <div className='input__wrap'>
-                            <input
-                                className={errors?.text ? 'form__input warning' : 'form__input'}
-                                type='password'
-                                {...register('password', { ...passwordValidationCheck })}
-                                placeholder='password'
-                            />
+                            <div className='input__wrap_pass'>
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    {...register('password', { ...passwordValidationCheck })}
+                                    placeholder='Пароль'
+                                    className={
+                                        errors?.password ? 'form__input warning' : 'form__input'
+                                    }
+                                />
+                                <span
+                                    className='input__eye_show'
+                                    onClick={() => setShowPassword((state) => !state)}
+                                >
+                                    {showPassword ? <EyeFill /> : <EyeSlashFill />}
+                                </span>
+                            </div>
                             {errors?.password && (
                                 <span className='warning__text'> {errors?.password.message}</span>
                             )}

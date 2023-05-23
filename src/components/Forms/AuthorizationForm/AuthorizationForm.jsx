@@ -1,13 +1,15 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../forms.css';
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { userApi } from '../../../utils/apiUser';
 import { checkingTheFillingEmail, passwordValidationCheck } from '../../../utils/utils';
 import { CardContext } from '../../../context/cardContext';
+import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
 
 const AuthorizationForm = (props) => {
-    const { setActiveModal, setHaveTokenAuth } = useContext(CardContext);
+    const { setActiveModal, setHaveTokenAuth, showPassword, setShowPassword } =
+        useContext(CardContext);
     const {
         register,
         handleSubmit,
@@ -43,18 +45,26 @@ const AuthorizationForm = (props) => {
                     )}
                 </div>
                 <div className='input__wrap'>
-                    <input
-                        type='password'
-                        {...register('password', { ...passwordValidationCheck })}
-                        placeholder='Пароль'
-                        className={errors?.password ? 'form__input warning' : 'form__input'}
-                    />
+                    <div className='input__wrap_pass'>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            {...register('password', { ...passwordValidationCheck })}
+                            placeholder='Пароль'
+                            className={errors?.password ? 'form__input warning' : 'form__input'}
+                        />
+                        <span
+                            className='input__eye_show'
+                            onClick={() => setShowPassword((state) => !state)}
+                        >
+                            {showPassword ? <EyeFill /> : <EyeSlashFill />}
+                        </span>
+                    </div>
                     {errors?.password && (
                         <span className='warning__text'> {errors?.password.message}</span>
                     )}
                 </div>
                 <Link to='/newPass' className='form__info-right'>
-                    <p className='form__info'>Восстановить пароль</p>
+                    <p className='form__info pass__recovery'>Восстановить пароль</p>
                 </Link>
                 <button type='submit' className='form__btn form__btn-basic'>
                     Войти

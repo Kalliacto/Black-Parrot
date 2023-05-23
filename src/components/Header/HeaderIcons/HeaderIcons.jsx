@@ -8,8 +8,7 @@ import { CardContext } from '../../../context/cardContext';
 import { BoxArrowInLeft, BoxArrowRight } from 'react-bootstrap-icons';
 
 const HeaderIcons = () => {
-    const { favorites, setActiveModal, setHaveTokenAuth, haveTokenAuth, user } =
-        useContext(CardContext);
+    const { favorites, setActiveModal, setHaveTokenAuth, haveTokenAuth } = useContext(CardContext);
 
     const logOut = () => {
         localStorage.removeItem('token');
