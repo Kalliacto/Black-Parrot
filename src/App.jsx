@@ -26,6 +26,7 @@ function App() {
     const [favorites, setFavorite] = useState([]);
     const [activeModal, setActiveModal] = useState(false);
     const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
+    const [showPassword, setShowPassword] = useState(false);
 
     const myCards = (card) => {
         return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
@@ -111,6 +112,8 @@ function App() {
         setHaveTokenAuth,
         haveTokenAuth,
         setUser,
+        showPassword,
+        setShowPassword,
     };
 
     return (

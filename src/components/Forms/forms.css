@@ -1,6 +1,6 @@
 .form__wrapper {
-    max-width: 388px;
-    max-height: 370px;
+    min-width: 300px;
+    max-width: 350px;
     display: flex;
     flex-direction: column;
     align-self: stretch;
@@ -47,12 +47,17 @@
     font-size: 16px;
     line-height: 125%;
     color: #1a1a1a;
+    transition: color 0.3s;
 }
 .form__btn:hover {
     cursor: pointer;
+    background: #e0ddcb;
 }
 .form__btn-basic {
     background: #ffe44d;
+}
+.form__btn-basic:hover {
+    background-color: #ffaa0d;
 }
 
 .warning__text {
@@ -64,4 +69,22 @@
 .warning {
     outline: auto;
     outline-color: rgba(218, 25, 25, 0.8);
+}
+.input__wrap_pass {
+    position: relative;
+}
+.input__eye_show {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.pass__recovery {
+    transition: color 0.2s;
+}
+
+.pass__recovery:hover {
+    color: #ffaa0d;
 }
