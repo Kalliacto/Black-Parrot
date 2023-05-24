@@ -4,9 +4,10 @@ import './catalogProduct.css';
 import SortCards from '../../components/SortCards/SortCards';
 import { CardContext } from '../../context/cardContext';
 import { getEndings } from '../../utils/utils';
+import Pagination from '../../components/Pagination/Pagination';
 
-const CatalogProducts = () => {
-    const { card, search } = useContext(CardContext);
+const CatalogProducts = ({ allCards, paginate }) => {
+    const { card, search, currentCards } = useContext(CardContext);
 
     return (
         <>
@@ -20,7 +21,8 @@ const CatalogProducts = () => {
                 ''
             )}
             <SortCards />
-            <CardList cards={card} />
+            <CardList cards={currentCards} />
+            <Pagination allCards={allCards} paginate={paginate} />
         </>
     );
 };
