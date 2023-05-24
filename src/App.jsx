@@ -96,6 +96,13 @@ function App() {
         }
     };
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [cardsOnPage, setCardsOnPage] = useState(4);
+    const lastPageIndex = currentPage * cardsOnPage;
+    const firstPageIndex = lastPageIndex - cardsOnPage;
+    const currentCards = card.slice(firstPageIndex, lastPageIndex);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     const cardsValue = {
         card,
         search,
@@ -114,6 +121,11 @@ function App() {
         setUser,
         showPassword,
         setShowPassword,
+        currentCards,
+        cardsOnPage,
+        setCurrentPage,
+        currentPage,
+        setCardsOnPage,
     };
 
     return (
@@ -123,7 +135,12 @@ function App() {
                 <main className='main'>
                     <div className='container'>
                         <Routes>
-                            <Route path='/' element={<CatalogProducts />} />
+                            <Route
+                                path='/'
+                                element={
+                                    <CatalogProducts allCards={card.length} paginate={paginate} />
+                                }
+                            />
                             <Route path='/product/:id' element={<PageProduct />} />
                             <Route path='/favorite' element={<FavoritePage />} />
                             <Route path='/profile' element={<ProfilePage />}></Route>
