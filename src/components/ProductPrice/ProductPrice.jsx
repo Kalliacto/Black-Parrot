@@ -11,11 +11,17 @@ const ProductPrice = ({ productInfo }) => {
             )}
             {!!productInfo.discount ? (
                 <span className='product__price _red'>
-                    {productInfo.price - (productInfo.price * productInfo.discount) / 100}&nbsp;₽
+                    {Math.round(
+                        productInfo.price - (productInfo.price * productInfo.discount) / 100
+                    )}
+                    &nbsp;₽
                 </span>
             ) : (
                 <span className='product__price _black'>
-                    {productInfo.price - (productInfo.price * productInfo.discount) / 100}&nbsp;₽
+                    {Math.round(
+                        productInfo.price - (productInfo.price * productInfo.discount) / 100
+                    )}
+                    &nbsp;₽
                 </span>
             )}
         </div>

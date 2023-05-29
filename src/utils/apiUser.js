@@ -8,7 +8,8 @@ const config = {
 };
 
 const onResponse = (data) => {
-    return data.ok ? data.json() : Promise.reject(`Что-то пошло не так`);
+    // return data.ok ? data.json() : Promise.reject(`Что-то пошло не так`);
+    return data.ok ? data.json() : Promise.reject(new Error('Что-то пошло не так'));
 };
 
 class UserApi {

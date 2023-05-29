@@ -24,9 +24,10 @@ const AuthorizationForm = (props) => {
                 localStorage.setItem('token', res.token);
                 setActiveModal(false);
                 setHaveTokenAuth(true);
+                alert(`Добро пожаловать, ${res.data.name}`);
                 navigate('/');
             })
-            .catch((error) => alert('Oooops, ' + error));
+            .catch((error) => alert(error));
     };
 
     return (
