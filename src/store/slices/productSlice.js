@@ -17,5 +17,6 @@ const productSlice = createSlice({
     extraReducers: {},
 });
 
+// export const setList  = productSlice.actions.setList; Более длинная запись чтобы достать конкретный action
 export const { setList } = productSlice.actions;
 export default productSlice.reducer;

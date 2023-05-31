@@ -19,9 +19,8 @@
 
 .profile__info {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
+    align-items: center;
+    gap: 30px;
 }
 
 .profile__name {
@@ -75,4 +74,19 @@
 .profile__input_wrap {
     display: flex;
     flex-direction: column;
+}
+
+.avatar__wrap {
+    width: 100px;
+    height: 100px;
+}
+.avatar__img {
+    border-radius: 50%;
+}
+
+.profile__info_detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
 }
