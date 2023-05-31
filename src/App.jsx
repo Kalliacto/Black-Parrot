@@ -18,6 +18,8 @@ import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/Passwo
 import { productRating } from './utils/utils';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { userApi } from './utils/apiUser';
+import { useDispatch } from 'react-redux';
+import { setList } from './store/slices/productSlice';
 
 function App() {
     const [card, setCards] = useState([]);
@@ -27,6 +29,8 @@ function App() {
     const [activeModal, setActiveModal] = useState(false);
     const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
     const [showPassword, setShowPassword] = useState(false);
+
+    const dispatch = useDispatch();
 
     const myCards = (card) => {
         return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
@@ -45,12 +49,12 @@ function App() {
                 setUser(data);
                 const filtered = myCards(res.products);
                 setCards(filtered);
-
+                // dispatch(setList(filtered));
                 const MyFavorite = filtered.filter((item) => findFavorite(item, data._id));
                 setFavorite(MyFavorite);
             })
             .catch((error) => console.log(error));
-    }, [haveTokenAuth]);
+    }, [haveTokenAuth, dispatch]);
 
     const changeLikeCard = async (product, cardLiked) => {
         const updateLikeInCard = await api
