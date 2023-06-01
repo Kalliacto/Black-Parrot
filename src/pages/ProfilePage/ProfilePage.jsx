@@ -1,33 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './profilePage.css';
 import GoBack from '../../components/GoBack/GoBack';
-import { userApi } from '../../utils/apiUser';
 import { useForm } from 'react-hook-form';
-import { CardContext } from '../../context/cardContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../../store/slices/userSlice';
+import { getUser, updateUser } from '../../store/slices/userSlice';
 
 const ProfilePage = () => {
+    const { data: user } = useSelector((s) => s.user);
+    const dispatch = useDispatch();
     const [formActive, setFormActive] = useState(false);
-    const { user, setUser } = useContext(CardContext);
     const { register, handleSubmit } = useForm({
         defaultValues: { name: user.name, about: user.about },
     });
-
-    const dispatch = useDispatch();
-    const { data } = useSelector((s) => s.user);
-
-    console.log(data);
 
     useEffect(() => {
         dispatch(getUser());
     }, [dispatch]);
 
-    const sendData = async (data) => {
-        return await userApi
-            .changingDataUser(data)
-            .then((dataUser) => setUser({ ...dataUser }))
-            .catch((err) => alert(err));
+    const sendData = (data) => {
+        dispatch(updateUser(data));
     };
 
     return (
@@ -36,7 +27,7 @@ const ProfilePage = () => {
             <h2 className='profile__title'>Профиль</h2>
             <div className='profile__info'>
                 <div className='avatar__wrap'>
-                    <img src={data?.avatar} alt='avatar' className='avatar__img' />
+                    <img src={user?.avatar} alt='avatar' className='avatar__img' />
                 </div>
                 <div className='profile__info_detail'>
                     <p className='profile__name'>{user.name}</p>

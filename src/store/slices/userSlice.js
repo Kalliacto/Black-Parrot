@@ -12,12 +12,12 @@ export const getUser = createAsyncThunk('user/getUser', async function (str) {
     return data;
 });
 
-// export const updateUser = createAsyncThunk('user/updateUser', async function (data) {
-//     const data = await userApi.changingDataUser(data);
-//     return data;
-// });
+export const updateUser = createAsyncThunk('user/updateUser', async function (newUserData) {
+    const data = await userApi.changingDataUser(newUserData);
+    return data;
+});
 
-//------------slice// reduser-----------
+//------------slice// reducer-----------
 const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -26,6 +26,10 @@ const userSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(getUser.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.data = action.payload;
+        });
+        builder.addCase(updateUser.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
         });
