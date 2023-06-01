@@ -22,35 +22,39 @@ export const updateUser = createAsyncThunk('user/updateUser', async function (ne
 //     return data;
 // });
 
+const showError = (error) => {
+    return alert(error);
+};
+
+const isLoadingData = (data) => {
+    return data.type.endsWith('pending');
+};
+const forErrors = (data) => {
+    return data.type.endsWith('rejected');
+};
 //------------slice// reducer-----------
 const userSlice = createSlice({
     name: 'user',
     initialState,
     extraReducers: (builder) => {
-        builder.addCase(getUser.pending, (state, action) => {
-            state.isLoading = true;
-        });
         builder.addCase(getUser.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
-        });
-        builder.addCase(updateUser.pending, (state, action) => {
-            state.isLoading = true;
         });
         builder.addCase(updateUser.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
         });
-        // builder.addCase(updateUserAvatar.pending, (state, action) => {
-        //     state.isLoading = true;
-        // });
         // builder.addCase(updateUserAvatar.fulfilled, (state, action) => {
         //     state.isLoading = false;
         //     state.data = action.payload;
         // });
-        // builder.addCase(getUser.rejected, (state, action) => {
-        //     state.error = [...error, action.payload];
-        // });
+        builder.addMatcher(isLoadingData, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addMatcher(forErrors, (state, action) => {
+            showError(action.error.message);
+        });
     },
 });
 
