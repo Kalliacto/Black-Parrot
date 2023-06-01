@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser, updateUser } from '../../store/slices/userSlice';
 
 const ProfilePage = () => {
-    const { data: user } = useSelector((s) => s.user);
+    const { data: user, isLoading } = useSelector((s) => s.user);
     const dispatch = useDispatch();
     const [formActive, setFormActive] = useState(false);
     const { register, handleSubmit } = useForm({
@@ -25,16 +25,20 @@ const ProfilePage = () => {
         <div className='profile__container'>
             <GoBack />
             <h2 className='profile__title'>Профиль</h2>
-            <div className='profile__info'>
-                <div className='avatar__wrap'>
-                    <img src={user?.avatar} alt='avatar' className='avatar__img' />
+            {isLoading ? (
+                <div className='profile__info preload'></div>
+            ) : (
+                <div className='profile__info'>
+                    <div className='avatar__wrap'>
+                        <img src={user?.avatar} alt='avatar' className='avatar__img' />
+                    </div>
+                    <div className='profile__info_detail'>
+                        <p className='profile__name'>{user.name}</p>
+                        <span className='profile__contact'>{user.about}</span>
+                        <span className='profile__contact'>{user.email}</span>
+                    </div>
                 </div>
-                <div className='profile__info_detail'>
-                    <p className='profile__name'>{user.name}</p>
-                    <span className='profile__contact'>{user.about}</span>
-                    <span className='profile__contact'>{user.email}</span>
-                </div>
-            </div>
+            )}
             <button onClick={() => setFormActive(!formActive)} className='profile_btn'>
                 Изменить
             </button>

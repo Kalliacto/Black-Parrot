@@ -17,6 +17,11 @@ export const updateUser = createAsyncThunk('user/updateUser', async function (ne
     return data;
 });
 
+// export const updateUserAvatar = createAsyncThunk('user/updateUserAvatar', async function (newUserData) {
+//     const data = await userApi.(newUserData);
+//     return data;
+// });
+
 //------------slice// reducer-----------
 const userSlice = createSlice({
     name: 'user',
@@ -29,10 +34,20 @@ const userSlice = createSlice({
             state.isLoading = false;
             state.data = action.payload;
         });
+        builder.addCase(updateUser.pending, (state, action) => {
+            state.isLoading = true;
+        });
         builder.addCase(updateUser.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
         });
+        // builder.addCase(updateUserAvatar.pending, (state, action) => {
+        //     state.isLoading = true;
+        // });
+        // builder.addCase(updateUserAvatar.fulfilled, (state, action) => {
+        //     state.isLoading = false;
+        //     state.data = action.payload;
+        // });
         // builder.addCase(getUser.rejected, (state, action) => {
         //     state.error = [...error, action.payload];
         // });
