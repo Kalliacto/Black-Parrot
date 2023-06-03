@@ -4,8 +4,9 @@ import { timeOptions } from '../../utils/utils';
 import Rate from '../Rate/Rate';
 import { useForm } from 'react-hook-form';
 import { api } from '../../utils/api';
-import { CardContext } from '../../context/cardContext';
+
 import { Trash3 } from 'react-bootstrap-icons';
+import { useSelector } from 'react-redux';
 
 const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
     const [formActive, setFormActive] = useState(false);
@@ -15,8 +16,9 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
         formState: { errors },
         reset,
     } = useForm({ mode: 'onBlur' });
-    const { user } = useContext(CardContext);
+
     const [rate, setRate] = useState(3);
+    const { userData } = useSelector((s) => s.user);
 
     const submitReview = async (review) => {
         return await api
@@ -91,7 +93,7 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
                             </div>
                             <div className='reviews__text-wrap'>
                                 <div className='reviews__text'>{item?.text}</div>
-                                {user._id === item.author._id ? (
+                                {userData._id === item.author._id ? (
                                     <Trash3
                                         className='reviews__trash'
                                         onClick={() => deleteReview(item._id)}

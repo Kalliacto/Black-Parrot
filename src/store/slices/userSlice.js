@@ -2,24 +2,21 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { userApi } from '../../utils/apiUser';
 
 const initialState = {
-    data: {},
+    userData: {},
     isLoading: false,
 };
 //------------actions-------------
 //---------------для работы с ассинхроном необходимо достать createAsyncThunk-------
-export const getUser = createAsyncThunk('user/getUser', async function (str) {
-    const data = await userApi.getUserInfo();
-    return data;
+export const getUser = createAsyncThunk('user/getUser', async function (str, { getState }) {
+    return await userApi.getUserInfo();
 });
 
 export const updateUser = createAsyncThunk('user/updateUser', async function (newUserData) {
-    const data = await userApi.changingDataUser(newUserData);
-    return data;
+    return await userApi.changingDataUser(newUserData);
 });
 
 // export const updateUserAvatar = createAsyncThunk('user/updateUserAvatar', async function (newUserData) {
-//     const data = await userApi.(newUserData);
-//     return data;
+//     return await userApi.(newUserData);
 // });
 
 const showError = (error) => {
@@ -39,23 +36,24 @@ const userSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getUser.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.data = action.payload;
+            state.userData = action.payload;
         });
         builder.addCase(updateUser.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.data = action.payload;
+            state.userData = action.payload;
         });
         // builder.addCase(updateUserAvatar.fulfilled, (state, action) => {
         //     state.isLoading = false;
         //     state.data = action.payload;
         // });
-        builder.addMatcher(isLoadingData, (state, action) => {
+        builder.addMatcher(isLoadingData, (state) => {
             state.isLoading = true;
         });
-        builder.addMatcher(forErrors, (state, action) => {
+        builder.addMatcher(forErrors, (action) => {
             showError(action.error.message);
         });
     },
+    reducers: {},
 });
 
 // export const {} = userSlice.actions;

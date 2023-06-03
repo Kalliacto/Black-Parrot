@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser, updateUser } from '../../store/slices/userSlice';
 
 const ProfilePage = () => {
-    const { data: user, isLoading } = useSelector((s) => s.user);
+    const { userData, isLoading } = useSelector((s) => s.user);
     const dispatch = useDispatch();
     const [formActive, setFormActive] = useState(false);
     const { register, handleSubmit } = useForm({
-        defaultValues: { name: user.name, about: user.about },
+        defaultValues: { name: userData.name, about: userData.about },
     });
 
     useEffect(() => {
@@ -30,12 +30,12 @@ const ProfilePage = () => {
             ) : (
                 <div className='profile__info'>
                     <div className='avatar__wrap'>
-                        <img src={user?.avatar} alt='avatar' className='avatar__img' />
+                        <img src={userData?.avatar} alt='avatar' className='avatar__img' />
                     </div>
                     <div className='profile__info_detail'>
-                        <p className='profile__name'>{user.name}</p>
-                        <span className='profile__contact'>{user.about}</span>
-                        <span className='profile__contact'>{user.email}</span>
+                        <p className='profile__name'>{userData.name}</p>
+                        <span className='profile__contact'>{userData.about}</span>
+                        <span className='profile__contact'>{userData.email}</span>
                     </div>
                 </div>
             )}

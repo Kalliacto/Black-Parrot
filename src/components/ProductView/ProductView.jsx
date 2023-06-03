@@ -10,12 +10,14 @@ import ProductReviews from '../ProductReviews/ProductReviews';
 import { getEndings } from '../../utils/utils';
 import Rate from '../Rate/Rate';
 import Modal from '../Modal/Modal';
+import { useSelector } from 'react-redux';
 
 const ProductView = ({ productInfo, setProductInfo, id }) => {
-    const { card, user, setCards, findFavorite, setFavorite, productRating, setActiveModal } =
+    const { card, setCards, findFavorite, setFavorite, productRating, setActiveModal } =
         useContext(CardContext);
     const [allReviews, setAllReviews] = useState([]);
-    const cardIsLiked = productInfo.likes ? productInfo.likes.includes(user._id) : false;
+    const { userData } = useSelector((s) => s.user);
+    const cardIsLiked = productInfo.likes ? productInfo.likes.includes(userData._id) : false;
 
     const changeLikeCardOne = async (id, cardIsLiked) => {
         const updateLikeInCard = await api
@@ -28,7 +30,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
         setProductInfo(updateLikeInCard);
         setCards([...newCard]);
 
-        const newFavorite = newCard.filter((item) => findFavorite(item, user._id));
+        const newFavorite = newCard.filter((item) => findFavorite(item, userData._id));
         setFavorite(newFavorite);
     };
 

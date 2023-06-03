@@ -4,11 +4,13 @@ import { ReactComponent as Like } from './img/Like.svg';
 import { Link } from 'react-router-dom';
 import { CardContext } from '../../context/cardContext';
 import ProductPrice from '../ProductPrice/ProductPrice';
+import { useSelector } from 'react-redux';
 
 const Card = React.memo(({ product }) => {
-    const { user, changeLikeCard } = useContext(CardContext);
+    const { changeLikeCard } = useContext(CardContext);
 
-    const cardLiked = product.likes.some((item) => item === user._id);
+    const { userData } = useSelector((s) => s.user);
+    const cardLiked = product.likes.some((item) => item === userData._id);
 
     return (
         <div className='card'>

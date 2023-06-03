@@ -17,20 +17,19 @@ import AuthorizationForm from './components/Forms/AuthorizationForm/Authorizatio
 import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/PasswordRecoveryForm';
 import { productRating } from './utils/utils';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
-import { userApi } from './utils/apiUser';
-import { useDispatch } from 'react-redux';
-import { setList } from './store/slices/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from './store/slices/userSlice';
 
 function App() {
     const [card, setCards] = useState([]);
     const [search, setSearch] = useState(undefined);
-    const [user, setUser] = useState({});
     const [favorites, setFavorite] = useState([]);
     const [activeModal, setActiveModal] = useState(false);
     const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
     const [showPassword, setShowPassword] = useState(false);
 
     const dispatch = useDispatch();
+    const { userData } = useSelector((s) => s.user);
 
     const myCards = (card) => {
         return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
@@ -44,17 +43,20 @@ function App() {
     }, [search]);
 
     useEffect(() => {
-        Promise.all([userApi.getUserInfo(), api.getAllProducts()])
-            .then(([data, res]) => {
-                setUser(data);
-                const filtered = myCards(res.products);
-                setCards(filtered);
-                // dispatch(setList(filtered));
-                const MyFavorite = filtered.filter((item) => findFavorite(item, data._id));
-                setFavorite(MyFavorite);
-            })
-            .catch((error) => console.log(error));
-    }, [haveTokenAuth, dispatch]);
+        if (!userData._id) return;
+
+        api.getAllProducts().then((res) => {
+            const filtered = myCards(res.products);
+            // dispatch(setList(filtered));
+            setCards(filtered);
+            const MyFavorite = filtered.filter((item) => findFavorite(item, userData._id));
+            setFavorite(MyFavorite);
+        });
+    }, [haveTokenAuth, dispatch, userData?._id]);
+
+    useEffect(() => {
+        dispatch(getUser());
+    }, [dispatch]);
 
     const changeLikeCard = async (product, cardLiked) => {
         const updateLikeInCard = await api
@@ -110,7 +112,6 @@ function App() {
     const cardsValue = {
         card,
         search,
-        user,
         favorites,
         setCards,
         changeLikeCard,
@@ -122,7 +123,6 @@ function App() {
         setActiveModal,
         setHaveTokenAuth,
         haveTokenAuth,
-        setUser,
         showPassword,
         setShowPassword,
         currentCards,
