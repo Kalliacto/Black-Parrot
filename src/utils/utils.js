@@ -49,3 +49,19 @@ export const telephoneValidationCheck = {
 export const checkingTheFillingEmail = { required: 'Email обязательно!' };
 
 export const checkingTheFillingGroup = { required: 'Введите вашу группу обязательно!' };
+
+export const sortItem = [
+    { id: 'popular', title: 'Популярные' },
+    { id: 'newProduct', title: 'Новинки' },
+    { id: 'lowPrice', title: 'Сначала дешёвые' },
+    { id: 'highPrice', title: 'Сначала дорогие' },
+    { id: 'sale', title: 'По скидке' },
+    { id: 'rate', title: 'По рейтингу' },
+];
+export const myCards = (card) => {
+    return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
+};
+
+export const findFavorite = (card, id) => {
+    return card.likes.some((i) => i === id);
+};

@@ -15,25 +15,27 @@ import Modal from './components/Modal/Modal';
 import RegistrationForm from './components/Forms/RegistrationForm/RegistrationForm';
 import AuthorizationForm from './components/Forms/AuthorizationForm/AuthorizationForm';
 import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/PasswordRecoveryForm';
-import { productRating } from './utils/utils';
+import { myCards, productRating } from './utils/utils';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './store/slices/userSlice';
+import { getAllProductsData } from './store/slices/productSlice';
 
 function App() {
     const [card, setCards] = useState([]);
     const [search, setSearch] = useState(undefined);
-    const [favorites, setFavorite] = useState([]);
     const [activeModal, setActiveModal] = useState(false);
     const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
     const [showPassword, setShowPassword] = useState(false);
 
     const dispatch = useDispatch();
-    const { userData } = useSelector((s) => s.user);
+    // const { userData } = useSelector((s) => s.user);
+    const { dataProducts } = useSelector((s) => s.products);
 
-    const myCards = (card) => {
-        return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
-    };
+    useEffect(() => {
+        // Проверка на токен должна быть тут, если нет ничего не делай
+        dispatch(getUser()).then(() => dispatch(getAllProductsData()));
+    }, [dispatch]);
 
     useEffect(() => {
         if (search === undefined) return;
@@ -41,41 +43,6 @@ function App() {
             .then((data) => setCards(myCards(data)))
             .catch((error) => console.log(error));
     }, [search]);
-
-    useEffect(() => {
-        if (!userData._id) return;
-
-        api.getAllProducts().then((res) => {
-            const filtered = myCards(res.products);
-            // dispatch(setList(filtered));
-            setCards(filtered);
-            const MyFavorite = filtered.filter((item) => findFavorite(item, userData._id));
-            setFavorite(MyFavorite);
-        });
-    }, [haveTokenAuth, dispatch, userData?._id]);
-
-    useEffect(() => {
-        dispatch(getUser());
-    }, [dispatch]);
-
-    const changeLikeCard = async (product, cardLiked) => {
-        const updateLikeInCard = await api
-            .editLikeCard(product, cardLiked)
-            .catch((error) => console.log(error));
-
-        const newCard = card.map((item) =>
-            item._id === updateLikeInCard._id ? updateLikeInCard : item
-        );
-        setCards([...newCard]);
-
-        cardLiked
-            ? setFavorite((state) => state.filter((item) => item._id !== updateLikeInCard._id))
-            : setFavorite((state) => [updateLikeInCard, ...state]);
-    };
-
-    const findFavorite = (card, id) => {
-        return card.likes.some((i) => i === id);
-    };
 
     const onSort = (sortId) => {
         switch (sortId) {
@@ -106,18 +73,12 @@ function App() {
     const [cardsOnPage, setCardsOnPage] = useState(4);
     const lastPageIndex = currentPage * cardsOnPage;
     const firstPageIndex = lastPageIndex - cardsOnPage;
-    const currentCards = card.slice(firstPageIndex, lastPageIndex);
+    const currentCards = dataProducts.slice(firstPageIndex, lastPageIndex);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const cardsValue = {
-        card,
         search,
-        favorites,
-        setCards,
-        changeLikeCard,
         onSort,
-        findFavorite,
-        setFavorite,
         productRating,
         activeModal,
         setActiveModal,
@@ -142,7 +103,10 @@ function App() {
                             <Route
                                 path='/'
                                 element={
-                                    <CatalogProducts allCards={card.length} paginate={paginate} />
+                                    <CatalogProducts
+                                        allCards={dataProducts.length}
+                                        paginate={paginate}
+                                    />
                                 }
                             />
                             <Route path='/product/:id' element={<PageProduct />} />

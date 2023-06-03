@@ -1,21 +1,21 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './favoritePage.css';
 import GoBack from '../../components/GoBack/GoBack';
 import { CardList } from '../../components/CardList/CardList';
-import { CardContext } from '../../context/cardContext';
 import NotFoundComponent from '../../components/NotFoundComponent/NotFoundComponent';
+import { useSelector } from 'react-redux';
 
 const FavoritePage = () => {
-    const { favorites } = useContext(CardContext);
+    const { favoritesCards } = useSelector((s) => s.products);
 
     return (
         <div className='favorite__wrapper'>
             <GoBack />
-            {favorites.length !== 0 ? (
+            {favoritesCards.length !== 0 ? (
                 <>
                     <h2 className='favorite__title'>Избранное</h2>
                     <div></div>
-                    <CardList cards={favorites} />
+                    <CardList cards={favoritesCards} />
                 </>
             ) : (
                 <NotFoundComponent

@@ -58,6 +58,12 @@ const ProfilePage = () => {
                             className='form__profile_input'
                             placeholder='Обо мне'
                         />
+                        <input
+                            type='avatar'
+                            {...register('avatar')}
+                            className='form__profile_input'
+                            placeholder='Ваш новый аватар'
+                        />
                         <button type='submit' className='profile_btn'>
                             Сохранить
                         </button>

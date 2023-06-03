@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { userApi } from '../../utils/apiUser';
+import { forErrors, isLoadingData, showError } from '../utilsStore';
 
 const initialState = {
     userData: {},
@@ -7,28 +8,30 @@ const initialState = {
 };
 //------------actions-------------
 //---------------для работы с ассинхроном необходимо достать createAsyncThunk-------
-export const getUser = createAsyncThunk('user/getUser', async function (str, { getState }) {
-    return await userApi.getUserInfo();
-});
+export const getUser = createAsyncThunk(
+    'user/getUser',
+    async function (str, { getState, fulfillWithValue }) {
+        try {
+            return await userApi.getUserInfo();
+        } catch {}
+    }
+);
 
-export const updateUser = createAsyncThunk('user/updateUser', async function (newUserData) {
-    return await userApi.changingDataUser(newUserData);
-});
+export const updateUser = createAsyncThunk(
+    'user/updateUser',
+    async function (newUserData, { fulfillWithValue }) {
+        try {
+            if (newUserData.avatar) {
+                return await userApi.changingAvatarUser({ avatar: newUserData.avatar });
+            }
+            return await userApi.changingDataUser({
+                name: newUserData.name,
+                about: newUserData.about,
+            });
+        } catch {}
+    }
+);
 
-// export const updateUserAvatar = createAsyncThunk('user/updateUserAvatar', async function (newUserData) {
-//     return await userApi.(newUserData);
-// });
-
-const showError = (error) => {
-    return alert(error);
-};
-
-const isLoadingData = (data) => {
-    return data.type.endsWith('pending');
-};
-const forErrors = (data) => {
-    return data.type.endsWith('rejected');
-};
 //------------slice// reducer-----------
 const userSlice = createSlice({
     name: 'user',
@@ -42,10 +45,6 @@ const userSlice = createSlice({
             state.isLoading = false;
             state.userData = action.payload;
         });
-        // builder.addCase(updateUserAvatar.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.data = action.payload;
-        // });
         builder.addMatcher(isLoadingData, (state) => {
             state.isLoading = true;
         });

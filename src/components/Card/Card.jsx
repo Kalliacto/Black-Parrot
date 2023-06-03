@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './card.css';
 import { ReactComponent as Like } from './img/Like.svg';
 import { Link } from 'react-router-dom';
-import { CardContext } from '../../context/cardContext';
 import ProductPrice from '../ProductPrice/ProductPrice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { changingLikeOnProductCards } from '../../store/slices/productSlice';
 
 const Card = React.memo(({ product }) => {
-    const { changeLikeCard } = useContext(CardContext);
-
     const { userData } = useSelector((s) => s.user);
+    const dispatch = useDispatch();
+
     const cardLiked = product.likes.some((item) => item === userData._id);
 
     return (
@@ -29,7 +29,7 @@ const Card = React.memo(({ product }) => {
             <div className='card__sticky card__sticky_right'>
                 <button
                     onClick={() => {
-                        changeLikeCard(product._id, cardLiked);
+                        dispatch(changingLikeOnProductCards({ product, cardLiked: cardLiked }));
                     }}
                     className={`btn__like ${cardLiked ? 'card__like_active' : 'card__like'}`}
                 >

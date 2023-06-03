@@ -7,14 +7,13 @@ import { api } from '../../utils/api';
 import { Truck, Award, ZoomIn } from 'react-bootstrap-icons';
 import ProductPrice from '../ProductPrice/ProductPrice';
 import ProductReviews from '../ProductReviews/ProductReviews';
-import { getEndings } from '../../utils/utils';
+import { findFavorite, getEndings } from '../../utils/utils';
 import Rate from '../Rate/Rate';
 import Modal from '../Modal/Modal';
 import { useSelector } from 'react-redux';
 
 const ProductView = ({ productInfo, setProductInfo, id }) => {
-    const { card, setCards, findFavorite, setFavorite, productRating, setActiveModal } =
-        useContext(CardContext);
+    const { card, setCards, setFavorite, productRating, setActiveModal } = useContext(CardContext);
     const [allReviews, setAllReviews] = useState([]);
     const { userData } = useSelector((s) => s.user);
     const cardIsLiked = productInfo.likes ? productInfo.likes.includes(userData._id) : false;

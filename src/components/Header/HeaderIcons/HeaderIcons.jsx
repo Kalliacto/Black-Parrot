@@ -6,9 +6,13 @@ import { ReactComponent as Cart } from './icons/ic-cart.svg';
 import { Link } from 'react-router-dom';
 import { CardContext } from '../../../context/cardContext';
 import { BoxArrowInLeft, BoxArrowRight } from 'react-bootstrap-icons';
+import { useSelector } from 'react-redux';
 
 const HeaderIcons = () => {
-    const { favorites, setActiveModal, setHaveTokenAuth, haveTokenAuth } = useContext(CardContext);
+    const { setActiveModal, setHaveTokenAuth, haveTokenAuth } = useContext(CardContext);
+
+    const { favoritesCards } = useSelector((s) => s.products);
+    console.log({ favoritesCards });
 
     const logOut = () => {
         localStorage.removeItem('token');
@@ -22,8 +26,10 @@ const HeaderIcons = () => {
                     <div title='В избранное'>
                         <Link className='header__heart' to={'/favorite'}>
                             <Heart />
-                            {favorites.length !== 0 ? (
-                                <span className='header__icons_bubble'>{favorites.length}</span>
+                            {favoritesCards.length !== 0 ? (
+                                <span className='header__icons_bubble'>
+                                    {favoritesCards.length}
+                                </span>
                             ) : (
                                 ''
                             )}

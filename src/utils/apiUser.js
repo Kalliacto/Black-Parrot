@@ -69,6 +69,14 @@ class UserApi {
             body: JSON.stringify(data),
         }).then(onResponse);
     }
+
+    changingAvatarUser(data) {
+        return fetch(`${this.baseUrl}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: this.headers,
+            body: JSON.stringify(data),
+        }).then(onResponse);
+    }
 }
 
 export const userApi = new UserApi(config);
