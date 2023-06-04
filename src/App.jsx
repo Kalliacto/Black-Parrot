@@ -19,7 +19,7 @@ import { myCards, productRating } from './utils/utils';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './store/slices/userSlice';
-import { getAllProductsData } from './store/slices/productSlice';
+import { getAllProductsData } from './store/slices/productsSlice';
 
 function App() {
     const [card, setCards] = useState([]);
@@ -79,7 +79,6 @@ function App() {
     const cardsValue = {
         search,
         onSort,
-        productRating,
         activeModal,
         setActiveModal,
         setHaveTokenAuth,

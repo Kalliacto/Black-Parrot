@@ -3,19 +3,22 @@ import ProductView from '../../components/ProductView/ProductView';
 import { useParams } from 'react-router-dom';
 import { api } from '../../utils/api';
 import './pageProduct.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getInfoOneProduct, getProductAllReviewsInfo } from '../../store/slices/oneProductSlice';
 
 const PageProduct = () => {
-    const [productInfo, setProductInfo] = useState({});
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const { product: productInfo } = useSelector((s) => s.oneProduct);
 
     useEffect(() => {
-        api.getOneProduct(id).then((data) => setProductInfo(data));
+        dispatch(getInfoOneProduct(id)).then(() => dispatch(getProductAllReviewsInfo(id)));
     }, [id]);
 
     return (
         <>
             {!!Object.keys(productInfo).length ? (
-                <ProductView productInfo={productInfo} setProductInfo={setProductInfo} id={id} />
+                <ProductView productInfo={productInfo} id={id} />
             ) : (
                 <div>Loading....</div>
             )}

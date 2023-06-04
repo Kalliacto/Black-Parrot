@@ -50,6 +50,13 @@ export const checkingTheFillingEmail = { required: 'Email обязательно
 
 export const checkingTheFillingGroup = { required: 'Введите вашу группу обязательно!' };
 
+export const checkingTheField = {
+    required: {
+        value: true,
+        message: 'Обязательное поле для заполнения',
+    },
+};
+
 export const sortItem = [
     { id: 'popular', title: 'Популярные' },
     { id: 'newProduct', title: 'Новинки' },

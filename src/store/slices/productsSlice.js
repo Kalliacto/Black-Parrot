@@ -26,6 +26,7 @@ export const changingLikeOnProductCards = createAsyncThunk(
     async (data, arg) => {
         try {
             const updateLikeInCard = await api.editLikeCard(data.product._id, data.cardLiked);
+            console.log(data.product._id, data.cardLiked);
             return arg.fulfillWithValue({ updateLikeInCard, cardLiked: data.cardLiked });
         } catch (error) {}
     }
@@ -54,7 +55,6 @@ const productSlice = createSlice({
             state.dataProducts = state.dataProducts.map((item) =>
                 item._id === updateLikeInCard._id ? updateLikeInCard : item
             );
-
             if (cardLiked) {
                 state.favoritesCards = state.favoritesCards.filter(
                     (item) => item._id !== updateLikeInCard._id

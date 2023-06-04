@@ -12,7 +12,6 @@ const HeaderIcons = () => {
     const { setActiveModal, setHaveTokenAuth, haveTokenAuth } = useContext(CardContext);
 
     const { favoritesCards } = useSelector((s) => s.products);
-    console.log({ favoritesCards });
 
     const logOut = () => {
         localStorage.removeItem('token');

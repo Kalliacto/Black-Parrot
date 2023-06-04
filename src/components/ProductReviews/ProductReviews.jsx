@@ -1,14 +1,14 @@
 import React, { memo, useState } from 'react';
 import './productReviews.css';
-import { timeOptions } from '../../utils/utils';
+import { checkingTheField, timeOptions } from '../../utils/utils';
 import Rate from '../Rate/Rate';
 import { useForm } from 'react-hook-form';
 import { api } from '../../utils/api';
-
 import { Trash3 } from 'react-bootstrap-icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addReview, deleteReview } from '../../store/slices/oneProductSlice';
 
-const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
+const ProductReviews = memo(({ productInfo }) => {
     const [formActive, setFormActive] = useState(false);
     const {
         register,
@@ -19,37 +19,14 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
 
     const [rate, setRate] = useState(3);
     const { userData } = useSelector((s) => s.user);
-
-    const submitReview = async (review) => {
-        return await api
-            .addNewReview(productInfo._id, review)
-            .then((product) => setAllReviews(product.reviews))
-            .catch((error) => console.log(error));
-    };
-
-    const deleteReview = async (reviewId) => {
-        return await api
-            .deleteProductReview(productInfo._id, reviewId)
-            .then(() =>
-                setAllReviews((state) =>
-                    state.filter((productReview) => productReview._id !== reviewId)
-                )
-            )
-            .catch((error) => console.log(error));
-    };
+    const { reviews: allReviews } = useSelector((s) => s.oneProduct);
+    const dispatch = useDispatch();
 
     const sendReview = ({ text }) => {
-        submitReview({ text, rating: rate });
+        dispatch(addReview({ id: productInfo._id, body: { text, rating: rate } }));
         reset();
         setFormActive(false);
         setRate(3);
-    };
-
-    const checkingTheField = {
-        required: {
-            value: true,
-            message: 'Обязательное поле для заполнения',
-        },
     };
 
     return (
@@ -96,7 +73,9 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
                                 {userData._id === item.author._id ? (
                                     <Trash3
                                         className='reviews__trash'
-                                        onClick={() => deleteReview(item._id)}
+                                        onClick={() =>
+                                            dispatch(deleteReview({ productInfo, item }))
+                                        }
                                     />
                                 ) : (
                                     ''

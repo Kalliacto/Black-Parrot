@@ -4,7 +4,7 @@ import { ReactComponent as Like } from './img/Like.svg';
 import { Link } from 'react-router-dom';
 import ProductPrice from '../ProductPrice/ProductPrice';
 import { useDispatch, useSelector } from 'react-redux';
-import { changingLikeOnProductCards } from '../../store/slices/productSlice';
+import { changingLikeOnProductCards } from '../../store/slices/productsSlice';
 
 const Card = React.memo(({ product }) => {
     const { userData } = useSelector((s) => s.user);
