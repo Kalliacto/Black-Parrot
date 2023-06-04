@@ -29,7 +29,6 @@ function App() {
     const [showPassword, setShowPassword] = useState(false);
 
     const dispatch = useDispatch();
-    // const { userData } = useSelector((s) => s.user);
     const { dataProducts } = useSelector((s) => s.products);
 
     useEffect(() => {

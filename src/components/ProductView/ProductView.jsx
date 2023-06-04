@@ -3,18 +3,17 @@ import './productView.css';
 import GoBack from '../GoBack/GoBack';
 import { ReactComponent as Like } from '../Card/img/Like.svg';
 import { CardContext } from '../../context/cardContext';
-import { api } from '../../utils/api';
 import { Truck, Award, ZoomIn } from 'react-bootstrap-icons';
 import ProductPrice from '../ProductPrice/ProductPrice';
 import ProductReviews from '../ProductReviews/ProductReviews';
-import { findFavorite, getEndings, productRating } from '../../utils/utils';
+import { getEndings, productRating } from '../../utils/utils';
 import Rate from '../Rate/Rate';
 import Modal from '../Modal/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeLikeOneCard, changingLikeOnProductCards } from '../../store/slices/productsSlice';
+import { changingLikeOnProductCards } from '../../store/slices/productsSlice';
 
-const ProductView = ({ productInfo, id }) => {
-    const { setCards, setFavorite, setActiveModal } = useContext(CardContext);
+const ProductView = ({ productInfo }) => {
+    const { setActiveModal } = useContext(CardContext);
 
     const { userData } = useSelector((s) => s.user);
     const { reviews: allReviews } = useSelector((s) => s.oneProduct);
@@ -23,19 +22,7 @@ const ProductView = ({ productInfo, id }) => {
     const cardLiked = productInfo.likes ? productInfo.likes.includes(userData._id) : false;
 
     const changeLikeCardOne = (productInfo, cardLiked) => {
-        dispatch(changingLikeOnProductCards({ productInfo, cardLiked: cardLiked }));
-        // const updateLikeInCard = api
-        //     .editLikeCard(id, cardLiked)
-        //     .catch((error) => console.log(error));
-
-        // const newCard = dataProducts.map((item) =>
-        //     item._id === updateLikeInCard._id ? updateLikeInCard : item
-        // );
-        // setProductInfo(updateLikeInCard);
-        // setCards([...newCard]);
-
-        // const newFavorite = newCard.filter((item) => findFavorite(item, userData._id));
-        // setFavorite(newFavorite);
+        dispatch(changingLikeOnProductCards({ product: productInfo, cardLiked }));
     };
 
     return (

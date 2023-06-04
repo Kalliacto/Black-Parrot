@@ -3,6 +3,9 @@ export const showError = (error) => {
 };
 
 export const isLoadingData = (data) => {
+    if (data.type.includes('Like') || data.type.includes('Review')) {
+        return false;
+    }
     return data.type.endsWith('pending');
 };
 export const forErrors = (data) => {

@@ -5,6 +5,7 @@ import { forErrors, isLoadingData, showError } from '../utilsStore';
 const initialState = {
     product: {},
     reviews: [],
+    isLoading: false,
 };
 
 export const getInfoOneProduct = createAsyncThunk('oneProduct/getInfoOneProduct', async (id) => {
@@ -36,11 +37,18 @@ export const addReview = createAsyncThunk('oneProduct/addReview', async (data) =
 const oneProductSlice = createSlice({
     name: 'oneProductInfo',
     initialState,
+    reducers: {
+        updateProduct(state, action) {
+            state.product = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(getInfoOneProduct.fulfilled, (state, action) => {
+            state.isLoading = false;
             state.product = action.payload;
         });
         builder.addCase(getProductAllReviewsInfo.fulfilled, (state, action) => {
+            state.isLoading = false;
             state.reviews = action.payload;
         });
         builder.addCase(deleteReview.fulfilled, (state, action) => {
@@ -57,5 +65,5 @@ const oneProductSlice = createSlice({
         });
     },
 });
-
+export const { updateProduct } = oneProductSlice.actions;
 export default oneProductSlice.reducer;

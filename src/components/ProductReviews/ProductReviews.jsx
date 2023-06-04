@@ -3,7 +3,6 @@ import './productReviews.css';
 import { checkingTheField, timeOptions } from '../../utils/utils';
 import Rate from '../Rate/Rate';
 import { useForm } from 'react-hook-form';
-import { api } from '../../utils/api';
 import { Trash3 } from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReview, deleteReview } from '../../store/slices/oneProductSlice';

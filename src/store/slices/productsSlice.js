@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../utils/api';
 import { forErrors, isLoadingData, showError } from '../utilsStore';
 import { findFavorite, myCards } from '../../utils/utils';
+import { getInfoOneProduct, updateProduct } from './oneProductSlice';
 
 const initialState = {
     dataProducts: [],
@@ -12,7 +13,7 @@ const initialState = {
 
 export const getAllProductsData = createAsyncThunk(
     'products/getAllProductsData',
-    async (_, { getState, fulfillWithValue, rejectWithValue }) => {
+    async (_, { getState, fulfillWithValue }) => {
         try {
             const state = getState();
             const allProducts = await api.getAllProducts();
@@ -23,12 +24,15 @@ export const getAllProductsData = createAsyncThunk(
 
 export const changingLikeOnProductCards = createAsyncThunk(
     'products/changingLikeOnProductCards',
-    async (data, arg) => {
+    async (data, { dispatch, fulfillWithValue, rejectWithValue }) => {
         try {
             const updateLikeInCard = await api.editLikeCard(data.product._id, data.cardLiked);
-            console.log(data.product._id, data.cardLiked);
-            return arg.fulfillWithValue({ updateLikeInCard, cardLiked: data.cardLiked });
-        } catch (error) {}
+            // dispatch(getInfoOneProduct(data.product._id));такой вариант норм?
+            dispatch(updateProduct(updateLikeInCard));
+            return fulfillWithValue({ updateLikeInCard, cardLiked: data.cardLiked });
+        } catch (error) {
+            //    return rejectWithValue()
+        }
     }
 );
 
@@ -36,13 +40,9 @@ export const changingLikeOnProductCards = createAsyncThunk(
 const productSlice = createSlice({
     name: 'product',
     initialState,
-    reducers: {
-        // setList(state, action) {
-        //     state.dataProducts = action.payload;
-        // },
-    },
     extraReducers: (builder) => {
         builder.addCase(getAllProductsData.fulfilled, (state, action) => {
+            state.isLoading = false;
             const filteredCards = myCards(action.payload.products);
             state.dataProducts = filteredCards;
             state.total = filteredCards.length;
@@ -55,6 +55,7 @@ const productSlice = createSlice({
             state.dataProducts = state.dataProducts.map((item) =>
                 item._id === updateLikeInCard._id ? updateLikeInCard : item
             );
+
             if (cardLiked) {
                 state.favoritesCards = state.favoritesCards.filter(
                     (item) => item._id !== updateLikeInCard._id
