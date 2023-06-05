@@ -10,16 +10,14 @@ import { useSelector } from 'react-redux';
 const CatalogProducts = ({ allCards, paginate }) => {
     const { search, currentCards } = useContext(CardContext);
 
-    const { dataProducts } = useSelector((s) => s.products);
-
+    const { products } = useSelector((s) => s.products);
     return (
         <>
             {search ? (
                 <p className='search__info'>
                     По запросу <b>{search}</b>
-                    {dataProducts.length === 1 ? ' найден' : ' найдено'}{' '}
-                    <b>{dataProducts.length}</b>
-                    {getEndings(dataProducts.length, 'товар')}
+                    {products.length === 1 ? ' найден' : ' найдено'} <b>{products.length}</b>
+                    {getEndings(products.length, 'товар')}
                 </p>
             ) : (
                 ''

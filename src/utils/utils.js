@@ -65,7 +65,7 @@ export const sortItem = [
     { id: 'sale', title: 'По скидке' },
     { id: 'rate', title: 'По рейтингу' },
 ];
-export const myCards = (card) => {
+export const myFilterCards = (card) => {
     return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
 };
 

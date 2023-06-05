@@ -27,7 +27,6 @@ const ProductReviews = memo(({ productInfo }) => {
         setFormActive(false);
         setRate(3);
     };
-
     return (
         <div className='product__reviews'>
             <h2 className='product__reviews_title'>Отзывы</h2>
@@ -58,27 +57,35 @@ const ProductReviews = memo(({ productInfo }) => {
                 {allReviews.map((item) => {
                     return (
                         <div key={item._id} className='reviews__item'>
-                            <div className='reviews__name-wrap'>
-                                <span className='reviews__name'>{item.author.name}&#160;</span>
-                                <span className='reviews__date'>
-                                    {new Date(item.created_at).toLocaleString('ru-RU', timeOptions)}
-                                </span>
+                            <div className='author__avatar'>
+                                <img src={item.author.avatar} alt='' />
                             </div>
-                            <div className='reviews__rate'>
-                                <Rate rating={item.rating} />
-                            </div>
-                            <div className='reviews__text-wrap'>
-                                <div className='reviews__text'>{item?.text}</div>
-                                {userData._id === item.author._id ? (
-                                    <Trash3
-                                        className='reviews__trash'
-                                        onClick={() =>
-                                            dispatch(deleteReview({ productInfo, item }))
-                                        }
-                                    />
-                                ) : (
-                                    ''
-                                )}
+                            <div className='reviews__info'>
+                                <div className='reviews__name-wrap'>
+                                    <span className='reviews__name'>{item.author.name}&#160;</span>
+                                    <span className='reviews__date'>
+                                        {new Date(item.created_at).toLocaleString(
+                                            'ru-RU',
+                                            timeOptions
+                                        )}
+                                    </span>
+                                </div>
+                                <div className='reviews__rate'>
+                                    <Rate rating={item.rating} />
+                                </div>
+                                <div className='reviews__text-wrap'>
+                                    <div className='reviews__text'>{item?.text}</div>
+                                    {userData._id === item.author._id ? (
+                                        <Trash3
+                                            className='reviews__trash'
+                                            onClick={() =>
+                                                dispatch(deleteReview({ productInfo, item }))
+                                            }
+                                        />
+                                    ) : (
+                                        ''
+                                    )}
+                                </div>
                             </div>
                         </div>
                     );

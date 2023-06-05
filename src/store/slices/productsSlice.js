@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../utils/api';
 import { forErrors, isLoadingData, showError } from '../utilsStore';
-import { findFavorite, myCards, productRating } from '../../utils/utils';
+import { findFavorite, myFilterCards, productRating } from '../../utils/utils';
 import { getInfoOneProduct, updateProduct } from './oneProductSlice';
 
 const initialState = {
-    dataProducts: [],
+    products: [],
     isLoading: false,
     total: 0,
     favoritesCards: [],
@@ -13,12 +13,14 @@ const initialState = {
 
 export const getAllProductsData = createAsyncThunk(
     'products/getAllProductsData',
-    async (_, { getState, fulfillWithValue }) => {
+    async (_, { getState, fulfillWithValue, rejectWithValue }) => {
         try {
             const state = getState();
             const allProducts = await api.getAllProducts();
             return fulfillWithValue({ ...allProducts, userId: state.user.userData._id });
-        } catch (error) {}
+        } catch (error) {
+            return rejectWithValue(error);
+        }
     }
 );
 
@@ -31,7 +33,19 @@ export const changingLikeOnProductCards = createAsyncThunk(
             dispatch(updateProduct(updateLikeInCard));
             return fulfillWithValue({ updateLikeInCard, cardLiked: data.cardLiked });
         } catch (error) {
-            //    return rejectWithValue()
+            return rejectWithValue(error);
+        }
+    }
+);
+
+export const searchProducts = createAsyncThunk(
+    'products/searchProducts',
+    async (search, { fulfillWithValue, rejectWithValue }) => {
+        try {
+            const searchResult = await api.searchProducts(search);
+            return fulfillWithValue(searchResult);
+        } catch (error) {
+            return rejectWithValue(error);
         }
     }
 );
@@ -44,39 +58,37 @@ const productSlice = createSlice({
         sortingProducts: (state, action) => {
             switch (action.payload) {
                 case 'lowPrice':
-                    state.dataProducts = state.dataProducts.sort((a, b) => a.price - b.price);
+                    state.products = state.products.sort((a, b) => a.price - b.price);
                     break;
                 case 'highPrice':
-                    state.dataProducts = state.dataProducts.sort((a, b) => b.price - a.price);
+                    state.products = state.products.sort((a, b) => b.price - a.price);
                     break;
                 case 'sale':
-                    state.dataProducts = state.dataProducts.sort((a, b) => b.discount - a.discount);
+                    state.products = state.products.sort((a, b) => b.discount - a.discount);
                     break;
                 case 'newProduct':
-                    state.dataProducts = state.dataProducts.sort(
+                    state.products = state.products.sort(
                         (a, b) => new Date(b.created_at) - new Date(a.created_at)
                     );
                     break;
                 case 'popular':
-                    state.dataProducts = state.dataProducts.sort(
-                        (a, b) => b.likes.length - a.likes.length
-                    );
+                    state.products = state.products.sort((a, b) => b.likes.length - a.likes.length);
                     break;
                 case 'rate':
-                    state.dataProducts = state.dataProducts.sort(
+                    state.products = state.products.sort(
                         (a, b) => productRating(b.reviews) - productRating(a.reviews)
                     );
                     break;
                 default:
-                    state.dataProducts = state.dataProducts.sort((a, b) => a.price - b.price);
+                    state.products = state.products.sort((a, b) => a.price - b.price);
             }
         },
     },
     extraReducers: (builder) => {
         builder.addCase(getAllProductsData.fulfilled, (state, action) => {
             state.isLoading = false;
-            const filteredCards = myCards(action.payload.products);
-            state.dataProducts = filteredCards;
+            const filteredCards = myFilterCards(action.payload.products);
+            state.products = filteredCards;
             state.total = filteredCards.length;
             state.favoritesCards = filteredCards.filter((item) =>
                 findFavorite(item, action.payload.userId)
@@ -84,7 +96,7 @@ const productSlice = createSlice({
         });
         builder.addCase(changingLikeOnProductCards.fulfilled, (state, action) => {
             const { updateLikeInCard, cardLiked } = action.payload;
-            state.dataProducts = state.dataProducts.map((item) =>
+            state.products = state.products.map((item) =>
                 item._id === updateLikeInCard._id ? updateLikeInCard : item
             );
 
@@ -95,6 +107,10 @@ const productSlice = createSlice({
             } else {
                 state.favoritesCards = [...state.favoritesCards, updateLikeInCard];
             }
+        });
+        builder.addCase(searchProducts.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.products = myFilterCards(action.payload);
         });
         builder.addMatcher(isLoadingData, (state) => {
             state.isLoading = true;

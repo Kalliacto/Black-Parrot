@@ -15,21 +15,19 @@ import Modal from './components/Modal/Modal';
 import RegistrationForm from './components/Forms/RegistrationForm/RegistrationForm';
 import AuthorizationForm from './components/Forms/AuthorizationForm/AuthorizationForm';
 import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/PasswordRecoveryForm';
-import { myCards, productRating } from './utils/utils';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './store/slices/userSlice';
-import { getAllProductsData } from './store/slices/productsSlice';
+import { getAllProductsData, searchProducts } from './store/slices/productsSlice';
 
 function App() {
-    const [card, setCards] = useState([]);
     const [search, setSearch] = useState(undefined);
     const [activeModal, setActiveModal] = useState(false);
     const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
     const [showPassword, setShowPassword] = useState(false);
 
     const dispatch = useDispatch();
-    const { dataProducts } = useSelector((s) => s.products);
+    const { products } = useSelector((s) => s.products);
 
     useEffect(() => {
         // Проверка на токен должна быть тут, если нет ничего не делай
@@ -38,16 +36,14 @@ function App() {
 
     useEffect(() => {
         if (search === undefined) return;
-        api.searchProducts(search)
-            .then((data) => setCards(myCards(data)))
-            .catch((error) => console.log(error));
-    }, [search]);
+        dispatch(searchProducts(search));
+    }, [dispatch, search]);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [cardsOnPage, setCardsOnPage] = useState(4);
     const lastPageIndex = currentPage * cardsOnPage;
     const firstPageIndex = lastPageIndex - cardsOnPage;
-    const currentCards = dataProducts.slice(firstPageIndex, lastPageIndex);
+    const currentCards = products.slice(firstPageIndex, lastPageIndex);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const cardsValue = {
@@ -76,7 +72,7 @@ function App() {
                                 path='/'
                                 element={
                                     <CatalogProducts
-                                        allCards={dataProducts.length}
+                                        allCards={products.length}
                                         paginate={paginate}
                                     />
                                 }

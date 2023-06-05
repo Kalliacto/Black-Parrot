@@ -1,6 +1,8 @@
 .search {
     width: 100%;
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .search__input {
@@ -11,7 +13,6 @@
     border: none;
     color: #1a1a1a;
     line-height: 125%;
-    position: relative;
 }
 
 .search__input:focus {
@@ -19,9 +20,9 @@
 }
 
 .search__icon {
-    color: #ccc;
+    color: #767676;
     position: absolute;
-    right: 20px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
 }
