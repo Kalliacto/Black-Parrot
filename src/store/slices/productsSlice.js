@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../utils/api';
 import { forErrors, isLoadingData, showError } from '../utilsStore';
-import { findFavorite, myCards } from '../../utils/utils';
+import { findFavorite, myCards, productRating } from '../../utils/utils';
 import { getInfoOneProduct, updateProduct } from './oneProductSlice';
 
 const initialState = {
@@ -40,6 +40,38 @@ export const changingLikeOnProductCards = createAsyncThunk(
 const productSlice = createSlice({
     name: 'product',
     initialState,
+    reducers: {
+        sortingProducts: (state, action) => {
+            switch (action.payload) {
+                case 'lowPrice':
+                    state.dataProducts = state.dataProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'highPrice':
+                    state.dataProducts = state.dataProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'sale':
+                    state.dataProducts = state.dataProducts.sort((a, b) => b.discount - a.discount);
+                    break;
+                case 'newProduct':
+                    state.dataProducts = state.dataProducts.sort(
+                        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                    );
+                    break;
+                case 'popular':
+                    state.dataProducts = state.dataProducts.sort(
+                        (a, b) => b.likes.length - a.likes.length
+                    );
+                    break;
+                case 'rate':
+                    state.dataProducts = state.dataProducts.sort(
+                        (a, b) => productRating(b.reviews) - productRating(a.reviews)
+                    );
+                    break;
+                default:
+                    state.dataProducts = state.dataProducts.sort((a, b) => a.price - b.price);
+            }
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(getAllProductsData.fulfilled, (state, action) => {
             state.isLoading = false;
@@ -74,5 +106,5 @@ const productSlice = createSlice({
 });
 
 // export const setList  = productSlice.actions.setList; Более длинная запись чтобы достать конкретный action
-export const { setList } = productSlice.actions;
+export const { sortingProducts } = productSlice.actions;
 export default productSlice.reducer;

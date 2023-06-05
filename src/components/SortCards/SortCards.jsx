@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import './sortCards.css';
-import { CardContext } from '../../context/cardContext';
 import { sortItem } from '../../utils/utils';
+import { useDispatch } from 'react-redux';
+import { sortingProducts } from '../../store/slices/productsSlice';
 
 const SortCards = () => {
-    const { onSort } = useContext(CardContext);
+    const dispatch = useDispatch();
 
     return (
         <div className='sort__cards_wrapper'>
@@ -13,7 +14,7 @@ const SortCards = () => {
                     return (
                         <span
                             key={item.id}
-                            onClick={() => onSort(item.id)}
+                            onClick={() => dispatch(sortingProducts(item.id))}
                             className='sort__cards_text'
                         >
                             {item.title}

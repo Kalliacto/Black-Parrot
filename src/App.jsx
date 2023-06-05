@@ -43,31 +43,6 @@ function App() {
             .catch((error) => console.log(error));
     }, [search]);
 
-    const onSort = (sortId) => {
-        switch (sortId) {
-            case 'lowPrice':
-                return setCards((state) => [...state.sort((a, b) => a.price - b.price)]);
-            case 'highPrice':
-                return setCards((state) => [...state.sort((a, b) => b.price - a.price)]);
-            case 'sale':
-                return setCards((state) => [...state.sort((a, b) => b.discount - a.discount)]);
-            case 'newProduct':
-                return setCards((state) => [
-                    ...state.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)),
-                ]);
-            case 'popular':
-                return setCards((state) => [
-                    ...state.sort((a, b) => b.likes.length - a.likes.length),
-                ]);
-            case 'rate':
-                return setCards((state) => [
-                    ...state.sort((a, b) => productRating(b.reviews) - productRating(a.reviews)),
-                ]);
-            default:
-                return setCards((state) => [...state.sort((a, b) => a.price - b.price)]);
-        }
-    };
-
     const [currentPage, setCurrentPage] = useState(1);
     const [cardsOnPage, setCardsOnPage] = useState(4);
     const lastPageIndex = currentPage * cardsOnPage;
@@ -77,7 +52,6 @@ function App() {
 
     const cardsValue = {
         search,
-        onSort,
         activeModal,
         setActiveModal,
         setHaveTokenAuth,
