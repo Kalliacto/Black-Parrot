@@ -25,4 +25,9 @@
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.search__icon:hover {
+    color: #3b3b3b;
 }

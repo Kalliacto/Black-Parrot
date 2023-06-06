@@ -9,6 +9,7 @@ const initialState = {
     isLoading: false,
     total: 0,
     favoritesCards: [],
+    search: null,
 };
 
 export const getAllProductsData = createAsyncThunk(
@@ -82,6 +83,9 @@ const productSlice = createSlice({
                 default:
                     state.products = state.products.sort((a, b) => a.price - b.price);
             }
+        },
+        setSearch: (state, action) => {
+            state.search = action.payload;
         },
     },
     extraReducers: (builder) => {
