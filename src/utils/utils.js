@@ -72,3 +72,24 @@ export const myFilterCards = (card) => {
 export const findFavorite = (card, id) => {
     return card.likes.some((i) => i === id);
 };
+
+export const refreshToken = (obj) => {
+    return { ...obj, authorization: localStorage.getItem('token') };
+};
+
+export function parseJwt(token) {
+    if (!token) return null;
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(
+        window
+            .atob(base64)
+            .split('')
+            .map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join('')
+    );
+
+    return JSON.parse(jsonPayload);
+}

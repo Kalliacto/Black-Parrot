@@ -5,7 +5,7 @@ import { Footer } from './components/Footer/Footer';
 import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
 import PageProduct from './pages/PageProduct/PageProduct';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import FavoritePage from './pages/FavoritePage/FavoritePage';
 import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
 import { CardContext } from './context/cardContext';
@@ -18,18 +18,32 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './store/slices/userSlice';
 import { getAllProductsData, searchProducts } from './store/slices/productsSlice';
+import { parseJwt } from './utils/utils';
 
 function App() {
     const [activeModal, setActiveModal] = useState(false);
     const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
     const { products, search } = useSelector((s) => s.products);
 
+    // Проверка на токен годный
     useEffect(() => {
-        // Проверка на токен должна быть тут, если нет ничего не делай
+        const token = parseJwt(localStorage.getItem('token'));
+        if (token && new Date() < new Date(token?.exp * 1e3)) {
+            setHaveTokenAuth(true);
+        } else {
+            setActiveModal(true);
+        }
+    }, [navigate]);
+
+    useEffect(() => {
+        if (!haveTokenAuth) {
+            return;
+        }
         dispatch(getUser()).then(() => dispatch(getAllProductsData()));
-    }, [dispatch]);
+    }, [dispatch, haveTokenAuth]);
 
     useEffect(() => {
         if (search === undefined) return;

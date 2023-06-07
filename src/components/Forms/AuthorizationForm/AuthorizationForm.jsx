@@ -27,7 +27,7 @@ const AuthorizationForm = (props) => {
                 alert(`Добро пожаловать, ${res.data.name}`);
                 navigate('/');
             })
-            .catch((error) => alert(error));
+            .catch((error) => alert(error.message));
     };
 
     return (

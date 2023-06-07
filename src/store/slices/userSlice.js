@@ -5,6 +5,7 @@ import { forErrors, isLoadingData, showError } from '../utilsStore';
 const initialState = {
     userData: {},
     isLoading: false,
+    haveTokenAuth: false,
 };
 //------------actions-------------
 //---------------для работы с ассинхроном необходимо достать createAsyncThunk-------
@@ -36,6 +37,12 @@ export const updateUser = createAsyncThunk(
 const userSlice = createSlice({
     name: 'user',
     initialState,
+    reducers: {
+        setHaveTokenAuth(state, action) {
+            console.log(state.haveTokenAuth);
+            state.haveTokenAuth = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(getUser.fulfilled, (state, action) => {
             state.isLoading = false;
@@ -55,5 +62,5 @@ const userSlice = createSlice({
     reducers: {},
 });
 
-// export const {} = userSlice.actions;
+export const { setHaveTokenAuth } = userSlice.actions;
 export default userSlice.reducer;

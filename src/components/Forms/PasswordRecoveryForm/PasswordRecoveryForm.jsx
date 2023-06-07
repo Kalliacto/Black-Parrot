@@ -24,10 +24,9 @@ const PasswordRecoveryForm = (props) => {
         } else {
             return await userApi
                 .resetPass(data)
-                .then((res) => console.log(res))
                 // localStorage.setItem('token', res.token);
                 .then(() => setHaveToken(true))
-                .catch((error) => alert(error));
+                .catch((error) => alert(error.message));
         }
     };
 

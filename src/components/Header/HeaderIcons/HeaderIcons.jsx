@@ -3,18 +3,19 @@ import './headersIcons.css';
 import { ReactComponent as Heart } from './icons/Favorites.svg';
 import { ReactComponent as Cart } from './icons/ic-cart.svg';
 import { ReactComponent as Bird } from './icons/697561-200 (1).svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CardContext } from '../../../context/cardContext';
 import { BoxArrowInLeft, BoxArrowRight } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 
 const HeaderIcons = () => {
     const { setActiveModal, setHaveTokenAuth, haveTokenAuth } = useContext(CardContext);
-
+    const navigate = useNavigate();
     const { favoritesCards } = useSelector((s) => s.products);
 
     const logOut = () => {
         localStorage.removeItem('token');
+        navigate('/auth');
         return setHaveTokenAuth(false);
     };
 

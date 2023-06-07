@@ -1,12 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import '../forms.css';
-import React from 'react';
+import React, { useContext } from 'react';
 import { userApi } from '../../../utils/apiUser';
 import { useForm } from 'react-hook-form';
 import { checkingTheFillingEmail, checkingTheFillingGroup } from '../../../utils/utils';
 import PasswordInput from '../PasswordInput/PasswordInput';
+import { CardContext } from '../../../context/cardContext';
 
 const RegistrationForm = (props) => {
+    const { setActiveModal } = useContext(CardContext);
     const {
         register,
         handleSubmit,
@@ -17,8 +19,16 @@ const RegistrationForm = (props) => {
     const sendRegistrData = async (data) => {
         return await userApi
             .signUp(data)
-            .then(() => navigate('/auth'))
-            .catch((error) => alert(error));
+            .then(() => userApi.signIn({ email: data.email, password: data.password }))
+            .then((res) => {
+                localStorage.setItem('token', res.token);
+                setActiveModal(false);
+                alert(`Добро пожаловать, ${res.data.name}`);
+                navigate('/');
+            })
+            .catch((error) => alert(error.message));
+        // .then(() => navigate('/auth'))
+        // .catch((error) => alert(error.message));
     };
 
     return (
