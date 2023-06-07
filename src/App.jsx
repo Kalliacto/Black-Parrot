@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
-import { api } from './utils/api';
 import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
 import PageProduct from './pages/PageProduct/PageProduct';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
@@ -21,13 +20,11 @@ import { getUser } from './store/slices/userSlice';
 import { getAllProductsData, searchProducts } from './store/slices/productsSlice';
 
 function App() {
-    const [search, setSearch] = useState(undefined);
     const [activeModal, setActiveModal] = useState(false);
     const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
-    const [showPassword, setShowPassword] = useState(false);
 
     const dispatch = useDispatch();
-    const { products } = useSelector((s) => s.products);
+    const { products, search } = useSelector((s) => s.products);
 
     useEffect(() => {
         // Проверка на токен должна быть тут, если нет ничего не делай
@@ -47,13 +44,10 @@ function App() {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const cardsValue = {
-        search,
         activeModal,
         setActiveModal,
         setHaveTokenAuth,
         haveTokenAuth,
-        showPassword,
-        setShowPassword,
         currentCards,
         cardsOnPage,
         setCurrentPage,
@@ -64,7 +58,7 @@ function App() {
     return (
         <div className='App'>
             <CardContext.Provider value={cardsValue}>
-                <Header setSearch={setSearch}></Header>
+                <Header />
                 <main className='main'>
                     <div className='container'>
                         <Routes>
@@ -81,10 +75,7 @@ function App() {
                             <Route path='/favorite' element={<FavoritePage />} />
                             <Route path='/profile' element={<ProfilePage />}></Route>
                             <Route path='*' element={<NotFoundPage />} />
-                            <Route
-                                path='/notfoundProduct'
-                                element={<NotFoundProductPage setSearch={setSearch} />}
-                            />
+                            <Route path='/notfoundProduct' element={<NotFoundProductPage />} />
                             <Route path='/faq' element={<FAQ />}></Route>
                             <Route
                                 path='/register'

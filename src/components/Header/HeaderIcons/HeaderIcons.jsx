@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import './headersIcons.css';
-import { ReactComponent as Dog } from './icons/DogIcon.svg';
 import { ReactComponent as Heart } from './icons/Favorites.svg';
 import { ReactComponent as Cart } from './icons/ic-cart.svg';
+import { ReactComponent as Bird } from './icons/697561-200 (1).svg';
 import { Link } from 'react-router-dom';
 import { CardContext } from '../../../context/cardContext';
 import { BoxArrowInLeft, BoxArrowRight } from 'react-bootstrap-icons';
@@ -40,7 +40,7 @@ const HeaderIcons = () => {
                         </Link>
                     </div>{' '}
                     <Link to={`/profile`}>
-                        <Dog title='Профиль' />
+                        <Bird title='Профиль' />
                     </Link>
                     <BoxArrowRight onClick={() => logOut()} title='Выход' className='log__icon' />
                 </>

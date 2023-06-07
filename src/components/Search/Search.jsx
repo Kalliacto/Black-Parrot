@@ -1,16 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import s from './search.module.css';
 import { XCircle } from 'react-bootstrap-icons';
-import { CardContext } from '../../context/cardContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearch } from '../../store/slices/productsSlice';
 
-const Search = ({ setSearch }) => {
-    const { search } = useContext(CardContext);
+const Search = () => {
+    const { search } = useSelector((s) => s.products);
+    const dispatch = useDispatch();
+
     return (
         <div className={s.search}>
             <input
                 className={s.search__input}
                 placeholder='Поиск...'
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => dispatch(setSearch(e.target.value))}
             />
             {!!search && (
                 <XCircle
@@ -18,7 +21,7 @@ const Search = ({ setSearch }) => {
                     onClick={(e) => {
                         console.log(e.target.previousElementSibling.value);
                         e.currentTarget.previousElementSibling.value = '';
-                        setSearch('');
+                        dispatch(setSearch(null));
                     }}
                 />
             )}

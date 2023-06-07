@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './profilePage.css';
+import './profilePage.scss';
 import GoBack from '../../components/GoBack/GoBack';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -50,18 +50,18 @@ const ProfilePage = () => {
                             type='text'
                             {...register('name')}
                             placeholder='Имя'
-                            className='form__profile_input'
+                            className='profile__form_input'
                         />
                         <input
                             type='about'
                             {...register('about')}
-                            className='form__profile_input'
+                            className='profile__form_input'
                             placeholder='Обо мне'
                         />
                         <input
                             type='avatar'
                             {...register('avatar')}
-                            className='form__profile_input'
+                            className='profile__form_input'
                             placeholder='Ваш новый аватар'
                         />
                         <button type='submit' className='profile_btn'>

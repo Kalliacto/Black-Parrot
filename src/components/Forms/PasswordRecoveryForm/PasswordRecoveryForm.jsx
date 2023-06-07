@@ -1,16 +1,13 @@
 import { Link } from 'react-router-dom';
 import '../forms.css';
 
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { userApi } from '../../../utils/apiUser';
 import { checkingTheFillingEmail } from '../../../utils/utils';
-import { passwordValidationCheck } from '../../../utils/utils';
-import { CardContext } from '../../../context/cardContext';
-import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
+import PasswordInput from '../PasswordInput/PasswordInput';
 
 const PasswordRecoveryForm = (props) => {
-    const { showPassword, setShowPassword } = useContext(CardContext);
     const [haveToken, setHaveToken] = useState(false);
     const {
         register,
@@ -19,8 +16,6 @@ const PasswordRecoveryForm = (props) => {
     } = useForm({ mode: 'onBlur' });
 
     const sendPassData = async (data) => {
-        console.log({ data });
-
         if (data.token) {
             return await userApi
                 .resetPassWithToken(data.token, { password: data.password })
@@ -69,22 +64,7 @@ const PasswordRecoveryForm = (props) => {
                             )}
                         </div>
                         <div className='input__wrap'>
-                            <div className='input__wrap_pass'>
-                                <input
-                                    type={showPassword ? 'text' : 'password'}
-                                    {...register('password', { ...passwordValidationCheck })}
-                                    placeholder='Пароль'
-                                    className={
-                                        errors?.password ? 'form__input warning' : 'form__input'
-                                    }
-                                />
-                                <span
-                                    className='input__eye_show'
-                                    onClick={() => setShowPassword((state) => !state)}
-                                >
-                                    {showPassword ? <EyeFill /> : <EyeSlashFill />}
-                                </span>
-                            </div>
+                            <PasswordInput register={register} errors={errors} />
                             {errors?.password && (
                                 <span className='warning__text'> {errors?.password.message}</span>
                             )}

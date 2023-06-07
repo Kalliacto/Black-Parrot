@@ -126,5 +126,5 @@ const productSlice = createSlice({
 });
 
 // export const setList  = productSlice.actions.setList; Более длинная запись чтобы достать конкретный action
-export const { sortingProducts } = productSlice.actions;
+export const { sortingProducts, setSearch } = productSlice.actions;
 export default productSlice.reducer;

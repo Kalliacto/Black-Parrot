@@ -1,0 +1,113 @@
+@import '../../global.scss';
+
+.profile {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        margin: 50px 0;
+        width: 100%;
+        background-color: #fff;
+        padding: 20px 20px 40px 20px;
+        border-radius: 10px;
+        border: 2px solid $main-yellow-color;
+    }
+    &__title {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 114%;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+    &__info {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+    &__name {
+        font-weight: 800;
+        font-size: 20px;
+        line-height: 120%;
+        color: #1a1a1a;
+    }
+    &__contact {
+        font-size: 12px;
+        line-height: 117%;
+        color: #7b8e98;
+    }
+    &__form {
+        display: grid;
+        min-width: 350px;
+        gap: 10px;
+        padding: 30px 0;
+    }
+    &_btn {
+        max-width: fit-content;
+        border: 1px solid #cfd8dc;
+        border-radius: 87px;
+        padding: 9px 16px;
+        background: $main-yellow-color;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 14px;
+        margin-top: 25px;
+        transition: 0.3s all;
+    }
+    &_btn:hover {
+        cursor: pointer;
+        background-color: #ffaa0d;
+    }
+    &__form_input {
+        background: #ffffff;
+        border: 1px solid #cfd8dc;
+        border-radius: 12px;
+        padding: 14px 16px;
+        width: 100%;
+        max-width: 364px;
+    }
+    &__form_input:focus {
+        outline: 1px solid #ffaa0d;
+    }
+    &__input_wrap {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.avatar__wrap {
+    width: 100px;
+    height: 100px;
+}
+.avatar__img {
+    border-radius: 50%;
+}
+
+.profile__info_detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.preload {
+    position: relative;
+    min-height: 100px;
+}
+
+.preload::after {
+    content: '';
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    top: calc(50% - 28px);
+    left: calc(50% - 28px);
+    border: 11px $main-yellow-color double;
+    border-radius: 50%;
+    border-left-style: solid;
+    animation: rotate 0.7s infinite linear;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
