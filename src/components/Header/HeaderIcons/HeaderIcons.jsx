@@ -15,7 +15,7 @@ const HeaderIcons = () => {
 
     const logOut = () => {
         localStorage.removeItem('token');
-        navigate('/auth');
+        // navigate('/auth');
         return setHaveTokenAuth(false);
     };
 
