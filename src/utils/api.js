@@ -1,14 +1,14 @@
+import { refreshToken } from './utils';
+
 const config = {
     baseUrl: 'https://api.react-learning.ru',
     headers: {
         'Content-Type': 'application/json',
-        authorization:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDNmYjgyNDMyOTFkNzkwYjNmM2IzMDkiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgxODk4MjMxLCJleHAiOjE3MTM0MzQyMzF9.Pjg_bXUQkZt9RyGlYZbt_6PXaFLP0Nt11LGaMQG1lQg',
     },
 };
 
 const onResponse = (data) => {
-    return data.ok ? data.json() : Promise.reject('Что-то пошло не так');
+    return data.ok ? data.json() : data.json().then((data) => Promise.reject(data));
 };
 
 class Api {
@@ -20,44 +20,44 @@ class Api {
     getAllProducts() {
         return fetch(`${this.baseUrl}/products`, {
             method: 'GET',
-            headers: this.headers,
+            headers: refreshToken(this.headers),
         }).then(onResponse);
     }
 
     searchProducts(path) {
         return fetch(`${this.baseUrl}/products/search?query=${path}`, {
-            headers: this.headers,
+            headers: refreshToken(this.headers),
         }).then(onResponse);
     }
 
     editLikeCard(id, cardLiked) {
         return fetch(`${this.baseUrl}/products/likes/${id}`, {
             method: cardLiked ? 'DELETE' : 'PUT',
-            headers: this.headers,
+            headers: refreshToken(this.headers),
         }).then(onResponse);
     }
     getOneProduct(id) {
         return fetch(`${this.baseUrl}/products/${id}`, {
-            headers: this.headers,
+            headers: refreshToken(this.headers),
         }).then(onResponse);
     }
 
     getAllReviews() {
         return fetch(`${this.baseUrl}/products/review`, {
-            headers: this.headers,
+            headers: refreshToken(this.headers),
         }).then(onResponse);
     }
 
     getProductAllReviews(id) {
         return fetch(`${this.baseUrl}/products/review/${id}`, {
-            headers: this.headers,
+            headers: refreshToken(this.headers),
         }).then(onResponse);
     }
 
     addNewReview(id, body) {
         return fetch(`${this.baseUrl}/products/review/${id}`, {
             method: 'POST',
-            headers: this.headers,
+            headers: refreshToken(this.headers),
             body: JSON.stringify(body),
         }).then(onResponse);
     }
@@ -65,7 +65,7 @@ class Api {
     deleteProductReview(productId, reviewId) {
         return fetch(`${this.baseUrl}/products/review/${productId}/${reviewId}`, {
             method: 'DELETE',
-            headers: this.headers,
+            headers: refreshToken(this.headers),
         }).then(onResponse);
     }
 }

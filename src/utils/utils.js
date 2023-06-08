@@ -49,3 +49,47 @@ export const telephoneValidationCheck = {
 export const checkingTheFillingEmail = { required: 'Email обязательно!' };
 
 export const checkingTheFillingGroup = { required: 'Введите вашу группу обязательно!' };
+
+export const checkingTheField = {
+    required: {
+        value: true,
+        message: 'Обязательное поле для заполнения',
+    },
+};
+
+export const sortItem = [
+    { id: 'popular', title: 'Популярные' },
+    { id: 'newProduct', title: 'Новинки' },
+    { id: 'lowPrice', title: 'Сначала дешёвые' },
+    { id: 'highPrice', title: 'Сначала дорогие' },
+    { id: 'sale', title: 'По скидке' },
+    { id: 'rate', title: 'По рейтингу' },
+];
+export const myFilterCards = (card) => {
+    return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
+};
+
+export const findFavorite = (card, id) => {
+    return card.likes.some((i) => i === id);
+};
+
+export const refreshToken = (obj) => {
+    return { ...obj, authorization: localStorage.getItem('token') };
+};
+
+export function parseJwt(token) {
+    if (!token) return null;
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(
+        window
+            .atob(base64)
+            .split('')
+            .map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join('')
+    );
+
+    return JSON.parse(jsonPayload);
+}

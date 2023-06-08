@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
-import { api } from './utils/api';
 import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
 import PageProduct from './pages/PageProduct/PageProduct';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import FavoritePage from './pages/FavoritePage/FavoritePage';
 import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
 import { CardContext } from './context/cardContext';
@@ -15,123 +14,89 @@ import Modal from './components/Modal/Modal';
 import RegistrationForm from './components/Forms/RegistrationForm/RegistrationForm';
 import AuthorizationForm from './components/Forms/AuthorizationForm/AuthorizationForm';
 import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/PasswordRecoveryForm';
-import { productRating } from './utils/utils';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
-import { userApi } from './utils/apiUser';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser, setIsAuth } from './store/slices/userSlice';
+import { getAllProductsData, searchProducts } from './store/slices/productsSlice';
+import { parseJwt } from './utils/utils';
 
 function App() {
-    const [card, setCards] = useState([]);
-    const [search, setSearch] = useState(undefined);
-    const [user, setUser] = useState({});
-    const [favorites, setFavorite] = useState([]);
     const [activeModal, setActiveModal] = useState(false);
-    const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
-    const [showPassword, setShowPassword] = useState(false);
+    const { products, search } = useSelector((s) => s.products);
+    const { isAuth } = useSelector((s) => s.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const myCards = (card) => {
-        return card.filter((item) => item.author._id === '643fb8243291d790b3f3b309');
-    };
+    // Проверка на токен годный
+    useEffect(() => {
+        const token = parseJwt(localStorage.getItem('token'));
+        if (token && new Date() < new Date(token?.exp * 1e3)) {
+            dispatch(setIsAuth(true));
+        } else {
+            if (
+                location.pathname.includes('/auth') ||
+                location.pathname.includes('/register') ||
+                location.pathname.includes('/newPass')
+            ) {
+                return;
+            } else {
+                navigate('/auth');
+                setActiveModal(true);
+            }
+        }
+    }, [navigate, isAuth]);
+
+    useEffect(() => {
+        if (!isAuth) {
+            return;
+        }
+        dispatch(getUser()).then(() => dispatch(getAllProductsData()));
+    }, [dispatch, isAuth]);
 
     useEffect(() => {
         if (search === undefined) return;
-        api.searchProducts(search)
-            .then((data) => setCards(myCards(data)))
-            .catch((error) => console.log(error));
-    }, [search]);
+        dispatch(searchProducts(search));
+    }, [dispatch, search]);
 
-    useEffect(() => {
-        Promise.all([userApi.getUserInfo(), api.getAllProducts()])
-            .then(([data, res]) => {
-                setUser(data);
-                const filtered = myCards(res.products);
-                setCards(filtered);
-
-                const MyFavorite = filtered.filter((item) => findFavorite(item, data._id));
-                setFavorite(MyFavorite);
-            })
-            .catch((error) => console.log(error));
-    }, [haveTokenAuth]);
-
-    const changeLikeCard = async (product, cardLiked) => {
-        const updateLikeInCard = await api
-            .editLikeCard(product, cardLiked)
-            .catch((error) => console.log(error));
-
-        const newCard = card.map((item) =>
-            item._id === updateLikeInCard._id ? updateLikeInCard : item
-        );
-        setCards([...newCard]);
-
-        cardLiked
-            ? setFavorite((state) => state.filter((item) => item._id !== updateLikeInCard._id))
-            : setFavorite((state) => [updateLikeInCard, ...state]);
-    };
-
-    const findFavorite = (card, id) => {
-        return card.likes.some((i) => i === id);
-    };
-
-    const onSort = (sortId) => {
-        switch (sortId) {
-            case 'lowPrice':
-                return setCards((state) => [...state.sort((a, b) => a.price - b.price)]);
-            case 'highPrice':
-                return setCards((state) => [...state.sort((a, b) => b.price - a.price)]);
-            case 'sale':
-                return setCards((state) => [...state.sort((a, b) => b.discount - a.discount)]);
-            case 'newProduct':
-                return setCards((state) => [
-                    ...state.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)),
-                ]);
-            case 'popular':
-                return setCards((state) => [
-                    ...state.sort((a, b) => b.likes.length - a.likes.length),
-                ]);
-            case 'rate':
-                return setCards((state) => [
-                    ...state.sort((a, b) => productRating(b.reviews) - productRating(a.reviews)),
-                ]);
-            default:
-                return setCards((state) => [...state.sort((a, b) => a.price - b.price)]);
-        }
-    };
+    const [currentPage, setCurrentPage] = useState(1);
+    const [cardsOnPage, setCardsOnPage] = useState(4);
+    const lastPageIndex = currentPage * cardsOnPage;
+    const firstPageIndex = lastPageIndex - cardsOnPage;
+    const currentCards = products.slice(firstPageIndex, lastPageIndex);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const cardsValue = {
-        card,
-        search,
-        user,
-        favorites,
-        setCards,
-        changeLikeCard,
-        onSort,
-        findFavorite,
-        setFavorite,
-        productRating,
         activeModal,
         setActiveModal,
-        setHaveTokenAuth,
-        haveTokenAuth,
-        setUser,
-        showPassword,
-        setShowPassword,
+        currentCards,
+        cardsOnPage,
+        setCurrentPage,
+        currentPage,
+        setCardsOnPage,
     };
 
     return (
         <div className='App'>
             <CardContext.Provider value={cardsValue}>
-                <Header setSearch={setSearch}></Header>
+                <Header />
                 <main className='main'>
                     <div className='container'>
                         <Routes>
-                            <Route path='/' element={<CatalogProducts />} />
+                            <Route
+                                path='/'
+                                element={
+                                    <CatalogProducts
+                                        allCards={products.length}
+                                        paginate={paginate}
+                                    />
+                                }
+                            />
                             <Route path='/product/:id' element={<PageProduct />} />
                             <Route path='/favorite' element={<FavoritePage />} />
                             <Route path='/profile' element={<ProfilePage />}></Route>
                             <Route path='*' element={<NotFoundPage />} />
-                            <Route
-                                path='/notfoundProduct'
-                                element={<NotFoundProductPage setSearch={setSearch} />}
-                            />
+                            <Route path='/notfoundProduct' element={<NotFoundProductPage />} />
                             <Route path='/faq' element={<FAQ />}></Route>
                             <Route
                                 path='/register'

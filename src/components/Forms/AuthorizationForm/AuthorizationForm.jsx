@@ -3,19 +3,21 @@ import '../forms.css';
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { userApi } from '../../../utils/apiUser';
-import { checkingTheFillingEmail, passwordValidationCheck } from '../../../utils/utils';
+import { checkingTheFillingEmail } from '../../../utils/utils';
 import { CardContext } from '../../../context/cardContext';
-import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
+import PasswordInput from '../PasswordInput/PasswordInput';
+import { useDispatch } from 'react-redux';
+import { setIsAuth } from '../../../store/slices/userSlice';
 
 const AuthorizationForm = (props) => {
-    const { setActiveModal, setHaveTokenAuth, showPassword, setShowPassword } =
-        useContext(CardContext);
+    const { setActiveModal } = useContext(CardContext);
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({ mode: 'onBlur' });
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const sendAuthData = async (data) => {
         return await userApi
@@ -23,10 +25,11 @@ const AuthorizationForm = (props) => {
             .then((res) => {
                 localStorage.setItem('token', res.token);
                 setActiveModal(false);
-                setHaveTokenAuth(true);
+                dispatch(setIsAuth(true));
+                alert(`Добро пожаловать, ${res.data.name}`);
                 navigate('/');
             })
-            .catch((error) => alert('Oooops, ' + error));
+            .catch((error) => alert(error.message));
     };
 
     return (
@@ -45,20 +48,7 @@ const AuthorizationForm = (props) => {
                     )}
                 </div>
                 <div className='input__wrap'>
-                    <div className='input__wrap_pass'>
-                        <input
-                            type={showPassword ? 'text' : 'password'}
-                            {...register('password', { ...passwordValidationCheck })}
-                            placeholder='Пароль'
-                            className={errors?.password ? 'form__input warning' : 'form__input'}
-                        />
-                        <span
-                            className='input__eye_show'
-                            onClick={() => setShowPassword((state) => !state)}
-                        >
-                            {showPassword ? <EyeFill /> : <EyeSlashFill />}
-                        </span>
-                    </div>
+                    <PasswordInput register={register} errors={errors} />
                     {errors?.password && (
                         <span className='warning__text'> {errors?.password.message}</span>
                     )}

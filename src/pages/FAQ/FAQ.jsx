@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './faq.css';
-import data from '../../data/popapData.json';
+import data from '../../data/popupData.json';
 
 const FAQ = () => {
     const [selected, setSelected] = useState(null);
@@ -12,16 +12,13 @@ const FAQ = () => {
     };
 
     return (
-        <div className="faq__wrapper">
-            <h2 className="faq__title">Часто спрашивают</h2>
-            <div className="faq__accordion">
+        <div className='faq__wrapper'>
+            <h2 className='faq__title'>Часто спрашивают</h2>
+            <div className='faq__accordion'>
                 {data.map((item, index) => {
                     return (
-                        <div className="faq__accordion_item" key={index}>
-                            <div
-                                className="faq__accordion_title"
-                                onClick={() => toggle(index)}
-                            >
+                        <div className='faq__accordion_item' key={index}>
+                            <div className='faq__accordion_title' onClick={() => toggle(index)}>
                                 <span>{selected === index ? '-' : '+'}</span>
                                 <h3>{item.title}</h3>
                             </div>

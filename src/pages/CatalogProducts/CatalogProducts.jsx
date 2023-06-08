@@ -4,23 +4,28 @@ import './catalogProduct.css';
 import SortCards from '../../components/SortCards/SortCards';
 import { CardContext } from '../../context/cardContext';
 import { getEndings } from '../../utils/utils';
+import Pagination from '../../components/Pagination/Pagination';
+import { useSelector } from 'react-redux';
 
-const CatalogProducts = () => {
-    const { card, search } = useContext(CardContext);
+const CatalogProducts = ({ allCards, paginate }) => {
+    const { currentCards } = useContext(CardContext);
+    const { search } = useSelector((s) => s.products);
 
+    const { products } = useSelector((s) => s.products);
     return (
         <>
             {search ? (
                 <p className='search__info'>
                     По запросу <b>{search}</b>
-                    {card.length === 1 ? ' найден' : ' найдено'} <b>{card.length}</b>
-                    {getEndings(card.length, 'товар')}
+                    {products.length === 1 ? ' найден' : ' найдено'} <b>{products.length}</b>
+                    {getEndings(products.length, 'товар')}
                 </p>
             ) : (
                 ''
             )}
             <SortCards />
-            <CardList cards={card} />
+            <CardList cards={currentCards} />
+            <Pagination allCards={allCards} paginate={paginate} />
         </>
     );
 };

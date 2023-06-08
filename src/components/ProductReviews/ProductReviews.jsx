@@ -1,13 +1,13 @@
-import React, { memo, useContext, useState } from 'react';
+import React, { memo, useState } from 'react';
 import './productReviews.css';
-import { timeOptions } from '../../utils/utils';
+import { checkingTheField, timeOptions } from '../../utils/utils';
 import Rate from '../Rate/Rate';
 import { useForm } from 'react-hook-form';
-import { api } from '../../utils/api';
-import { CardContext } from '../../context/cardContext';
 import { Trash3 } from 'react-bootstrap-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { addReview, deleteReview } from '../../store/slices/oneProductSlice';
 
-const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
+const ProductReviews = memo(({ productInfo }) => {
     const [formActive, setFormActive] = useState(false);
     const {
         register,
@@ -15,41 +15,18 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
         formState: { errors },
         reset,
     } = useForm({ mode: 'onBlur' });
-    const { user } = useContext(CardContext);
+
     const [rate, setRate] = useState(3);
-
-    const submitReview = async (review) => {
-        return await api
-            .addNewReview(productInfo._id, review)
-            .then((product) => setAllReviews(product.reviews))
-            .catch((error) => console.log(error));
-    };
-
-    const deleteReview = async (reviewId) => {
-        return await api
-            .deleteProductReview(productInfo._id, reviewId)
-            .then(() =>
-                setAllReviews((state) =>
-                    state.filter((productReview) => productReview._id !== reviewId)
-                )
-            )
-            .catch((error) => console.log(error));
-    };
+    const { userData } = useSelector((s) => s.user);
+    const { reviews: allReviews } = useSelector((s) => s.oneProduct);
+    const dispatch = useDispatch();
 
     const sendReview = ({ text }) => {
-        submitReview({ text, rating: rate });
+        dispatch(addReview({ id: productInfo._id, body: { text, rating: rate } }));
         reset();
         setFormActive(false);
         setRate(3);
     };
-
-    const checkingTheField = {
-        required: {
-            value: true,
-            message: 'Обязательное поле для заполнения',
-        },
-    };
-
     return (
         <div className='product__reviews'>
             <h2 className='product__reviews_title'>Отзывы</h2>
@@ -80,25 +57,35 @@ const ProductReviews = memo(({ productInfo, allReviews, setAllReviews }) => {
                 {allReviews.map((item) => {
                     return (
                         <div key={item._id} className='reviews__item'>
-                            <div className='reviews__name-wrap'>
-                                <span className='reviews__name'>{item.author.name}&#160;</span>
-                                <span className='reviews__date'>
-                                    {new Date(item.created_at).toLocaleString('ru-RU', timeOptions)}
-                                </span>
+                            <div className='author__avatar'>
+                                <img src={item.author.avatar} alt='' />
                             </div>
-                            <div className='reviews__rate'>
-                                <Rate rating={item.rating} />
-                            </div>
-                            <div className='reviews__text-wrap'>
-                                <div className='reviews__text'>{item?.text}</div>
-                                {user._id === item.author._id ? (
-                                    <Trash3
-                                        className='reviews__trash'
-                                        onClick={() => deleteReview(item._id)}
-                                    />
-                                ) : (
-                                    ''
-                                )}
+                            <div className='reviews__info'>
+                                <div className='reviews__name-wrap'>
+                                    <span className='reviews__name'>{item.author.name}&#160;</span>
+                                    <span className='reviews__date'>
+                                        {new Date(item.created_at).toLocaleString(
+                                            'ru-RU',
+                                            timeOptions
+                                        )}
+                                    </span>
+                                </div>
+                                <div className='reviews__rate'>
+                                    <Rate rating={item.rating} />
+                                </div>
+                                <div className='reviews__text-wrap'>
+                                    <div className='reviews__text'>{item?.text}</div>
+                                    {userData._id === item.author._id ? (
+                                        <Trash3
+                                            className='reviews__trash'
+                                            onClick={() =>
+                                                dispatch(deleteReview({ productInfo, item }))
+                                            }
+                                        />
+                                    ) : (
+                                        ''
+                                    )}
+                                </div>
                             </div>
                         </div>
                     );

@@ -3,38 +3,27 @@ import './productView.css';
 import GoBack from '../GoBack/GoBack';
 import { ReactComponent as Like } from '../Card/img/Like.svg';
 import { CardContext } from '../../context/cardContext';
-import { api } from '../../utils/api';
 import { Truck, Award, ZoomIn } from 'react-bootstrap-icons';
 import ProductPrice from '../ProductPrice/ProductPrice';
 import ProductReviews from '../ProductReviews/ProductReviews';
-import { getEndings } from '../../utils/utils';
+import { getEndings, productRating } from '../../utils/utils';
 import Rate from '../Rate/Rate';
 import Modal from '../Modal/Modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { changingLikeOnProductCards } from '../../store/slices/productsSlice';
 
-const ProductView = ({ productInfo, setProductInfo, id }) => {
-    const { card, user, setCards, findFavorite, setFavorite, productRating, setActiveModal } =
-        useContext(CardContext);
-    const [allReviews, setAllReviews] = useState([]);
-    const cardIsLiked = productInfo.likes ? productInfo.likes.includes(user._id) : false;
+const ProductView = ({ productInfo }) => {
+    const { setActiveModal } = useContext(CardContext);
 
-    const changeLikeCardOne = async (id, cardIsLiked) => {
-        const updateLikeInCard = await api
-            .editLikeCard(id, cardIsLiked)
-            .catch((error) => console.log(error));
+    const { userData } = useSelector((s) => s.user);
+    const { reviews: allReviews } = useSelector((s) => s.oneProduct);
+    const dispatch = useDispatch();
 
-        const newCard = card.map((item) =>
-            item._id === updateLikeInCard._id ? updateLikeInCard : item
-        );
-        setProductInfo(updateLikeInCard);
-        setCards([...newCard]);
+    const cardLiked = productInfo.likes ? productInfo.likes.includes(userData._id) : false;
 
-        const newFavorite = newCard.filter((item) => findFavorite(item, user._id));
-        setFavorite(newFavorite);
+    const changeLikeCardOne = (productInfo, cardLiked) => {
+        dispatch(changingLikeOnProductCards({ product: productInfo, cardLiked }));
     };
-
-    useEffect(() => {
-        api.getProductAllReviews(productInfo._id).then((data) => setAllReviews(data));
-    }, [productInfo._id]);
 
     return (
         <>
@@ -61,9 +50,9 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                         </div>
                         <div className='card__sticky card__sticky_right'>
                             <button
-                                onClick={() => changeLikeCardOne(id, cardIsLiked)}
+                                onClick={() => changeLikeCardOne(productInfo, cardLiked)}
                                 className={`btn__like ${
-                                    cardIsLiked ? 'card__like_active' : 'card__like'
+                                    cardLiked ? 'card__like_active' : 'card__like'
                                 }`}
                             >
                                 <Like />
@@ -111,11 +100,7 @@ const ProductView = ({ productInfo, setProductInfo, id }) => {
                     <span className='product__description_title'>Описание</span>
                     <span>{productInfo.description}</span>
                 </div>
-                <ProductReviews
-                    productInfo={productInfo}
-                    allReviews={allReviews}
-                    setAllReviews={setAllReviews}
-                />
+                <ProductReviews productInfo={productInfo} />
             </div>
             <Modal
                 children={

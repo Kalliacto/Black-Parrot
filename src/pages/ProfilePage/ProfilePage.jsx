@@ -1,36 +1,47 @@
-import React, { useContext, useState } from 'react';
-import './profilePage.css';
+import React, { useEffect, useState } from 'react';
+import './profilePage.scss';
 import GoBack from '../../components/GoBack/GoBack';
-import { userApi } from '../../utils/apiUser';
 import { useForm } from 'react-hook-form';
-import { CardContext } from '../../context/cardContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser, updateUser } from '../../store/slices/userSlice';
 
 const ProfilePage = () => {
+    const { userData, isLoading } = useSelector((s) => s.user);
+    const dispatch = useDispatch();
     const [formActive, setFormActive] = useState(false);
-    const { user, setUser } = useContext(CardContext);
     const { register, handleSubmit } = useForm({
-        defaultValues: { name: user.name, about: user.about },
+        defaultValues: { name: userData.name, about: userData.about },
     });
 
-    const sendData = async (data) => {
-        return await userApi
-            .changingDataUser(data)
-            .then((dataUser) => setUser({ ...dataUser }))
-            .catch((err) => alert(err));
+    useEffect(() => {
+        dispatch(getUser());
+    }, [dispatch]);
+
+    const sendData = (data) => {
+        dispatch(updateUser(data));
     };
 
     return (
         <div className='profile__container'>
             <GoBack />
             <h2 className='profile__title'>Профиль</h2>
-            <div className='profile__info'>
-                <p className='profile__name'>{user.name}</p>
-                <span className='profile__contact'>{user.about}</span>
-                <span className='profile__contact'>{user.email}</span>
-                <button onClick={() => setFormActive(!formActive)} className='profile_btn'>
-                    Изменить
-                </button>
-            </div>
+            {isLoading ? (
+                <div className='profile__info preload'></div>
+            ) : (
+                <div className='profile__info'>
+                    <div className='avatar__wrap'>
+                        <img src={userData?.avatar} alt='avatar' className='avatar__img' />
+                    </div>
+                    <div className='profile__info_detail'>
+                        <p className='profile__name'>{userData.name}</p>
+                        <span className='profile__contact'>{userData.about}</span>
+                        <span className='profile__contact'>{userData.email}</span>
+                    </div>
+                </div>
+            )}
+            <button onClick={() => setFormActive(!formActive)} className='profile_btn'>
+                Изменить
+            </button>
             {formActive && (
                 <>
                     <form className='profile__form' onSubmit={handleSubmit(sendData)}>
@@ -39,13 +50,19 @@ const ProfilePage = () => {
                             type='text'
                             {...register('name')}
                             placeholder='Имя'
-                            className='form__profile_input'
+                            className='profile__form_input'
                         />
                         <input
                             type='about'
                             {...register('about')}
-                            className='form__profile_input'
+                            className='profile__form_input'
                             placeholder='Обо мне'
+                        />
+                        <input
+                            type='avatar'
+                            {...register('avatar')}
+                            className='profile__form_input'
+                            placeholder='Ваш новый аватар'
                         />
                         <button type='submit' className='profile_btn'>
                             Сохранить
