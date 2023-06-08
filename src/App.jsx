@@ -22,20 +22,16 @@ import { parseJwt } from './utils/utils';
 
 function App() {
     const [activeModal, setActiveModal] = useState(false);
-    const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
     const { products, search } = useSelector((s) => s.products);
     const { isAuth } = useSelector((s) => s.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
-    console.log(isAuth);
-
     // Проверка на токен годный
     useEffect(() => {
         const token = parseJwt(localStorage.getItem('token'));
         if (token && new Date() < new Date(token?.exp * 1e3)) {
-            setHaveTokenAuth(true);
             dispatch(setIsAuth(true));
         } else {
             if (
@@ -49,14 +45,14 @@ function App() {
                 setActiveModal(true);
             }
         }
-    }, [navigate, haveTokenAuth]);
+    }, [navigate, isAuth]);
 
     useEffect(() => {
-        if (!haveTokenAuth) {
+        if (!isAuth) {
             return;
         }
         dispatch(getUser()).then(() => dispatch(getAllProductsData()));
-    }, [dispatch, haveTokenAuth]);
+    }, [dispatch, isAuth]);
 
     useEffect(() => {
         if (search === undefined) return;
@@ -73,8 +69,6 @@ function App() {
     const cardsValue = {
         activeModal,
         setActiveModal,
-        setHaveTokenAuth,
-        haveTokenAuth,
         currentCards,
         cardsOnPage,
         setCurrentPage,

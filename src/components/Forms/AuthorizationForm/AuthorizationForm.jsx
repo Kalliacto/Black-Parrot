@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { setIsAuth } from '../../../store/slices/userSlice';
 
 const AuthorizationForm = (props) => {
-    const { setActiveModal, setHaveTokenAuth } = useContext(CardContext);
+    const { setActiveModal } = useContext(CardContext);
     const {
         register,
         handleSubmit,
@@ -25,7 +25,7 @@ const AuthorizationForm = (props) => {
             .then((res) => {
                 localStorage.setItem('token', res.token);
                 setActiveModal(false);
-                setHaveTokenAuth(true);
+                dispatch(setIsAuth(true));
                 alert(`Добро пожаловать, ${res.data.name}`);
                 navigate('/');
             })

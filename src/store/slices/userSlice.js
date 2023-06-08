@@ -39,7 +39,6 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setIsAuth(state, action) {
-            console.log(action.payload);
             state.isAuth = action.payload;
         },
     },
@@ -59,7 +58,6 @@ const userSlice = createSlice({
             showError(action.error.message);
         });
     },
-    reducers: {},
 });
 
 export const { setIsAuth } = userSlice.actions;
