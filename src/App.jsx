@@ -5,7 +5,7 @@ import { Footer } from './components/Footer/Footer';
 import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
 import PageProduct from './pages/PageProduct/PageProduct';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import FavoritePage from './pages/FavoritePage/FavoritePage';
 import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
 import { CardContext } from './context/cardContext';
@@ -16,34 +16,43 @@ import AuthorizationForm from './components/Forms/AuthorizationForm/Authorizatio
 import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/PasswordRecoveryForm';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from './store/slices/userSlice';
+import { getUser, setIsAuth } from './store/slices/userSlice';
 import { getAllProductsData, searchProducts } from './store/slices/productsSlice';
 import { parseJwt } from './utils/utils';
 
 function App() {
     const [activeModal, setActiveModal] = useState(false);
-    const [haveTokenAuth, setHaveTokenAuth] = useState(!!localStorage.getItem('token'));
-    const navigate = useNavigate();
-
-    const dispatch = useDispatch();
     const { products, search } = useSelector((s) => s.products);
+    const { isAuth } = useSelector((s) => s.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     // Проверка на токен годный
     useEffect(() => {
         const token = parseJwt(localStorage.getItem('token'));
         if (token && new Date() < new Date(token?.exp * 1e3)) {
-            setHaveTokenAuth(true);
+            dispatch(setIsAuth(true));
         } else {
-            setActiveModal(true);
+            if (
+                location.pathname.includes('/auth') ||
+                location.pathname.includes('/register') ||
+                location.pathname.includes('/newPass')
+            ) {
+                return;
+            } else {
+                navigate('/auth');
+                setActiveModal(true);
+            }
         }
-    }, [navigate]);
+    }, [navigate, isAuth]);
 
     useEffect(() => {
-        if (!haveTokenAuth) {
+        if (!isAuth) {
             return;
         }
         dispatch(getUser()).then(() => dispatch(getAllProductsData()));
-    }, [dispatch, haveTokenAuth]);
+    }, [dispatch, isAuth]);
 
     useEffect(() => {
         if (search === undefined) return;
@@ -60,8 +69,6 @@ function App() {
     const cardsValue = {
         activeModal,
         setActiveModal,
-        setHaveTokenAuth,
-        haveTokenAuth,
         currentCards,
         cardsOnPage,
         setCurrentPage,

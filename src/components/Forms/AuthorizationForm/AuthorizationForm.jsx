@@ -5,17 +5,19 @@ import { useForm } from 'react-hook-form';
 import { userApi } from '../../../utils/apiUser';
 import { checkingTheFillingEmail } from '../../../utils/utils';
 import { CardContext } from '../../../context/cardContext';
-
 import PasswordInput from '../PasswordInput/PasswordInput';
+import { useDispatch } from 'react-redux';
+import { setIsAuth } from '../../../store/slices/userSlice';
 
 const AuthorizationForm = (props) => {
-    const { setActiveModal, setHaveTokenAuth } = useContext(CardContext);
+    const { setActiveModal } = useContext(CardContext);
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({ mode: 'onBlur' });
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const sendAuthData = async (data) => {
         return await userApi
@@ -23,7 +25,7 @@ const AuthorizationForm = (props) => {
             .then((res) => {
                 localStorage.setItem('token', res.token);
                 setActiveModal(false);
-                setHaveTokenAuth(true);
+                dispatch(setIsAuth(true));
                 alert(`Добро пожаловать, ${res.data.name}`);
                 navigate('/');
             })

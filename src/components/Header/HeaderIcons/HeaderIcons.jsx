@@ -3,25 +3,26 @@ import './headersIcons.css';
 import { ReactComponent as Heart } from './icons/Favorites.svg';
 import { ReactComponent as Cart } from './icons/ic-cart.svg';
 import { ReactComponent as Bird } from './icons/697561-200 (1).svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CardContext } from '../../../context/cardContext';
 import { BoxArrowInLeft, BoxArrowRight } from 'react-bootstrap-icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsAuth } from '../../../store/slices/userSlice';
 
 const HeaderIcons = () => {
-    const { setActiveModal, setHaveTokenAuth, haveTokenAuth } = useContext(CardContext);
-    const navigate = useNavigate();
+    const { setActiveModal } = useContext(CardContext);
     const { favoritesCards } = useSelector((s) => s.products);
+    const { isAuth } = useSelector((s) => s.user);
+    const dispatch = useDispatch();
 
     const logOut = () => {
         localStorage.removeItem('token');
-        navigate('/auth');
-        return setHaveTokenAuth(false);
+        dispatch(setIsAuth(false));
     };
 
     return (
         <div className='header__icons'>
-            {haveTokenAuth ? (
+            {isAuth ? (
                 <>
                     <div title='В избранное'>
                         <Link className='header__heart' to={'/favorite'}>

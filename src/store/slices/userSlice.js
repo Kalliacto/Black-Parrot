@@ -5,7 +5,7 @@ import { forErrors, isLoadingData, showError } from '../utilsStore';
 const initialState = {
     userData: {},
     isLoading: false,
-    haveTokenAuth: false,
+    isAuth: false,
 };
 //------------actions-------------
 //---------------для работы с ассинхроном необходимо достать createAsyncThunk-------
@@ -38,9 +38,8 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setHaveTokenAuth(state, action) {
-            console.log(state.haveTokenAuth);
-            state.haveTokenAuth = action.payload;
+        setIsAuth(state, action) {
+            state.isAuth = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -59,8 +58,7 @@ const userSlice = createSlice({
             showError(action.error.message);
         });
     },
-    reducers: {},
 });
 
-export const { setHaveTokenAuth } = userSlice.actions;
+export const { setIsAuth } = userSlice.actions;
 export default userSlice.reducer;
