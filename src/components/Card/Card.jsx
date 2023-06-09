@@ -5,9 +5,16 @@ import { Link } from 'react-router-dom';
 import ProductPrice from '../ProductPrice/ProductPrice';
 import { useDispatch, useSelector } from 'react-redux';
 import { changingLikeOnProductCards } from '../../store/slices/productsSlice';
+import {
+    addBasketProduct,
+    deleteProductFromBasket,
+    removeBasketProduct,
+} from '../../store/slices/basketSlice';
+import { Trash } from 'react-bootstrap-icons';
 
 const Card = React.memo(({ product }) => {
     const { userData } = useSelector((s) => s.user);
+    const { basketProducts } = useSelector((s) => s.basket);
     const dispatch = useDispatch();
 
     const cardLiked = product.likes.some((item) => item === userData._id);
@@ -50,7 +57,30 @@ const Card = React.memo(({ product }) => {
                     </p>
                 </div>
             </Link>
-            <button className='card__btn btn_color'>В Корзину</button>
+            {/* {!basketProducts.find((i) => i._id === product._id) ? ( */}
+            <button
+                className='card__btn btn_color'
+                onClick={() => {
+                    dispatch(addBasketProduct({ product, count: 1 }));
+                }}
+            >
+                В Корзину
+            </button>
+            <button
+                onClick={() => {
+                    dispatch(removeBasketProduct({ product, count: 1 }));
+                }}
+            >
+                ------
+            </button>
+            <Trash
+                onClick={() => {
+                    dispatch(deleteProductFromBasket(product));
+                }}
+            />
+            {/* ) : (
+                <button className='card__btn btn_color-basket'>Уже в корзине</button>
+            )} */}
         </div>
     );
 });

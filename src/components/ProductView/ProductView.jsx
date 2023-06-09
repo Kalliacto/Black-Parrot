@@ -14,7 +14,6 @@ import { changingLikeOnProductCards } from '../../store/slices/productsSlice';
 
 const ProductView = ({ productInfo }) => {
     const { setActiveModal } = useContext(CardContext);
-
     const { userData } = useSelector((s) => s.user);
     const { reviews: allReviews } = useSelector((s) => s.oneProduct);
     const dispatch = useDispatch();

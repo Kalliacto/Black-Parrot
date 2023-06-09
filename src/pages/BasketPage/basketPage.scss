@@ -1,0 +1,23 @@
+@import '../../global.scss';
+
+.basket {
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        margin: 50px 0;
+        width: 100%;
+        background-color: #fff;
+        padding: 20px 20px 40px 20px;
+        border-radius: 10px;
+        border: 2px solid $main-yellow-color;
+    }
+    &__container {
+        margin-top: 20px;
+    }
+    &__title {
+        font-size: 28px;
+        line-height: 114%;
+        color: #1a1a1a;
+        margin-bottom: 20px;
+    }
+}
