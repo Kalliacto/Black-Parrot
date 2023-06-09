@@ -21,7 +21,7 @@ const RegistrationForm = (props) => {
             .signUp(data)
             .then(() => userApi.signIn({ email: data.email, password: data.password }))
             .then((res) => {
-                localStorage.setItem('token', res.token);
+                localStorage.setItem('tokenParrot', res.token);
                 setActiveModal(false);
                 alert(`Добро пожаловать, ${res.data.name}`);
                 navigate('/');

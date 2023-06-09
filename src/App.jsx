@@ -30,7 +30,7 @@ function App() {
 
     // Проверка на токен годный
     useEffect(() => {
-        const token = parseJwt(localStorage.getItem('token'));
+        const token = parseJwt(localStorage.getItem('tokenParrot'));
         if (token && new Date() < new Date(token?.exp * 1e3)) {
             dispatch(setIsAuth(true));
         } else {
@@ -56,7 +56,10 @@ function App() {
 
     useEffect(() => {
         if (search === undefined) return;
-        dispatch(searchProducts(search));
+        const timer = setTimeout(() => {
+            dispatch(searchProducts(search));
+        }, 200);
+        return () => clearTimeout(timer);
     }, [dispatch, search]);
 
     const [currentPage, setCurrentPage] = useState(1);

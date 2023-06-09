@@ -23,7 +23,7 @@ const AuthorizationForm = (props) => {
         return await userApi
             .signIn(data)
             .then((res) => {
-                localStorage.setItem('token', res.token);
+                localStorage.setItem('tokenParrot', res.token);
                 setActiveModal(false);
                 dispatch(setIsAuth(true));
                 alert(`Добро пожаловать, ${res.data.name}`);

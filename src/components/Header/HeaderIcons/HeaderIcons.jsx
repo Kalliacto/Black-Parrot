@@ -16,7 +16,7 @@ const HeaderIcons = () => {
     const dispatch = useDispatch();
 
     const logOut = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem('tokenParrot');
         dispatch(setIsAuth(false));
     };
 

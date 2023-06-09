@@ -74,7 +74,7 @@ export const findFavorite = (card, id) => {
 };
 
 export const refreshToken = (obj) => {
-    return { ...obj, authorization: localStorage.getItem('token') };
+    return { ...obj, authorization: localStorage.getItem('tokenParrot') };
 };
 
 export function parseJwt(token) {
