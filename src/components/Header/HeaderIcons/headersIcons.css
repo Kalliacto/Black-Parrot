@@ -24,6 +24,10 @@
     align-items: center;
     justify-content: center;
 }
+.icon {
+    width: 24px;
+    height: 20px;
+}
 .log__icon {
     width: 20px;
     height: 20px;

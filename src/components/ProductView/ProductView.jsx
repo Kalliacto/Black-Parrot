@@ -11,18 +11,25 @@ import Rate from '../Rate/Rate';
 import Modal from '../Modal/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { changingLikeOnProductCards } from '../../store/slices/productsSlice';
+import BasketController from '../Basket/BasketController/BasketController';
+import { addBasketProduct } from '../../store/slices/basketSlice';
 
 const ProductView = ({ productInfo }) => {
     const { setActiveModal } = useContext(CardContext);
     const { userData } = useSelector((s) => s.user);
     const { reviews: allReviews } = useSelector((s) => s.oneProduct);
     const dispatch = useDispatch();
+    const { basketProducts } = useSelector((s) => s.basket);
+
+    const product1 = basketProducts.find((e) => e.product._id === productInfo._id);
 
     const cardLiked = productInfo.likes ? productInfo.likes.includes(userData._id) : false;
 
     const changeLikeCardOne = (productInfo, cardLiked) => {
         dispatch(changingLikeOnProductCards({ product: productInfo, cardLiked }));
     };
+
+    console.log(productInfo);
 
     return (
         <>
@@ -63,12 +70,23 @@ const ProductView = ({ productInfo }) => {
                     <div className='product__inCart_wrapper'>
                         <ProductPrice productInfo={productInfo} />
                         <div className='product__inCart_btns'>
-                            <div className='product__counter_btns'>
-                                <p className='btn_minus'>-</p>
-                                <span>0</span>
-                                <p className='btn_plus'>+</p>
-                            </div>
-                            <button className='btn_basket'>В корзину</button>
+                            <BasketController product={productInfo} count={product1?.count} />
+                            {!basketProducts.find((i) => i.product._id === productInfo._id) ? (
+                                <button
+                                    className='btn_basket'
+                                    onClick={() => {
+                                        dispatch(
+                                            addBasketProduct({ product: productInfo, count: 1 })
+                                        );
+                                    }}
+                                >
+                                    В Корзину
+                                </button>
+                            ) : (
+                                <button className=' btn_color-basket btn_basket'>
+                                    Уже в корзине
+                                </button>
+                            )}
                         </div>
                         <div className='product__delivery'>
                             <Truck width={32} height={32} />
