@@ -1,7 +1,7 @@
 .product__wrapper {
     display: flex;
     flex-direction: column;
-    margin: 50px 0;
+    margin-bottom: 50px;
     width: 100%;
     background-color: #fff;
     padding: 20px;
@@ -57,22 +57,12 @@
     gap: 16px;
     margin-bottom: 40px;
 }
-.product__counter_btns {
-    width: 109px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #cfd8dc;
-    border-radius: 100px;
-    padding: 16px;
-}
 
 .btn_basket {
     font-weight: 700;
     line-height: 125%;
     padding: 14px 50px;
-    background: #ffe44d;
+    background-color: #ffe44d;
     border-radius: 55px;
     border: none;
     transition: all 0.3s;
@@ -116,12 +106,6 @@
     height: auto;
     display: flex;
     align-self: flex-start;
-}
-
-.btn_minus,
-.btn_plus {
-    font-size: 18px;
-    cursor: pointer;
 }
 
 .zoom__picture {

@@ -13,6 +13,7 @@ const HeaderIcons = () => {
     const { setActiveModal } = useContext(CardContext);
     const { favoritesCards } = useSelector((s) => s.products);
     const { isAuth } = useSelector((s) => s.user);
+    const { basketProducts } = useSelector((s) => s.basket);
     const dispatch = useDispatch();
 
     const logOut = () => {
@@ -25,11 +26,11 @@ const HeaderIcons = () => {
             {isAuth ? (
                 <>
                     <div title='В избранное'>
-                        <Link className='header__heart' to={'/favorite'}>
+                        <Link className='header__icon' to={'/favorite'}>
                             <Heart />
-                            {favoritesCards.length !== 0 ? (
+                            {favoritesCards?.length !== 0 ? (
                                 <span className='header__icons_bubble'>
-                                    {favoritesCards.length}
+                                    {favoritesCards?.length}
                                 </span>
                             ) : (
                                 ''
@@ -37,7 +38,14 @@ const HeaderIcons = () => {
                         </Link>
                     </div>
                     <div title='В корзину'>
-                        <Link>
+                        <Link to={'/basket'} className='header__icon'>
+                            {basketProducts?.length !== 0 ? (
+                                <span className='header__icons_bubble'>
+                                    {basketProducts?.length}
+                                </span>
+                            ) : (
+                                ''
+                            )}
                             <Cart />
                         </Link>
                     </div>{' '}

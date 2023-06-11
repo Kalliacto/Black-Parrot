@@ -131,7 +131,11 @@
 }
 .btn_color:hover {
     background-color: #ffaa0d;
-    color: #f44336;
+    color: #666666;
+}
+.btn_color-basket {
+    background-color: #ffaa0d;
+    color: #666666;
 }
 
 .tag {
