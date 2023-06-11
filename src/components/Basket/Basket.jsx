@@ -5,10 +5,12 @@ import { Trash } from 'react-bootstrap-icons';
 import { deleteProductFromBasket, sendingAnOrder } from '../../store/slices/basketSlice';
 import BasketController from './BasketController/BasketController';
 import ProductPrice from '../ProductPrice/ProductPrice';
+import { useNavigate } from 'react-router-dom';
 
 const Basket = () => {
     const dispatch = useDispatch();
     const { basketProducts } = useSelector((s) => s.basket);
+    const navigate = useNavigate();
 
     const sumAllProduct = basketProducts.reduce((acc, el) => acc + el.product.price * el.count, 0);
     const saleAllProduct = basketProducts.reduce(
@@ -20,6 +22,7 @@ const Basket = () => {
     const sendData = (data) => {
         dispatch(sendingAnOrder(data));
         alert('Ваш заказ успешно принят!');
+        navigate('/');
     };
 
     return (
