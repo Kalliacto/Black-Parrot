@@ -28,9 +28,9 @@ const HeaderIcons = () => {
                     <div title='В избранное'>
                         <Link className='header__icon' to={'/favorite'}>
                             <Heart />
-                            {favoritesCards.length !== 0 ? (
+                            {favoritesCards?.length !== 0 ? (
                                 <span className='header__icons_bubble'>
-                                    {favoritesCards.length}
+                                    {favoritesCards?.length}
                                 </span>
                             ) : (
                                 ''
@@ -39,9 +39,9 @@ const HeaderIcons = () => {
                     </div>
                     <div title='В корзину'>
                         <Link to={'/basket'} className='header__icon'>
-                            {basketProducts.length !== 0 ? (
+                            {basketProducts?.length !== 0 ? (
                                 <span className='header__icons_bubble'>
-                                    {basketProducts.length}
+                                    {basketProducts?.length}
                                 </span>
                             ) : (
                                 ''

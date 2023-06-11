@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './basket.scss';
 import { Trash } from 'react-bootstrap-icons';
-import { deleteProductFromBasket } from '../../store/slices/basketSlice';
+import { deleteProductFromBasket, sendingAnOrder } from '../../store/slices/basketSlice';
 import BasketController from './BasketController/BasketController';
 import ProductPrice from '../ProductPrice/ProductPrice';
 
@@ -16,6 +16,11 @@ const Basket = () => {
         0
     );
     const resultAllProduct = sumAllProduct - saleAllProduct;
+
+    const sendData = (data) => {
+        dispatch(sendingAnOrder(data));
+        alert('Ваш заказ успешно принят!');
+    };
 
     return (
         <div className='basket__content-wrap'>
@@ -46,7 +51,7 @@ const Basket = () => {
                 <h3 className='basket__result-title'>Ваша корзина</h3>
                 <div className='basket__result-info'>
                     <div className='basket__result-info-list'>
-                        <span>Товары ({basketProducts.length})</span>
+                        <span>Товары ({basketProducts?.length})</span>
                         <span>{Math.round(sumAllProduct)}&nbsp;₽</span>
                     </div>
                     <div className='basket__result-info-list'>
@@ -60,7 +65,12 @@ const Basket = () => {
                         <span>{Math.round(resultAllProduct)}&nbsp;₽</span>
                     </div>
                 </div>
-                <button className='basket__result-btn'>Оформить заказ</button>
+                <button
+                    onClick={() => sendData(localStorage.getItem('basketParrot'))}
+                    className='basket__result-btn'
+                >
+                    Оформить заказ
+                </button>
             </div>
         </div>
     );

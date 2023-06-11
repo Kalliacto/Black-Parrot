@@ -1,9 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     basketProducts: [],
     isLoading: false,
 };
+
+export const sendingAnOrder = createAsyncThunk('basket/sendingAnOrder', async (data) => {
+    const productInfo = await fetch('https://reqres.in/api/users', {
+        method: 'post',
+        body: JSON.stringify(data),
+    });
+    return productInfo;
+});
 
 const basketSlice = createSlice({
     name: 'basket',
@@ -46,6 +54,15 @@ const basketSlice = createSlice({
             );
             localStorage.setItem('basketParrot', JSON.stringify(state.basketProducts));
         },
+        // deleteAllProducts: (state, action) => {
+        //     state.basketProducts = [];
+        // },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(sendingAnOrder.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.basketProducts = [];
+        });
     },
 });
 // ----------------------------------------------------

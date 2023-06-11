@@ -29,8 +29,6 @@ const ProductView = ({ productInfo }) => {
         dispatch(changingLikeOnProductCards({ product: productInfo, cardLiked }));
     };
 
-    console.log(productInfo);
-
     return (
         <>
             <div className='product__wrapper'>
