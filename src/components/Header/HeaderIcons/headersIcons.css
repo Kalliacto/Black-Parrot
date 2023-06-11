@@ -1,4 +1,4 @@
-.header__heart {
+.header__icon {
     position: relative;
 }
 
@@ -23,6 +23,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.icon {
+    width: 24px;
+    height: 20px;
 }
 .log__icon {
     width: 20px;

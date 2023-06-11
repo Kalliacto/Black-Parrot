@@ -19,10 +19,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser, setIsAuth } from './store/slices/userSlice';
 import { getAllProductsData, searchProducts } from './store/slices/productsSlice';
 import { parseJwt } from './utils/utils';
+import BasketPage from './pages/BasketPage/BasketPage';
+import { updateBasketProducts } from './store/slices/basketSlice';
 
 function App() {
     const [activeModal, setActiveModal] = useState(false);
     const { products, search } = useSelector((s) => s.products);
+    const { basketProducts } = useSelector((s) => s.products);
     const { isAuth } = useSelector((s) => s.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,7 +33,7 @@ function App() {
 
     // Проверка на токен годный
     useEffect(() => {
-        const token = parseJwt(localStorage.getItem('token'));
+        const token = parseJwt(localStorage.getItem('tokenParrot'));
         if (token && new Date() < new Date(token?.exp * 1e3)) {
             dispatch(setIsAuth(true));
         } else {
@@ -52,11 +55,18 @@ function App() {
             return;
         }
         dispatch(getUser()).then(() => dispatch(getAllProductsData()));
+
+        if (localStorage.getItem('basketParrot')) {
+            dispatch(updateBasketProducts(localStorage.getItem('basketParrot')));
+        }
     }, [dispatch, isAuth]);
 
     useEffect(() => {
         if (search === undefined) return;
-        dispatch(searchProducts(search));
+        const timer = setTimeout(() => {
+            dispatch(searchProducts(search));
+        }, 200);
+        return () => clearTimeout(timer);
     }, [dispatch, search]);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -110,6 +120,7 @@ function App() {
                                 path='/newPass'
                                 element={<Modal children={<PasswordRecoveryForm />} />}
                             ></Route>
+                            <Route path='/basket' element={<BasketPage />}></Route>
                         </Routes>
                     </div>
                 </main>

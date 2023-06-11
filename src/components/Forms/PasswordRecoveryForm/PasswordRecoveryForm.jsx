@@ -19,7 +19,7 @@ const PasswordRecoveryForm = (props) => {
         if (data.token) {
             return await userApi
                 .resetPassWithToken(data.token, { password: data.password })
-                .then((res) => localStorage.setItem('token', res.token))
+                .then((res) => localStorage.setItem('tokenParrot', res.token))
                 .catch((error) => alert(error));
         } else {
             return await userApi

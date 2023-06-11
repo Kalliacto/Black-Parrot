@@ -9,29 +9,23 @@ const initialState = {
 };
 //------------actions-------------
 //---------------для работы с ассинхроном необходимо достать createAsyncThunk-------
-export const getUser = createAsyncThunk(
-    'user/getUser',
-    async function (str, { getState, fulfillWithValue }) {
-        try {
-            return await userApi.getUserInfo();
-        } catch {}
-    }
-);
+export const getUser = createAsyncThunk('user/getUser', async function () {
+    try {
+        return await userApi.getUserInfo();
+    } catch {}
+});
 
-export const updateUser = createAsyncThunk(
-    'user/updateUser',
-    async function (newUserData, { fulfillWithValue }) {
-        try {
-            if (newUserData.avatar) {
-                return await userApi.changingAvatarUser({ avatar: newUserData.avatar });
-            }
-            return await userApi.changingDataUser({
-                name: newUserData.name,
-                about: newUserData.about,
-            });
-        } catch {}
-    }
-);
+export const updateUser = createAsyncThunk('user/updateUser', async function (newUserData) {
+    try {
+        if (newUserData.avatar) {
+            return await userApi.changingAvatarUser({ avatar: newUserData.avatar });
+        }
+        return await userApi.changingDataUser({
+            name: newUserData.name,
+            about: newUserData.about,
+        });
+    } catch {}
+});
 
 //------------slice// reducer-----------
 const userSlice = createSlice({

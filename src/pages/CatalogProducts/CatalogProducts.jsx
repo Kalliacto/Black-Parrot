@@ -10,8 +10,8 @@ import { useSelector } from 'react-redux';
 const CatalogProducts = ({ allCards, paginate }) => {
     const { currentCards } = useContext(CardContext);
     const { search } = useSelector((s) => s.products);
-
     const { products } = useSelector((s) => s.products);
+
     return (
         <>
             {search ? (
