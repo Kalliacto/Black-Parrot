@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './sortCards.css';
 import { sortItem } from '../../utils/utils';
 import { useDispatch } from 'react-redux';

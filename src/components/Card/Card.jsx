@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import ProductPrice from '../ProductPrice/ProductPrice';
 import { useDispatch, useSelector } from 'react-redux';
 import { changingLikeOnProductCards } from '../../store/slices/productsSlice';
-import { addBasketProduct, removeBasketProduct } from '../../store/slices/basketSlice';
+import { addBasketProduct } from '../../store/slices/basketSlice';
 
 const Card = React.memo(({ product }) => {
     const { userData } = useSelector((s) => s.user);

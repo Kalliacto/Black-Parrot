@@ -25,7 +25,6 @@ import { updateBasketProducts } from './store/slices/basketSlice';
 function App() {
     const [activeModal, setActiveModal] = useState(false);
     const { products, search } = useSelector((s) => s.products);
-    const { basketProducts } = useSelector((s) => s.products);
     const { isAuth } = useSelector((s) => s.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
