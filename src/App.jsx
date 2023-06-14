@@ -21,6 +21,7 @@ import { getAllProductsData, searchProducts } from './store/slices/productsSlice
 import { parseJwt } from './utils/utils';
 import BasketPage from './pages/BasketPage/BasketPage';
 import { updateBasketProducts } from './store/slices/basketSlice';
+import { updateProductsInLocal } from './store/slices/oneProductSlice';
 
 function App() {
     const [activeModal, setActiveModal] = useState(false);
@@ -57,6 +58,9 @@ function App() {
 
         if (localStorage.getItem('basketParrot')) {
             dispatch(updateBasketProducts(localStorage.getItem('basketParrot')));
+        }
+        if (localStorage.getItem('productsInLocal')) {
+            dispatch(updateProductsInLocal(localStorage.getItem('productsInLocal')));
         }
     }, [dispatch, isAuth]);
 

@@ -56,7 +56,9 @@ const Basket = () => {
                 <h3 className='basket__result-title'>Ваша корзина</h3>
                 <div className='basket__result-info'>
                     <div className='basket__result-info-list'>
-                        <span>Товары ({basketProducts?.length})</span>
+                        <span>
+                            Товары ({basketProducts.reduce((acc, el) => acc + el.count, 0)})
+                        </span>
                         <span>{Math.round(sumAllProduct)}&nbsp;₽</span>
                     </div>
                     <div className='basket__result-info-list'>
@@ -70,12 +72,16 @@ const Basket = () => {
                         <span>{Math.round(resultAllProduct)}&nbsp;₽</span>
                     </div>
                 </div>
-                <button
-                    onClick={() => sendData(localStorage.getItem('basketParrot'))}
-                    className='basket__result-btn'
-                >
-                    Оформить заказ
-                </button>
+                {basketProducts.length !== 0 ? (
+                    <button
+                        onClick={() => sendData(localStorage.getItem('basketParrot'))}
+                        className='basket__result-btn'
+                    >
+                        Оформить заказ
+                    </button>
+                ) : (
+                    <button className='basket__result-btn'>Пока пусто</button>
+                )}
             </div>
         </div>
     );

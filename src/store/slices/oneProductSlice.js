@@ -6,6 +6,7 @@ const initialState = {
     product: {},
     reviews: [],
     isLoading: false,
+    productsInLocal: [],
 };
 
 export const getInfoOneProduct = createAsyncThunk('oneProduct/getInfoOneProduct', async (id) => {
@@ -41,11 +42,25 @@ const oneProductSlice = createSlice({
         updateProduct(state, action) {
             state.product = action.payload;
         },
+        updateProductsInLocal(state, action) {
+            state.productsInLocal = JSON.parse(action.payload);
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getInfoOneProduct.fulfilled, (state, action) => {
             state.isLoading = false;
             state.product = action.payload;
+
+            if (state.productsInLocal.length === 0) state.productsInLocal.push(action.payload);
+            if (state.productsInLocal.find((el) => el._id !== action.payload._id)) {
+                if (state.productsInLocal.length < 5) {
+                    state.productsInLocal.push(action.payload);
+                } else {
+                    state.productsInLocal.shift();
+                    state.productsInLocal.push(action.payload);
+                }
+            }
+            localStorage.setItem('productsInLocal', JSON.stringify(state.productsInLocal));
         });
         builder.addCase(getProductAllReviewsInfo.fulfilled, (state, action) => {
             state.isLoading = false;
@@ -65,5 +80,5 @@ const oneProductSlice = createSlice({
         });
     },
 });
-export const { updateProduct } = oneProductSlice.actions;
+export const { updateProduct, updateProductsInLocal } = oneProductSlice.actions;
 export default oneProductSlice.reducer;

@@ -41,7 +41,7 @@ const HeaderIcons = () => {
                         <Link to={'/basket'} className='header__icon'>
                             {basketProducts?.length !== 0 ? (
                                 <span className='header__icons_bubble'>
-                                    {basketProducts?.length}
+                                    {basketProducts.reduce((acc, el) => acc + el.count, 0)}
                                 </span>
                             ) : (
                                 ''

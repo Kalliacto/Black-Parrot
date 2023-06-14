@@ -4,11 +4,11 @@
 }
 .product__price {
     display: flex;
-    flex-direction: column;
     font-weight: bold;
     font-size: 28px;
     line-height: 32px;
     margin-bottom: 5px;
+    gap: 10px;
 }
 ._red {
     color: red;
