@@ -1,5 +1,5 @@
 # Учебный проект интернет магазина ParrotFood находится здесь:
-- https://jade-taiyaki-3a1e0e.netlify.app/
+- https://admirable-melomakarona-8dd170.netlify.app/
 
 ## Реализован следующий функционал:
 
