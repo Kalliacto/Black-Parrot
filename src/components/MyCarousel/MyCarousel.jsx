@@ -10,8 +10,6 @@ const MyCarousel = () => {
     const { products } = useSelector((s) => s.products);
     const { productsInLocal } = useSelector((s) => s.oneProduct);
 
-    console.log(productsInLocal.length);
-
     var settings = {
         dots: true,
         infinite: true,
