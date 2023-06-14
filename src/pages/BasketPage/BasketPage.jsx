@@ -4,6 +4,7 @@ import GoBack from '../../components/GoBack/GoBack';
 import { useSelector } from 'react-redux';
 import { getEndings } from '../../utils/utils';
 import Basket from '../../components/Basket/Basket';
+import MyCarousel from '../../components/MyCarousel/MyCarousel';
 
 const BasketPage = () => {
     const { basketProducts, isLoading } = useSelector((s) => s.basket);
@@ -31,6 +32,7 @@ const BasketPage = () => {
                     </>
                 </div>
             )}
+            <MyCarousel />
         </div>
     );
 };

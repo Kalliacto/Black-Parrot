@@ -1,0 +1,33 @@
+.carousel {
+    padding: 5rem;
+    color: black;
+}
+
+.box {
+    background-color: lightcoral;
+    height: 200px;
+}
+
+.carousel__title {
+    margin-bottom: 30px;
+}
+
+.slick-slide div {
+    margin: 0 5px;
+}
+
+.slick-dots li.slick-active button::before {
+    color: #ffe44d !important;
+}
+
+.slick-dots li button::before {
+    color: #ffe44d !important;
+    font-size: 16px !important;
+    top: 20px !important;
+}
+
+.slick-prev:before,
+.slick-next:before {
+    color: #ffe44d !important;
+    font-size: 24px !important;
+}
