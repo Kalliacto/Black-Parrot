@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../utils/api';
 import { forErrors, isLoadingData, showError } from '../utilsStore';
 import { findFavorite, myFilterCards, productRating } from '../../utils/utils';
-import { getInfoOneProduct, updateProduct } from './oneProductSlice';
+import { updateProduct } from './oneProductSlice';
 
 const initialState = {
     products: [],
@@ -30,7 +30,6 @@ export const changingLikeOnProductCards = createAsyncThunk(
     async (data, { dispatch, fulfillWithValue, rejectWithValue }) => {
         try {
             const updateLikeInCard = await api.editLikeCard(data.product._id, data.cardLiked);
-            // dispatch(getInfoOneProduct(data.product._id));такой вариант норм?
             dispatch(updateProduct(updateLikeInCard));
             return fulfillWithValue({ updateLikeInCard, cardLiked: data.cardLiked });
         } catch (error) {

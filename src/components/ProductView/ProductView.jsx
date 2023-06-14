@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import './productView.css';
 import GoBack from '../GoBack/GoBack';
 import { ReactComponent as Like } from '../Card/img/Like.svg';
