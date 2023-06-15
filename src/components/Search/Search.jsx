@@ -19,7 +19,6 @@ const Search = () => {
                 <XCircle
                     className={s.search__icon}
                     onClick={(e) => {
-                        console.log(e.target.previousElementSibling.value);
                         e.currentTarget.previousElementSibling.value = '';
                         dispatch(setSearch(null));
                     }}
