@@ -31,3 +31,9 @@
 .search__icon:hover {
     color: #3b3b3b;
 }
+
+@media (max-width: 620px) {
+    .search {
+        order: 1;
+    }
+}

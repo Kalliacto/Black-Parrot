@@ -17,6 +17,13 @@
 
 @media (max-width: 776px) {
     .header__wrapper {
-        gap: 30px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 0;
     }
 }
