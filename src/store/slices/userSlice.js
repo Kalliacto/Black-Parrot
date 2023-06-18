@@ -7,27 +7,37 @@ const initialState = {
     isLoading: false,
     isAuth: false,
 };
-//------------actions-------------
-//---------------для работы с ассинхроном необходимо достать createAsyncThunk-------
-export const getUser = createAsyncThunk('user/getUser', async function () {
-    try {
-        return await userApi.getUserInfo();
-    } catch {}
-});
 
-export const updateUser = createAsyncThunk('user/updateUser', async function (newUserData) {
-    try {
-        if (newUserData.avatar) {
-            return await userApi.changingAvatarUser({ avatar: newUserData.avatar });
+export const getUser = createAsyncThunk(
+    'user/getUser',
+    async function (_, { fulfillWithValue, rejectWithValue }) {
+        try {
+            const userInfo = await userApi.getUserInfo();
+            return fulfillWithValue(userInfo);
+        } catch (error) {
+            return rejectWithValue(error);
         }
-        return await userApi.changingDataUser({
-            name: newUserData.name,
-            about: newUserData.about,
-        });
-    } catch {}
-});
+    }
+);
 
-//------------slice// reducer-----------
+export const updateUser = createAsyncThunk(
+    'user/updateUser',
+    async function (newUserData, { fulfillWithValue, rejectWithValue }) {
+        try {
+            if (newUserData.avatar) {
+                const userData = await userApi.changingAvatarUser({ avatar: newUserData.avatar });
+                return fulfillWithValue(userData);
+            }
+            return await userApi.changingDataUser({
+                name: newUserData.name,
+                about: newUserData.about,
+            });
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
 const userSlice = createSlice({
     name: 'user',
     initialState,

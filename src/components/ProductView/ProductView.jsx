@@ -22,7 +22,6 @@ const ProductView = ({ productInfo }) => {
     const { basketProducts } = useSelector((s) => s.basket);
 
     const product1 = basketProducts.find((e) => e.product._id === productInfo._id);
-
     const cardLiked = productInfo.likes ? productInfo.likes.includes(userData._id) : false;
 
     const changeLikeCardOne = (productInfo, cardLiked) => {

@@ -9,31 +9,53 @@ const initialState = {
     productsInLocal: [],
 };
 
-export const getInfoOneProduct = createAsyncThunk('oneProduct/getInfoOneProduct', async (id) => {
-    const productInfo = await api.getOneProduct(id);
-    return productInfo;
-});
+export const getInfoOneProduct = createAsyncThunk(
+    'oneProduct/getInfoOneProduct',
+    async (id, { fulfillWithValue, rejectWithValue }) => {
+        try {
+            const productInfo = await api.getOneProduct(id);
+            return fulfillWithValue(productInfo);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
 
 export const getProductAllReviewsInfo = createAsyncThunk(
     'oneProduct/getProductAllReviewsInfo',
-    async (id) => {
-        const productInfoReviews = await api.getProductAllReviews(id);
-        return productInfoReviews;
+    async (id, { fulfillWithValue, rejectWithValue }) => {
+        try {
+            const productInfoReviews = await api.getProductAllReviews(id);
+            return fulfillWithValue(productInfoReviews);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
     }
 );
 
 export const deleteReview = createAsyncThunk(
     'oneProduct/deleteReview',
-    async ({ productInfo, item }) => {
-        const newData = await api.deleteProductReview(productInfo._id, item._id);
-        return newData;
+    async ({ productInfo, item }, { fulfillWithValue, rejectWithValue }) => {
+        try {
+            const newData = await api.deleteProductReview(productInfo._id, item._id);
+            return fulfillWithValue(newData);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
     }
 );
 
-export const addReview = createAsyncThunk('oneProduct/addReview', async (data) => {
-    const newData = await api.addNewReview(data.id, data.body);
-    return newData;
-});
+export const addReview = createAsyncThunk(
+    'oneProduct/addReview',
+    async (data, { fulfillWithValue, rejectWithValue }) => {
+        try {
+            const newData = await api.addNewReview(data.id, data.body);
+            return fulfillWithValue(newData);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
 
 const oneProductSlice = createSlice({
     name: 'oneProductInfo',

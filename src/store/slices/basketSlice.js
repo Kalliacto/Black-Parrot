@@ -5,13 +5,20 @@ const initialState = {
     isLoading: false,
 };
 
-export const sendingAnOrder = createAsyncThunk('basket/sendingAnOrder', async (data) => {
-    const productInfo = await fetch('https://reqres.in/api/users', {
-        method: 'post',
-        body: JSON.stringify(data),
-    });
-    return productInfo;
-});
+export const sendingAnOrder = createAsyncThunk(
+    'basket/sendingAnOrder',
+    async (data, { fulfillWithValue, rejectWithValue }) => {
+        try {
+            const productInfo = await fetch('https://reqres.in/api/users', {
+                method: 'post',
+                body: JSON.stringify(data),
+            });
+            return fulfillWithValue(productInfo);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
 
 const basketSlice = createSlice({
     name: 'basket',
@@ -54,9 +61,6 @@ const basketSlice = createSlice({
             );
             localStorage.setItem('basketParrot', JSON.stringify(state.basketProducts));
         },
-        // deleteAllProducts: (state, action) => {
-        //     state.basketProducts = [];
-        // },
     },
     extraReducers: (builder) => {
         builder.addCase(sendingAnOrder.fulfilled, (state, action) => {
@@ -65,7 +69,6 @@ const basketSlice = createSlice({
         });
     },
 });
-// ----------------------------------------------------
 
 export const {
     addBasketProduct,
