@@ -20,7 +20,6 @@ const ProductView = ({ productInfo }) => {
     const { reviews: allReviews } = useSelector((s) => s.oneProduct);
     const dispatch = useDispatch();
     const { basketProducts } = useSelector((s) => s.basket);
-
     const product1 = basketProducts.find((e) => e.product._id === productInfo._id);
     const cardLiked = productInfo.likes ? productInfo.likes.includes(userData._id) : false;
 
@@ -80,9 +79,7 @@ const ProductView = ({ productInfo }) => {
                                     В Корзину
                                 </button>
                             ) : (
-                                <button className=' btn_color-basket btn_basket'>
-                                    Уже в корзине
-                                </button>
+                                <button className='btn_basket-basket'>Уже в корзине</button>
                             )}
                         </div>
                         <div className='product__delivery'>

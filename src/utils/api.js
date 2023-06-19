@@ -68,6 +68,13 @@ class Api {
             headers: refreshToken(this.headers),
         }).then(onResponse);
     }
+
+    sendProductOrder(data) {
+        return fetch('https://reqres.in/api/users', {
+            method: 'post',
+            body: JSON.stringify(data),
+        }).then(onResponse);
+    }
 }
 
 export const api = new Api(config);

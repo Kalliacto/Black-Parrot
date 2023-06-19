@@ -49,6 +49,7 @@
     padding: 10px 12px;
     border: none;
     border-radius: 55px;
+    cursor: pointer;
 }
 
 .pagination__btn:hover {
@@ -86,6 +87,7 @@
 .pagination__select:hover {
     border-color: #ffaa0d;
     box-shadow: 0 0 1px 1px #ffaa0d;
+    cursor: pointer;
 }
 .pagination__select:focus {
     border-color: #ffaa0d;

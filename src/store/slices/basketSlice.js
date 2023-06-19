@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { forErrors, showError } from '../utilsStore';
+import { api } from '../../utils/api';
 
 const initialState = {
     basketProducts: [],
@@ -9,10 +11,7 @@ export const sendingAnOrder = createAsyncThunk(
     'basket/sendingAnOrder',
     async (data, { fulfillWithValue, rejectWithValue }) => {
         try {
-            const productInfo = await fetch('https://reqres.in/api/users', {
-                method: 'post',
-                body: JSON.stringify(data),
-            });
+            const productInfo = await api.sendProductOrder(data);
             return fulfillWithValue(productInfo);
         } catch (error) {
             return rejectWithValue(error);
@@ -63,9 +62,13 @@ const basketSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(sendingAnOrder.fulfilled, (state, action) => {
+        builder.addCase(sendingAnOrder.fulfilled, (state) => {
             state.isLoading = false;
             state.basketProducts = [];
+            localStorage.setItem('basketParrot', JSON.stringify(state.basketProducts));
+        });
+        builder.addMatcher(forErrors, (state, { payload }) => {
+            showError(payload.error.message);
         });
     },
 });

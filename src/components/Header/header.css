@@ -1,7 +1,6 @@
 .header {
     width: 100%;
     background-color: #ffe44d;
-    padding: 12px 0;
 }
 
 .header__wrapper {
@@ -15,15 +14,9 @@
     align-items: flex-start;
 }
 
-@media (max-width: 776px) {
+@media (max-width: 620px) {
     .header__wrapper {
         gap: 10px;
         flex-wrap: wrap;
-    }
-}
-
-@media (max-width: 480px) {
-    .header {
-        padding: 0;
     }
 }

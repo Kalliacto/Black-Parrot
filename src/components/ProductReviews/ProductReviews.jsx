@@ -90,7 +90,7 @@ const ProductReviews = memo(({ productInfo }) => {
                         </div>
                     );
                 })}
-                <button className='reviews_btn btn__all_reviews'>Все отзывы {'>'}</button>
+                {/* <button className='reviews_btn btn__all_reviews'>Все отзывы {'>'}</button> */}
             </div>
         </div>
     );

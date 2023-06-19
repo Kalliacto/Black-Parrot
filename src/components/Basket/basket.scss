@@ -70,8 +70,29 @@
         display: flex;
         justify-content: space-between;
     }
+    &__item-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    &__price-one {
+        display: flex;
+        gap: 5px;
+        align-items: baseline;
+    }
 }
 
+.small {
+    font-size: 14px;
+    color: gray;
+}
+.basket__price {
+    display: flex;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 32px;
+    justify-content: space-evenly;
+}
 @media (max-width: 900px) {
     .product__price {
         font-size: 20px;

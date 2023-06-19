@@ -117,12 +117,11 @@ const productSlice = createSlice({
         builder.addMatcher(isLoadingData, (state) => {
             state.isLoading = true;
         });
-        builder.addMatcher(forErrors, (action) => {
-            showError(action.error.message);
+        builder.addMatcher(forErrors, (state, action) => {
+            showError(action.payload.error.message);
         });
     },
 });
 
-// export const setList  = productSlice.actions.setList; Более длинная запись чтобы достать конкретный action
 export const { sortingProducts, setSearch } = productSlice.actions;
 export default productSlice.reducer;
