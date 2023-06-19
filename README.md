@@ -1,5 +1,5 @@
 # Учебный проект интернет магазина ParrotFood находится здесь:
-- https://app.netlify.com/sites/inspiring-pastelito-d0bb4c/
+- https://inspiring-pastelito-d0bb4c.netlify.app/
 
 ## Реализован следующий функционал:
 
