@@ -1,5 +1,5 @@
 # Учебный проект интернет магазина ParrotFood находится здесь:
-- https://admirable-melomakarona-8dd170.netlify.app/
+- https://app.netlify.com/sites/inspiring-pastelito-d0bb4c/
 
 ## Реализован следующий функционал:
 
@@ -21,3 +21,4 @@
 - Проект переведен на redux
 - Реализована корзина
 - Реализован слайдер в корзине
+- Добавлена домашняя страница
