@@ -20,9 +20,10 @@ const Basket = () => {
     const resultAllProduct = sumAllProduct - saleAllProduct;
 
     const sendData = (data) => {
-        dispatch(sendingAnOrder(data));
-        alert('Ваш заказ успешно принят!');
-        navigate('/');
+        dispatch(sendingAnOrder(data)).then(() => {
+            alert('Ваш заказ успешно принят!');
+            navigate('/');
+        });
     };
 
     return (
@@ -38,10 +39,14 @@ const Basket = () => {
                             </Link>
                             <div className='basket__item-info'>
                                 <div className='basket__item-name'>{elem.product.name}</div>
-                                <div className='basket__item-count'>{elem.product.wight}</div>
+                                <div className='basket__item-count small'>{elem.product.wight}</div>
+                                <div className='basket__price-one'>
+                                    <span className='small'>Цена на штуку: </span>
+                                    <ProductPrice productInfo={elem.product} />
+                                </div>
                             </div>
-                            <ProductPrice productInfo={elem.product} />
                             <BasketController product={elem.product} count={elem.count} />
+                            <div className='basket__price'>{elem.count * elem.product.price}</div>
                             <Trash
                                 className='basket__item-trash'
                                 onClick={() => {
@@ -56,13 +61,13 @@ const Basket = () => {
                 <h3 className='basket__result-title'>Ваша корзина</h3>
                 <div className='basket__result-info'>
                     <div className='basket__result-info-list'>
-                        <span>
+                        <span className='small'>
                             Товары ({basketProducts.reduce((acc, el) => acc + el.count, 0)})
                         </span>
                         <span>{Math.round(sumAllProduct)}&nbsp;₽</span>
                     </div>
                     <div className='basket__result-info-list'>
-                        <span>Скидка</span>
+                        <span className='small'>Скидка</span>
                         <span className='_red'>- {Math.round(saleAllProduct)}&nbsp;₽</span>
                     </div>
                     <div className='basket__result-info-list'>

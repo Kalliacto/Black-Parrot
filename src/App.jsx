@@ -31,7 +31,6 @@ function App() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Проверка на токен годный
     useEffect(() => {
         const token = parseJwt(localStorage.getItem('tokenParrot'));
         if (token && new Date() < new Date(token?.exp * 1e3)) {

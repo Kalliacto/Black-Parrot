@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import '../forms.css';
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { userApi } from '../../../utils/apiUser';
@@ -24,7 +23,6 @@ const PasswordRecoveryForm = (props) => {
         } else {
             return await userApi
                 .resetPass(data)
-                // localStorage.setItem('token', res.token);
                 .then(() => setHaveToken(true))
                 .catch((error) => alert(error.message));
         }

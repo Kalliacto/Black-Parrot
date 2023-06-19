@@ -131,6 +131,7 @@
     transition: all 0.3s;
     border: none;
     margin-top: auto;
+    cursor: pointer;
 }
 
 .btn_color {
@@ -173,6 +174,7 @@
 @media (max-width: 820px) {
     .card {
         gap: 10px;
+        align-items: stretch;
     }
     .card__description {
         padding-top: 8px;
@@ -194,11 +196,30 @@
 }
 
 @media (max-width: 620px) {
+    .card {
+        gap: 2px;
+    }
     .card__price {
         font-size: 16px;
     }
     .card__btn {
-        padding: 8px 15px;
+        padding: 6px 10px;
         font-size: 14px;
+    }
+    .card__discount,
+    .tag_type_new,
+    .tag_type_sale {
+        font-size: 12px;
+        padding: 1px 4px;
+    }
+    .card__image {
+        height: 100px;
+    }
+    .card__image_wrapper {
+        margin-top: 10px;
+    }
+
+    .card__link {
+        grid-template-rows: 1fr 1fr;
     }
 }

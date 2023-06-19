@@ -27,8 +27,6 @@ const RegistrationForm = (props) => {
                 navigate('/');
             })
             .catch((error) => alert(error.message));
-        // .then(() => navigate('/auth'))
-        // .catch((error) => alert(error.message));
     };
 
     return (

@@ -1,17 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { forErrors, showError } from '../utilsStore';
+import { api } from '../../utils/api';
 
 const initialState = {
     basketProducts: [],
     isLoading: false,
 };
 
-export const sendingAnOrder = createAsyncThunk('basket/sendingAnOrder', async (data) => {
-    const productInfo = await fetch('https://reqres.in/api/users', {
-        method: 'post',
-        body: JSON.stringify(data),
-    });
-    return productInfo;
-});
+export const sendingAnOrder = createAsyncThunk(
+    'basket/sendingAnOrder',
+    async (data, { fulfillWithValue, rejectWithValue }) => {
+        try {
+            const productInfo = await api.sendProductOrder(data);
+            return fulfillWithValue(productInfo);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
 
 const basketSlice = createSlice({
     name: 'basket',
@@ -54,18 +60,18 @@ const basketSlice = createSlice({
             );
             localStorage.setItem('basketParrot', JSON.stringify(state.basketProducts));
         },
-        // deleteAllProducts: (state, action) => {
-        //     state.basketProducts = [];
-        // },
     },
     extraReducers: (builder) => {
-        builder.addCase(sendingAnOrder.fulfilled, (state, action) => {
+        builder.addCase(sendingAnOrder.fulfilled, (state) => {
             state.isLoading = false;
             state.basketProducts = [];
+            localStorage.setItem('basketParrot', JSON.stringify(state.basketProducts));
+        });
+        builder.addMatcher(forErrors, (state, { payload }) => {
+            showError(payload.error.message);
         });
     },
 });
-// ----------------------------------------------------
 
 export const {
     addBasketProduct,

@@ -95,3 +95,19 @@
         justify-self: center;
     }
 }
+
+@media (max-width: 480px) {
+    .footer__wrapper {
+        gap: 20px;
+    }
+    .footer__copy {
+        justify-content: flex-start;
+    }
+    .footer__nav {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .footer__menu {
+        gap: 8px;
+    }
+}
