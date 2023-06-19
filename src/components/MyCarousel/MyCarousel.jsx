@@ -3,12 +3,11 @@ import './myCarousel.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
-import { useSelector } from 'react-redux';
 import Card from '../Card/Card';
+import { useLocation } from 'react-router-dom';
 
-const MyCarousel = () => {
-    const { products } = useSelector((s) => s.products);
-    const { productsInLocal } = useSelector((s) => s.oneProduct);
+const MyCarousel = ({ cards, text }) => {
+    const location = useLocation();
 
     var settings = {
         dots: true,
@@ -46,25 +45,14 @@ const MyCarousel = () => {
     };
     return (
         <div className='carousel'>
-            {productsInLocal.length === 5 ? (
-                <>
-                    <h2 className='carousel__title'>Просмотренные товары</h2>
-                    <Slider {...settings}>
-                        {productsInLocal.map((elem) => {
-                            return <Card key={elem._id} {...elem} product={elem} />;
-                        })}
-                    </Slider>
-                </>
-            ) : (
-                <>
-                    <h2 className='carousel__title'>Рекомендуем взять</h2>
-                    <Slider {...settings}>
-                        {products.slice(0, 8).map((elem) => {
-                            return <Card key={elem._id} {...elem} product={elem} />;
-                        })}
-                    </Slider>
-                </>
-            )}
+            <div className='carousel__wrap'>
+                <h2 className='carousel__title'>{text}</h2>
+                <Slider {...settings}>
+                    {cards?.map((elem) => {
+                        return <Card key={elem._id} {...elem} product={elem} />;
+                    })}
+                </Slider>
+            </div>
         </div>
     );
 };

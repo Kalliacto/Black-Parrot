@@ -21,7 +21,8 @@ export const Header = React.memo(({ setSearch }) => {
                             <Logo />
                         </div>
                     </Link>
-                    {location.pathname === '/' || location.pathname === '/notfoundProduct' ? (
+                    {location.pathname === '/catalogPage' ||
+                    location.pathname === '/notfoundProduct' ? (
                         <Search setSearch={setSearchQuery} />
                     ) : (
                         ''

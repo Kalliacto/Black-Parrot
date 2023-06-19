@@ -10,7 +10,7 @@ const NotFoundComponent = ({ text }) => {
                 <div className='notFound__wrapper'>
                     <img className='notFound__img' src={svg} alt='sad smile' />
                     <div className='notFound__title'>{text}</div>
-                    <Link to={'/'}>
+                    <Link to={'/catalogPage'}>
                         <button className='notFound__btn'>На главную</button>
                     </Link>
                 </div>

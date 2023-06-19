@@ -4,7 +4,7 @@ import Logo from '../Logo/Logo';
 import { NavLink } from 'react-router-dom';
 
 const links = [
-    { name: 'Каталог', href: '/' },
+    { name: 'Каталог', href: '/catalogPage' },
     { name: 'Акции', href: '/stocks' },
     { name: 'Новости', href: '/news' },
     { name: 'Отзывы', href: '/reviews' },

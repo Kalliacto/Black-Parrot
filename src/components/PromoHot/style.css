@@ -1,0 +1,47 @@
+.promo__hot_wrap {
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.promo__hot_img {
+    width: 100%;
+    height: 250px;
+    max-width: 500px;
+    max-height: 480px;
+    border-radius: 20px;
+}
+.promo__one {
+    background: center / cover url('../../img/Banner1.png') no-repeat;
+}
+
+.promo__two {
+    background: center / cover url('../../img/Banner2.png') no-repeat;
+}
+
+.promo__hot_text {
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 90%;
+    max-width: 312px;
+    padding: 40px;
+}
+
+@media (max-width: 670px) {
+    .promo__hot_wrap {
+        margin: 10px 0;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .promo__hot_img {
+        max-width: 100%;
+        max-height: 180px;
+        border-radius: 20px;
+    }
+    .promo__hot_text {
+        line-height: 90%;
+        max-width: 512px;
+        font-size: 22px;
+    }
+}

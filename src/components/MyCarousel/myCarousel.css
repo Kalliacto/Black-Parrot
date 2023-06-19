@@ -1,7 +1,10 @@
 .carousel {
-    padding: 30px 16px;
+    padding: 30px;
     color: black;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
 }
 
 .box {
@@ -31,4 +34,7 @@
 .slick-next:before {
     color: #ffe44d !important;
     font-size: 24px !important;
+}
+
+.carousel__wrap {
 }

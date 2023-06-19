@@ -22,7 +22,7 @@ const Basket = () => {
     const sendData = (data) => {
         dispatch(sendingAnOrder(data)).then(() => {
             alert('Ваш заказ успешно принят!');
-            navigate('/');
+            navigate('/catalogPage');
         });
     };
 
@@ -46,7 +46,11 @@ const Basket = () => {
                                 </div>
                             </div>
                             <BasketController product={elem.product} count={elem.count} />
-                            <div className='basket__price'>{elem.count * elem.product.price}</div>
+                            <div className='basket__price'>
+                                {elem.count * elem.product.price -
+                                    ((elem.product.discount * elem.product.price) / 100) *
+                                        elem.count}
+                            </div>
                             <Trash
                                 className='basket__item-trash'
                                 onClick={() => {
