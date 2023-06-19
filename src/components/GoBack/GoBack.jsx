@@ -6,12 +6,12 @@ const GoBack = () => {
     const nav = useNavigate();
 
     const goBack = () => {
-        nav('/');
+        nav('/catalogPage');
     };
 
     return (
         <>
-            <span className="product__back" onClick={() => goBack()}>
+            <span className='product__back' onClick={() => goBack()}>
                 {'>'} К списку товаров
             </span>
         </>

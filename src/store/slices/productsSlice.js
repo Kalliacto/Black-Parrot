@@ -10,6 +10,8 @@ const initialState = {
     total: 0,
     favoritesCards: [],
     search: null,
+    topSaleCards: [],
+    topFavoritesCards: [],
 };
 
 export const getAllProductsData = createAsyncThunk(
@@ -94,6 +96,12 @@ const productSlice = createSlice({
             state.total = filteredCards.length;
             state.favoritesCards = filteredCards.filter((item) =>
                 findFavorite(item, action.payload.userId)
+            );
+            state.topSaleCards = myFilterCards(
+                action.payload.products.sort((a, b) => a.price - b.price)
+            );
+            state.topFavoritesCards = myFilterCards(
+                action.payload.products.sort((a, b) => b.likes.length - a.likes.length)
             );
         });
         builder.addCase(changingLikeOnProductCards.fulfilled, (state, action) => {

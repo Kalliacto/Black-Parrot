@@ -1,11 +1,12 @@
 import React from 'react';
 import './style.css';
 
-const Promo = (props) => {
+const Promo = ({ img }) => {
     return (
-        <div className="promo__block">
-            <div className="promo__img" />
-            <p className="promo__text">{props.text}</p>
+        <div className='promo__block'>
+            <div className='promo__img'>
+                <img src={img} alt='Promo' />
+            </div>
         </div>
     );
 };

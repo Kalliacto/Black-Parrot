@@ -8,6 +8,8 @@ import MyCarousel from '../../components/MyCarousel/MyCarousel';
 
 const BasketPage = () => {
     const { basketProducts, isLoading } = useSelector((s) => s.basket);
+    const { products } = useSelector((s) => s.products);
+    const { productsInLocal } = useSelector((s) => s.oneProduct);
 
     return (
         <div className='basket__wrapper'>
@@ -32,7 +34,11 @@ const BasketPage = () => {
                     </>
                 </div>
             )}
-            <MyCarousel />
+            {productsInLocal.length === 5 ? (
+                <MyCarousel cards={productsInLocal} text={'Просмотренные товары'} />
+            ) : (
+                <MyCarousel cards={products} text={'Рекомендуем взять'} />
+            )}
         </div>
     );
 };

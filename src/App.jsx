@@ -22,6 +22,7 @@ import { parseJwt } from './utils/utils';
 import BasketPage from './pages/BasketPage/BasketPage';
 import { updateBasketProducts } from './store/slices/basketSlice';
 import { updateProductsInLocal } from './store/slices/oneProductSlice';
+import HomePage from './pages/HomePage/HomePage';
 
 function App() {
     const [activeModal, setActiveModal] = useState(false);
@@ -72,7 +73,7 @@ function App() {
     }, [dispatch, search]);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [cardsOnPage, setCardsOnPage] = useState(4);
+    const [cardsOnPage, setCardsOnPage] = useState(8);
     const lastPageIndex = currentPage * cardsOnPage;
     const firstPageIndex = lastPageIndex - cardsOnPage;
     const currentCards = products.slice(firstPageIndex, lastPageIndex);
@@ -95,8 +96,9 @@ function App() {
                 <main className='main'>
                     <div className='container'>
                         <Routes>
+                            <Route path='/' element={<HomePage />} />
                             <Route
-                                path='/'
+                                path='/catalogPage'
                                 element={
                                     <CatalogProducts
                                         allCards={products.length}
