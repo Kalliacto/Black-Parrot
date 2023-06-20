@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../utils/api';
 import { forErrors, isLoadingData, showError } from '../utilsStore';
 import { findFavorite, myFilterCards, productRating } from '../../utils/utils';
-import { updateProduct } from './oneProductSlice';
+import { updateProduct, updateProductsInLocal, updateProductsInLocalLike } from './oneProductSlice';
 
 const initialState = {
     products: [],
@@ -10,8 +10,6 @@ const initialState = {
     total: 0,
     favoritesCards: [],
     search: null,
-    topSaleCards: [],
-    topFavoritesCards: [],
 };
 
 export const getAllProductsData = createAsyncThunk(
@@ -33,6 +31,7 @@ export const changingLikeOnProductCards = createAsyncThunk(
         try {
             const updateLikeInCard = await api.editLikeCard(data.product._id, data.cardLiked);
             dispatch(updateProduct(updateLikeInCard));
+            dispatch(updateProductsInLocalLike(updateLikeInCard));
             return fulfillWithValue({ updateLikeInCard, cardLiked: data.cardLiked });
         } catch (error) {
             return rejectWithValue(error);
@@ -96,12 +95,6 @@ const productSlice = createSlice({
             state.total = filteredCards.length;
             state.favoritesCards = filteredCards.filter((item) =>
                 findFavorite(item, action.payload.userId)
-            );
-            state.topSaleCards = myFilterCards(
-                action.payload.products.sort((a, b) => a.price - b.price)
-            );
-            state.topFavoritesCards = myFilterCards(
-                action.payload.products.sort((a, b) => b.likes.length - a.likes.length)
             );
         });
         builder.addCase(changingLikeOnProductCards.fulfilled, (state, action) => {

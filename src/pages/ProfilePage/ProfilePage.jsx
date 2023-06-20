@@ -4,13 +4,15 @@ import GoBack from '../../components/GoBack/GoBack';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, updateUser } from '../../store/slices/userSlice';
+import defaultImage from '../../img/defaultImage.jpg';
 
 const ProfilePage = () => {
     const { userData, isLoading } = useSelector((s) => s.user);
     const dispatch = useDispatch();
     const [formActive, setFormActive] = useState(false);
+    const [previewAvatar, setPreviewAvatar] = useState(userData.avatar);
     const { register, handleSubmit } = useForm({
-        defaultValues: { name: userData.name, about: userData.about },
+        defaultValues: { name: userData.name, about: userData.about, avatar: userData.avatar },
     });
 
     useEffect(() => {
@@ -43,7 +45,15 @@ const ProfilePage = () => {
                 Изменить
             </button>
             {formActive && (
-                <>
+                <div className='profile__form_wrap'>
+                    <div className='inputPost__preview_wrap'>
+                        <img
+                            className='inputPost__preview'
+                            src={previewAvatar}
+                            onError={(e) => (e.currentTarget.src = defaultImage)}
+                            alt='avatar'
+                        />
+                    </div>
                     <form className='profile__form' onSubmit={handleSubmit(sendData)}>
                         <h4>Мои данные</h4>
                         <input
@@ -63,12 +73,14 @@ const ProfilePage = () => {
                             {...register('avatar')}
                             className='profile__form_input'
                             placeholder='Ваш новый аватар'
+                            onChange={(e) => setPreviewAvatar(e.target.value)}
+                            onError={() => setPreviewAvatar(defaultImage)}
                         />
                         <button type='submit' className='profile_btn'>
                             Сохранить
                         </button>
                     </form>
-                </>
+                </div>
             )}
         </div>
     );

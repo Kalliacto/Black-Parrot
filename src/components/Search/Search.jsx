@@ -20,7 +20,7 @@ const Search = () => {
                     className={s.search__icon}
                     onClick={(e) => {
                         e.currentTarget.previousElementSibling.value = '';
-                        dispatch(setSearch(null));
+                        dispatch(setSearch(''));
                     }}
                 />
             )}

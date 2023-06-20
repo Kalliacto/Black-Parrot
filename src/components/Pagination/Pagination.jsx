@@ -63,7 +63,7 @@ const Pagination = memo(({ allCards, paginate }) => {
                 <option value='4' className='pagination__option'>
                     4
                 </option>
-                <option value='8' className='pagination__option'>
+                <option value='8' className='pagination__option' selected='selected'>
                     8
                 </option>
                 <option value='12' className='pagination__option'>
