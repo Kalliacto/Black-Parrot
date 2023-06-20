@@ -67,14 +67,18 @@ const oneProductSlice = createSlice({
         updateProductsInLocal(state, action) {
             state.productsInLocal = JSON.parse(action.payload);
         },
+        updateProductsInLocalLike(state, action) {
+            state.productsInLocal = state.productsInLocal.map((el) =>
+                el._id === action.payload._id ? action.payload : el
+            );
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getInfoOneProduct.fulfilled, (state, action) => {
             state.isLoading = false;
             state.product = action.payload;
-
             if (state.productsInLocal.length === 0) state.productsInLocal.push(action.payload);
-            if (state.productsInLocal.find((el) => el._id !== action.payload._id)) {
+            if (!state.productsInLocal.find((el) => el._id === action.payload._id)) {
                 if (state.productsInLocal.length < 5) {
                     state.productsInLocal.push(action.payload);
                 } else {
@@ -102,5 +106,6 @@ const oneProductSlice = createSlice({
         });
     },
 });
-export const { updateProduct, updateProductsInLocal } = oneProductSlice.actions;
+export const { updateProduct, updateProductsInLocal, updateProductsInLocalLike } =
+    oneProductSlice.actions;
 export default oneProductSlice.reducer;

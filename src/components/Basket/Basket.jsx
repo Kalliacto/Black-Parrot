@@ -47,9 +47,11 @@ const Basket = () => {
                             </div>
                             <BasketController product={elem.product} count={elem.count} />
                             <div className='basket__price'>
-                                {elem.count * elem.product.price -
-                                    ((elem.product.discount * elem.product.price) / 100) *
-                                        elem.count}
+                                {Math.round(
+                                    elem.count * elem.product.price -
+                                        ((elem.product.discount * elem.product.price) / 100) *
+                                            elem.count
+                                )}
                             </div>
                             <Trash
                                 className='basket__item-trash'
