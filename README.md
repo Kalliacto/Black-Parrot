@@ -1,5 +1,18 @@
 # Учебный проект интернет магазина ParrotFood находится здесь:
-- https://inspiring-pastelito-d0bb4c.netlify.app/
+- https://statuesque-boba-27f81c.netlify.app/
+
+## Технологии
+
+- React JavaScript-библиотека,
+- ReactDOM - пакет, предоставляющий управлять DOM-элементами веб-страницы,
+- React bootstrap icons библиотека иконок,
+- React hook form для работы с формами
+- React Router для маршрутизации страниц 
+- Reduxjs/toolkit для работы с состояниями приложения,
+- Classnames – утилита для условного объединения имен классов вместе
+- Sass препроцессор 
+- React-slick для компонента Carousel.
+- React-Toastify библиотека для нотификаций
 
 ## Реализован следующий функционал:
 
