@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isRejected } from '@reduxjs/toolkit';
 import { userApi } from '../../utils/apiUser';
-import { forErrors, isLoadingData, showError } from '../utilsStore';
+import { isLoadingData, showError } from '../utilsStore';
+import { toast } from 'react-toastify';
 
 const initialState = {
     userData: {},
@@ -22,9 +23,10 @@ export const getUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
     'user/updateUser',
-    async function (newUserData, { fulfillWithValue, rejectWithValue }) {
+    async function (newUserData, { fulfillWithValue, rejectWithValue, getState }) {
         try {
-            if (newUserData.avatar) {
+            const { user } = getState();
+            if (newUserData.avatar !== user.userData.avatar) {
                 const userData = await userApi.changingAvatarUser({ avatar: newUserData.avatar });
                 return fulfillWithValue(userData);
             }
@@ -54,12 +56,14 @@ const userSlice = createSlice({
         builder.addCase(updateUser.fulfilled, (state, action) => {
             state.isLoading = false;
             state.userData = action.payload;
+            toast.success('Ваши данные успешно изменены!');
         });
         builder.addMatcher(isLoadingData, (state) => {
             state.isLoading = true;
         });
-        builder.addMatcher(forErrors, (action) => {
-            showError(action.error.message);
+        builder.addMatcher(isRejected(updateUser), (state, action) => {
+            state.isLoading = false;
+            toast.error(action.payload.message);
         });
     },
 });

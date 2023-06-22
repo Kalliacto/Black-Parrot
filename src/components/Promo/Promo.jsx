@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './style.css';
 
-const Promo = ({ img }) => {
+const Promo = memo(({ img }) => {
     return (
         <div className='promo__block'>
             <div className='promo__img'>
@@ -9,6 +9,6 @@ const Promo = ({ img }) => {
             </div>
         </div>
     );
-};
+});
 
 export default Promo;

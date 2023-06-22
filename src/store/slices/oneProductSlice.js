@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isRejected } from '@reduxjs/toolkit';
 import { api } from '../../utils/api';
-import { forErrors, isLoadingData, showError } from '../utilsStore';
+import { isLoadingData } from '../utilsStore';
+import { toast } from 'react-toastify';
 
 const initialState = {
     product: {},
@@ -101,9 +102,13 @@ const oneProductSlice = createSlice({
         builder.addMatcher(isLoadingData, (state) => {
             state.isLoading = true;
         });
-        builder.addMatcher(forErrors, (action) => {
-            showError(action.error.message);
-        });
+        builder.addMatcher(
+            isRejected(getInfoOneProduct, getProductAllReviewsInfo, deleteReview, addReview),
+            (state, action) => {
+                state.isLoading = false;
+                toast.error(action.payload.message);
+            }
+        );
     },
 });
 export const { updateProduct, updateProductsInLocal, updateProductsInLocalLike } =

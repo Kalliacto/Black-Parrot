@@ -8,6 +8,7 @@ import { CardContext } from '../../../context/cardContext';
 import PasswordInput from '../PasswordInput/PasswordInput';
 import { useDispatch } from 'react-redux';
 import { setIsAuth } from '../../../store/slices/userSlice';
+import { toast } from 'react-toastify';
 
 const AuthorizationForm = (props) => {
     const { setActiveModal } = useContext(CardContext);
@@ -26,7 +27,7 @@ const AuthorizationForm = (props) => {
                 localStorage.setItem('tokenParrot', res.token);
                 setActiveModal(false);
                 dispatch(setIsAuth(true));
-                alert(`Добро пожаловать, ${res.data.name}`);
+                toast.info(`Добро пожаловать, ${res.data.name}`);
                 navigate('/');
             })
             .catch((error) => alert(error.message));

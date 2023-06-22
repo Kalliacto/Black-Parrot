@@ -67,19 +67,23 @@ const ProductView = ({ productInfo }) => {
                         <ProductPrice productInfo={productInfo} />
                         <div className='product__inCart_btns'>
                             <BasketController product={productInfo} count={product1?.count} />
-                            {!basketProducts.find((i) => i.product._id === productInfo._id) ? (
-                                <button
-                                    className='btn_basket'
-                                    onClick={() => {
-                                        dispatch(
-                                            addBasketProduct({ product: productInfo, count: 1 })
-                                        );
-                                    }}
-                                >
-                                    В Корзину
-                                </button>
+                            {productInfo.stock > 0 ? (
+                                !basketProducts.find((i) => i.product._id === productInfo._id) ? (
+                                    <button
+                                        className='btn_basket'
+                                        onClick={() => {
+                                            dispatch(
+                                                addBasketProduct({ product: productInfo, count: 1 })
+                                            );
+                                        }}
+                                    >
+                                        В Корзину
+                                    </button>
+                                ) : (
+                                    <button className='btn_basket-basket'>Уже в корзине</button>
+                                )
                             ) : (
-                                <button className='btn_basket-basket'>Уже в корзине</button>
+                                <button className='btn_basket-none'>Нет в наличии</button>
                             )}
                         </div>
                         <div className='product__delivery'>

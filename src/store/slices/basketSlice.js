@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { forErrors, showError } from '../utilsStore';
+import { createAsyncThunk, createSlice, isRejected } from '@reduxjs/toolkit';
 import { api } from '../../utils/api';
+import { toast } from 'react-toastify';
 
 const initialState = {
     basketProducts: [],
@@ -66,9 +66,11 @@ const basketSlice = createSlice({
             state.isLoading = false;
             state.basketProducts = [];
             localStorage.setItem('basketParrot', JSON.stringify(state.basketProducts));
+            toast.info('Ваш заказ успешно принят!');
         });
-        builder.addMatcher(forErrors, (state, { payload }) => {
-            showError(payload.error.message);
+        builder.addMatcher(isRejected(sendingAnOrder), (state, { payload }) => {
+            state.isLoading = false;
+            toast.error(payload.message);
         });
     },
 });

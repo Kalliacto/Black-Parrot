@@ -93,3 +93,5 @@ export function parseJwt(token) {
 
     return JSON.parse(jsonPayload);
 }
+
+export const path = ['/auth', '/register', '/newPass'];

@@ -21,7 +21,6 @@ const Basket = () => {
 
     const sendData = (data) => {
         dispatch(sendingAnOrder(data)).then(() => {
-            alert('Ваш заказ успешно принят!');
             navigate('/catalogPage');
         });
     };

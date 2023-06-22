@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './sortCards.css';
 import { sortItem } from '../../utils/utils';
 import { useDispatch } from 'react-redux';
 import { sortingProducts } from '../../store/slices/productsSlice';
 
-const SortCards = () => {
+const SortCards = memo(() => {
     const dispatch = useDispatch();
 
     return (
@@ -24,6 +24,6 @@ const SortCards = () => {
             </div>
         </div>
     );
-};
+});
 
 export default SortCards;

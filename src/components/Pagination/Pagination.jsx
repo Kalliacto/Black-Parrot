@@ -59,11 +59,15 @@ const Pagination = memo(({ allCards, paginate }) => {
                     Вперед
                 </button>
             </div>
-            <select className='pagination__select' onChange={(e) => setCardsOnPage(e.target.value)}>
+            <select
+                defaultValue={8}
+                className='pagination__select'
+                onChange={(e) => setCardsOnPage(e.target.value)}
+            >
                 <option value='4' className='pagination__option'>
                     4
                 </option>
-                <option value='8' className='pagination__option' selected='selected'>
+                <option value='8' className='pagination__option'>
                     8
                 </option>
                 <option value='12' className='pagination__option'>
