@@ -21,6 +21,7 @@ const ProfilePage = () => {
 
     const sendData = (data) => {
         dispatch(updateUser(data));
+        setFormActive(!formActive);
     };
 
     return (

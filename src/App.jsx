@@ -18,11 +18,13 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, setIsAuth } from './store/slices/userSlice';
 import { getAllProductsData, searchProducts } from './store/slices/productsSlice';
-import { parseJwt } from './utils/utils';
+import { parseJwt, path } from './utils/utils';
 import BasketPage from './pages/BasketPage/BasketPage';
 import { updateBasketProducts } from './store/slices/basketSlice';
 import { updateProductsInLocal } from './store/slices/oneProductSlice';
 import HomePage from './pages/HomePage/HomePage';
+import { Slide, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     const [activeModal, setActiveModal] = useState(false);
@@ -36,17 +38,9 @@ function App() {
         const token = parseJwt(localStorage.getItem('tokenParrot'));
         if (token && new Date() < new Date(token?.exp * 1e3)) {
             dispatch(setIsAuth(true));
-        } else {
-            if (
-                location.pathname.includes('/auth') ||
-                location.pathname.includes('/register') ||
-                location.pathname.includes('/newPass')
-            ) {
-                return;
-            } else {
-                navigate('/auth');
-                setActiveModal(true);
-            }
+        } else if (!path.includes(location.pathname)) {
+            navigate('/auth');
+            setActiveModal(true);
         }
     }, [navigate, isAuth]);
 
@@ -65,7 +59,7 @@ function App() {
     }, [dispatch, isAuth]);
 
     useEffect(() => {
-        if (search === undefined) return;
+        if (search === null) return;
         const timer = setTimeout(() => {
             dispatch(searchProducts(search));
         }, 200);
@@ -127,6 +121,12 @@ function App() {
                             <Route path='/basket' element={<BasketPage />}></Route>
                         </Routes>
                     </div>
+                    <ToastContainer
+                        position='top-right'
+                        autoClose={3000}
+                        theme='colored'
+                        transition={Slide}
+                    />
                 </main>
                 <Footer />
             </CardContext.Provider>

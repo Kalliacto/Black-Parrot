@@ -1,8 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isRejected } from '@reduxjs/toolkit';
 import { api } from '../../utils/api';
-import { forErrors, isLoadingData, showError } from '../utilsStore';
+import { isLoadingData } from '../utilsStore';
 import { findFavorite, myFilterCards, productRating } from '../../utils/utils';
 import { updateProduct, updateProductsInLocal, updateProductsInLocalLike } from './oneProductSlice';
+import { toast } from 'react-toastify';
 
 const initialState = {
     products: [],
@@ -118,9 +119,13 @@ const productSlice = createSlice({
         builder.addMatcher(isLoadingData, (state) => {
             state.isLoading = true;
         });
-        builder.addMatcher(forErrors, (state, action) => {
-            showError(action.payload.error.message);
-        });
+        builder.addMatcher(
+            isRejected(searchProducts, getAllProductsData, changingLikeOnProductCards),
+            (state, action) => {
+                state.isLoading = false;
+                toast.error(action.payload.message);
+            }
+        );
     },
 });
 

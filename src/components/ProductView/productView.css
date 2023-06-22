@@ -81,6 +81,16 @@
     background-color: #ffaa0d;
 }
 
+.btn_basket-none {
+    font-weight: 700;
+    line-height: 125%;
+    padding: 14px 30px;
+    border-radius: 55px;
+    border: none;
+    background-color: #9c9a9a;
+    cursor: not-allowed;
+}
+
 .product__delivery,
 .product__quality {
     background: rgba(236, 239, 241, 0.5);

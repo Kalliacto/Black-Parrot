@@ -52,17 +52,21 @@ const Card = React.memo(({ product }) => {
                     </p>
                 </div>
             </Link>
-            {!basketProducts.find((i) => i.product._id === product._id) ? (
-                <button
-                    className='card__btn btn_color'
-                    onClick={() => {
-                        dispatch(addBasketProduct({ product, count: 1 }));
-                    }}
-                >
-                    В Корзину
-                </button>
+            {product.stock > 0 ? (
+                !basketProducts.find((i) => i.product._id === product._id) ? (
+                    <button
+                        className='card__btn btn_color'
+                        onClick={() => {
+                            dispatch(addBasketProduct({ product, count: 1 }));
+                        }}
+                    >
+                        В Корзину
+                    </button>
+                ) : (
+                    <button className='card__btn btn_color-basket'>Уже в корзине</button>
+                )
             ) : (
-                <button className='card__btn btn_color-basket'>Уже в корзине</button>
+                <button className='card__btn btn_color-none'>Нет в наличии</button>
             )}
         </div>
     );

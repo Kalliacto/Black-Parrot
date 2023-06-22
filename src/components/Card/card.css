@@ -146,6 +146,11 @@
     color: #666666;
 }
 
+.btn_color-none {
+    background-color: #9c9a9a;
+    cursor: not-allowed;
+}
+
 .tag {
     padding: 2px 8px;
     border-radius: 20px;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './homePage.scss';
 import { Link } from 'react-router-dom';
 import MyCarousel from '../../components/MyCarousel/MyCarousel';
@@ -7,7 +7,7 @@ import Promo from '../../components/Promo/Promo';
 import banner from '../../img/Banner.jpg';
 import PromoHot from '../../components/PromoHot/PromoHot';
 
-const HomePage = () => {
+const HomePage = memo(() => {
     const { products } = useSelector((s) => s.products);
 
     return (
@@ -37,6 +37,6 @@ const HomePage = () => {
             )}
         </div>
     );
-};
+});
 
 export default HomePage;
