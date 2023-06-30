@@ -95,3 +95,27 @@ export function parseJwt(token) {
 }
 
 export const path = ['/auth', '/register', '/newPass'];
+
+export const countingTheRating = (data) => {
+    return data.reviews.reduce(
+        (acc, el) => {
+            if (el.rating === 1) {
+                acc[0] = acc[0] + 1;
+                return acc;
+            } else if (el.rating === 2) {
+                acc[1] = acc[1] + 1;
+                return acc;
+            } else if (el.rating === 3) {
+                acc[2] = acc[2] + 1;
+                return acc;
+            } else if (el.rating === 4) {
+                acc[3] = acc[3] + 1;
+                return acc;
+            } else if (el.rating === 5) {
+                acc[4] = acc[4] + 1;
+                return acc;
+            }
+        },
+        [0, 0, 0, 0, 0]
+    );
+};
