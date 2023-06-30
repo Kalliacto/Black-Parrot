@@ -1,5 +1,5 @@
 # Учебный проект интернет магазина ParrotFood находится здесь:
-- https://statuesque-boba-27f81c.netlify.app/
+- https://ubiquitous-taiyaki-c1aa25.netlify.app/
 
 ## Технологии
 
@@ -35,3 +35,19 @@
 - Реализована корзина
 - Реализован слайдер в корзине
 - Добавлена домашняя страница
+- Добалены графики со статистикой продукта по отзывам и лайкам
+
+  ## Скриншоты приложения:
+- Страница продукта с графиками
+-  ![image](https://github.com/Kalliacto/ParrotFood/assets/98468178/61f1446e-6a85-4a13-b599-ef0ff975658d)
+- Страница продукта с отзывами
+-  ![image](https://github.com/Kalliacto/ParrotFood/assets/98468178/a7273f37-b61e-4f93-8341-1c842899b391)
+- Главная страница
+-  ![image](https://github.com/Kalliacto/ParrotFood/assets/98468178/92db66f1-dd21-4946-819c-7aa945dd4fcc)
+- Каталог товаров
+-  ![image](https://github.com/Kalliacto/ParrotFood/assets/98468178/f6e1d34c-0696-426e-a9e2-4bda2defd448)
+- Корзина
+-  ![image](https://github.com/Kalliacto/ParrotFood/assets/98468178/f23b5842-3322-4c13-9003-1e66e9e784e5)
+
+
+
