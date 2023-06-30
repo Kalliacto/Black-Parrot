@@ -95,9 +95,11 @@ const oneProductSlice = createSlice({
         });
         builder.addCase(deleteReview.fulfilled, (state, action) => {
             state.reviews = action.payload.reviews;
+            state.product = action.payload;
         });
         builder.addCase(addReview.fulfilled, (state, action) => {
             state.reviews = action.payload.reviews;
+            state.product = action.payload;
         });
         builder.addMatcher(isLoadingData, (state) => {
             state.isLoading = true;

@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import ProductView from '../../components/ProductView/ProductView';
 import { useParams } from 'react-router-dom';
 import './pageProduct.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getInfoOneProduct, getProductAllReviewsInfo } from '../../store/slices/oneProductSlice';
 
-const PageProduct = () => {
+const PageProduct = memo(() => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { product: productInfo, isLoading } = useSelector((s) => s.oneProduct);
@@ -23,6 +23,6 @@ const PageProduct = () => {
             )}
         </>
     );
-};
+});
 
 export default PageProduct;

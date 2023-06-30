@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './productView.css';
 import GoBack from '../GoBack/GoBack';
 import { ReactComponent as Like } from '../Card/img/Like.svg';
@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changingLikeOnProductCards } from '../../store/slices/productsSlice';
 import BasketController from '../Basket/BasketController/BasketController';
 import { addBasketProduct } from '../../store/slices/basketSlice';
+import Chart from '../Chart/Chart';
+import { Link } from 'react-router-dom';
 
 const ProductView = ({ productInfo }) => {
     const { setActiveModal } = useContext(CardContext);
@@ -22,6 +24,11 @@ const ProductView = ({ productInfo }) => {
     const { basketProducts } = useSelector((s) => s.basket);
     const product1 = basketProducts.find((e) => e.product._id === productInfo._id);
     const cardLiked = productInfo.likes ? productInfo.likes.includes(userData._id) : false;
+    const [showTab, setShowTab] = useState(1);
+
+    const toggleTab = (i) => {
+        setShowTab(i);
+    };
 
     const changeLikeCardOne = (productInfo, cardLiked) => {
         dispatch(changingLikeOnProductCards({ product: productInfo, cardLiked }));
@@ -80,7 +87,9 @@ const ProductView = ({ productInfo }) => {
                                         В Корзину
                                     </button>
                                 ) : (
-                                    <button className='btn_basket-basket'>Уже в корзине</button>
+                                    <Link to='/basket'>
+                                        <button className='btn_basket-basket'>Уже в корзине</button>
+                                    </Link>
                                 )
                             ) : (
                                 <button className='btn_basket-none'>Нет в наличии</button>
@@ -115,7 +124,32 @@ const ProductView = ({ productInfo }) => {
                     <span className='product__description_title'>Описание</span>
                     <span>{productInfo.description}</span>
                 </div>
-                <ProductReviews productInfo={productInfo} />
+                <div className='tabs__container'>
+                    <div className='tabs__block'>
+                        <div
+                            className={showTab === 1 ? 'tabs tabs_active' : 'tabs'}
+                            onClick={() => toggleTab(1)}
+                        >
+                            Отзывы
+                        </div>
+                        <div
+                            className={showTab === 2 ? 'tabs tabs_active' : 'tabs'}
+                            onClick={() => toggleTab(2)}
+                        >
+                            Графики
+                        </div>
+                    </div>
+                    <div className='tabs__content_container'>
+                        <div className={showTab === 1 ? 'tabs__content_active' : 'tabs__content'}>
+                            <ProductReviews productInfo={productInfo} />
+                        </div>
+                        <div className={showTab === 2 ? 'tabs__content_active' : 'tabs__content'}>
+                            {!!Object.keys(productInfo).length && (
+                                <Chart productInfo={productInfo} />
+                            )}
+                        </div>
+                    </div>
+                </div>
             </div>
             <Modal
                 children={
