@@ -216,4 +216,9 @@
     .product__counter_btns {
         padding: 14px 20px;
     }
+    .tabs__block,
+    .tabs__content_container {
+        padding: 0 0 10px;
+        font-size: 14px;
+    }
 }

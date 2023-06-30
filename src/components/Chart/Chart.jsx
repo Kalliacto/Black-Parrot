@@ -18,6 +18,10 @@ const Chart = memo(({ productInfo }) => {
         const chartDom = document.getElementById('chartRating');
         const myChart = echarts.init(chartDom);
 
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        });
+
         const option = {
             title: {
                 text: 'Информация о рейтинге продукте',
@@ -53,6 +57,10 @@ const Chart = memo(({ productInfo }) => {
         const chartDom = document.getElementById('chartId');
         const myChart = echarts.init(chartDom);
 
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        });
+
         const optionReviews = {
             title: {
                 text: 'Отзывы и лайки продукта',
@@ -65,6 +73,7 @@ const Chart = memo(({ productInfo }) => {
             legend: {
                 orient: 'vertical',
                 left: 'left',
+                bottom: 'bottom',
             },
             series: [
                 {
